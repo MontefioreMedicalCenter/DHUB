@@ -1,0 +1,1 @@
+export const deepClone = (toClone: any) => JSON.parse(JSON.stringify(toClone))

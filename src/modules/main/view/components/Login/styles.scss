@@ -1,0 +1,71 @@
+.login-root-container {
+	display: flex;
+	height: inherit;
+	justify-content: center;
+	align-items: center;
+	background-color: #527a94;
+}
+.login-child-container {
+	flex-direction: column;
+	justify-content: center;
+	display: flex;
+	background-color: #e3eff7;
+	width: 400px;
+	height: 500px;
+	border-radius: 35px;
+	padding: 10px;
+}
+.login-continer-2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.login-title-logo {
+	height: 50px;
+}
+.textfield {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	column-gap: 10px;
+	width: 315px;
+	margin: 5px;
+	.MuiTypography-displayBlock {
+		margin-bottom: 0px;
+	}
+}
+.passwordfield {
+	display: flex;
+	align-items: center;
+	width: 315px;
+	justify-content: flex-end;
+	column-gap: 10px;
+	margin: 5px;
+	.MuiTypography-displayBlock {
+		margin-bottom: 0px;
+	}
+}
+.comboBox-field {
+	display: flex;
+	align-items: center;
+	width: 315px;
+	justify-content: flex-end;
+	column-gap: 10px;
+	margin: 5px;
+	.MuiFormControl-root {
+		width: 210px !important;
+	}
+	.MuiTypography-displayBlock {
+		margin-bottom: 0px;
+	}
+}
+.login-button {
+	.MuiButton-containedPrimary {
+		width: 105px;
+		margin-top: 10px;
+	}
+}
+.versionField {
+	font-size: 10px;
+	padding: 20px;
+}
