@@ -1,0 +1,25 @@
+POST http://localhost:8080/DHub/api/manageUsersvc/manageRole
+200
+4 m 37.92 s
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 416dd081-16ec-4de7-9ab7-7b631a21fb38
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 40
+Cookie: JSESSIONID=IrGyN3usKcVgGsuyp2Vq11-lC-U3PTLBJ9Cr3ERH.ynbedivwp01
+Request Body
+userId: "mzeltsan"
+roleId: "remits"
+Activate: "y"
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 110
+Date: Mon, 25 Oct 2021 13:32:39 GMT
+Response Body
+[{"accessActiveFlag":1,"id":{"facilityId":"MHS","roleId":"remits","serviceAreaId":"MMC","userId":"mzeltsan"}}]
