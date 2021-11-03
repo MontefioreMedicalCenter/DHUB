@@ -1,0 +1,20 @@
+POST http://localhost:8080/DHub/api/claimsvc/findClaimHeader
+200
+45 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: e9938f5b-285d-4fd8-84b6-eae6e7d3fc37
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=4QIpjEjDutyE12iRgoCCxwN2Vs4W4I_iSf9KLdHU.ynbedivwp01
+Content-Length: 0
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 59
+Date: Wed, 03 Nov 2021 16:48:00 GMT
+Response Body
+[[1,"Recvd"],[2,"Edits"],[3,"Payer"],[4,"TREKS"],[6,"999"]]
