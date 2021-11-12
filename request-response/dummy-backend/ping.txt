@@ -1,0 +1,23 @@
+POST http://localhost:8080/DHub/api/interfacessvc/ping
+200
+991 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 80c7c5ca-3ff7-4737-9cf2-66b3fe22fe6b
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 14
+Cookie: JSESSIONID=pb7SmPp8xiXQemKpFK0VC0SUHE573OjO0udtjm8Q.ynbedivwp01
+Request Body
+channelId: "1015"
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 15
+Date: Fri, 12 Nov 2021 15:47:08 GMT
+Response Body
+"UP, Tested OK"
