@@ -1,0 +1,23 @@
+POST http://localhost:8080/DHub/api/remitssvc/getRemitReportMaps
+200
+556 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 2c828dc5-9ee6-466a-a48c-73ead8fda969
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 12
+Cookie: JSESSIONID=ybZtaQI-YCOZtYdyHSeJDIAA1q1Z4-Yo_YIGTt5V.ynbedivwp01
+Request Body
+type: "Monthly"
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 185
+Date: Mon, 15 Nov 2021 19:43:07 GMT
+Response Body
+[["hb","HB-EPIC",1],["pb","PB-EPIC",2],["epichh","HH-EPIC",3],["cerc","CERC",4],["hsr","EAGLE",5],["fpp","IDXMOT",6],["hh","HH",7],["satp","SATP",8],["cmo","CMO",9],["total","TOTAL",9]]
