@@ -1,0 +1,20 @@
+POST http://localhost:8080/DHub/api/remitssvc/getRptMonth
+200
+526 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: fcc42264-f9e0-4884-b279-81a65fd9c7c6
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=ybZtaQI-YCOZtYdyHSeJDIAA1q1Z4-Yo_YIGTt5V.ynbedivwp01
+Content-Length: 0
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 347
+Date: Mon, 15 Nov 2021 19:55:26 GMT
+Response Body
+["All","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12"]
