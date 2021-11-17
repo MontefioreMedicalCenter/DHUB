@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "deliveryControl": {
             "activeFlag": "Y",
