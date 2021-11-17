@@ -1,0 +1,6 @@
+POST /DHub/api/fileManagersvc/explainPayload HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=hkunAwpAJYXMd3WEl5Rh2_FpzZf9NwaHGt401qCq.odcfsvvwd04
+
+fileId=4071963
