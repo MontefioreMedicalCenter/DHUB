@@ -1,4 +1,4 @@
-{
+module.exports = {
     "fileContent": "VGhpcyBpcyBhIHRlc3QuCg==",
     "fileId": 4072899,
     "fileProps": "RawDirListing=-rw-r-----    1 reconftp staff            16 Apr 21 2016  RGRTEST.txt",
