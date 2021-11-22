@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "activeFlag": "N",
         "configId": "EAGLE.PICKUP.1199.BPR.TRIG",
