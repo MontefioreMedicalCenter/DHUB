@@ -1,0 +1,6 @@
+POST /DHub/api/adminsvc/triggerCombineX12 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=ljScO_8TfkP6uNE_awvf7aRyrOvnvDvwDF1roWeu.odcfsvvwd04
+
+pollControlId=EAGLE.PICKUP.AETNAEDI.835.COMBTRIG
