@@ -1,0 +1,20 @@
+POST http://localhost:8080/DHub/api/remitSearchsvc/getPayerName
+200
+557 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 6ff40978-b4b4-4572-9576-f2b8eed3637f
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=syd9MOcGOtlJYHfDC-hfAv1BMJZkxP2XN-Z4Bu_f.ynbedivwp01
+Content-Length: 0
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 311
+Date: Wed, 24 Nov 2021 20:30:43 GMT
+Response Body
+["Medicaid","AMIDA","MVP","Metroplus","Amerigroup","Oxford","Trizetto","Centerlight","HIP-GHI","Elderplan",null,"UHC","EMBLEM","GHI","Local 1199","1199","Cigna","VNS","Medicare","Aetna","MAGNACARE","CMO","Wellcare","Affinity-Echo","Fidelis","Zelis","PAYSPAN","Availity","Affinity-Instamed","Healthfirst","BCBS"]
