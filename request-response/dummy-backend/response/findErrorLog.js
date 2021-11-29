@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "componentName": "PollerMDB",
         "errorLevel": 100,
