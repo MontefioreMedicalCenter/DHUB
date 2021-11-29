@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "componentName": "DeliveryHubMainMDB",
         "errorLevel": 11,
