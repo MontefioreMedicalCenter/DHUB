@@ -1,0 +1,6 @@
+POST /DHub/api/adminsvc/findErrorLogById HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=Quy5U4xdPhOEu6YnrVhkcGJrJ4blZvvWiptH1upA.odcfsvvwd04
+
+Id=DeliveryHubMainMDB.1638213815575.1638213815591
