@@ -1,4 +1,4 @@
-[
+module.exports = [
     "BURKE",
     "MMC",
     "NRMV",
