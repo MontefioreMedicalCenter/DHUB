@@ -1,0 +1,4 @@
+POST /DHub/api/adminsvc/getAllServiceArea HTTP/1.1
+Host: localhost:8080
+Cookie: JSESSIONID=T5mHrXGfnwJ6Tt4w1ZsD_4RwaKj6uozXW7nt1nrk.odcfsvvwd04
+
