@@ -1,0 +1,4 @@
+POST /DHub/api/adminsvc/getDeliveryControl HTTP/1.1
+Host: localhost:8080
+Cookie: JSESSIONID=2wXtkM5cnjsgmcrrQL3B0lhc0tPcKBLHSC5C36xd.odcfsvvwd04
+
