@@ -1,1 +1,1 @@
-true
+module.exports = true
