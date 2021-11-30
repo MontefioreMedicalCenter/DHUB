@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "adjustedFileDate": null,
         "ageInDays": 99999999,
