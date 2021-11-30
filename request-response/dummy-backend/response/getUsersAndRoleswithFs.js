@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "accessActiveFlag": 1,
         "id": {
