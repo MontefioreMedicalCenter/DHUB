@@ -1,4 +1,4 @@
-import Login from '../../modules/main/view/components/Login'
+import Login from "../../org/ehit/edi/hub/user/view/components/Login"
 
 const ROUTES = [
 	{ name: 'login', url: '/', private: false, component: Login, exact: true }
