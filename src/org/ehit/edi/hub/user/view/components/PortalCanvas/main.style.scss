@@ -1,0 +1,33 @@
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+.img{
+    height:30px
+}
+.title-logo{
+    height: 30px;
+}
+.title-content{
+    text-align-last: right;
+    font-size: small;
+    font-weight: bold;
+    // display: flex;
+    column-gap: 30px;
+}
+.main-container {
+    height: 100%;
+    // background: #dfe8f1;    
+    background-image: linear-gradient(to right, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white);
+}
+.logout-btn {
+    cursor: pointer;
+    color: #b30f0f;
+    font-weight: 500;
+    padding: 5px;
+}
+.container-main-view{
+    height: calc(100% - 105px);
+}

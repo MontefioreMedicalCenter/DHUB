@@ -9,7 +9,11 @@ import TextFeildComponent from '../../../../../../../../shared/components/TextFe
 import ButtonComponent from '../../../../../../../../shared/components/ButtonComponent'
 import { EventDispatcher } from '../../../../../../../../flexicious'
 import ComboBox from '../../../../../../../../shared/components/ComboBox'
+import { LoginMediator } from '../../LoginMediator.ts'
+import { LoginEvent } from '../../../model/events/LoginEvent.ts'
+import EdiUser from '../../../model/vo/EdiUser.ts'
 
+const VALIDATOR_PROPERTY = ''
 class Login extends EventDispatcher {
 	constructor() {
 		super()
@@ -19,17 +23,43 @@ class Login extends EventDispatcher {
 				username: false,
 				password: false
 			},
-			username: '',
-			password: '',
+			username: 'flexicious',
+			password: 'support',
 			serviceArea: [],
 			selectedIndex: 1,
 			checkBox: false,
-			passwordVisiblity: 'password'
+			passwordVisiblity: 'password',
+			serviceAreaValue: ''
 		}
 	}
 
-	get selServ(){
-		return this._selServ;
+	get selServ() {
+		return this._selServ
+	}
+
+	get usernameValidatorSource() /** :IValidatorListener*/ {
+		return this.state.username
+	}
+
+	get passwordValidatorSource() /** :IValidatorListener*/ {
+		return this.state.password
+	}
+
+	get usernameValidatorProperty() /** :String*/ {
+		return VALIDATOR_PROPERTY
+	}
+
+	get passwordValidatorProperty() /** :String*/ {
+		return VALIDATOR_PROPERTY
+	}
+
+	componentDidMount() {
+		this.mediator = new LoginMediator()
+		this.mediator.onRegister(this)
+	}
+
+	resetFocus() /** :void*/ {
+		this.state.username.setFocus()
 	}
 
 	handleChangeTxt = event => {
@@ -46,6 +76,16 @@ class Login extends EventDispatcher {
 		toast.warning('username or password cannot be empty!!')
 	}
 
+	loginUser = event => {
+		if (this.state.username === '' || this.state.password === '' || this.state.selectedIndex === '') {
+			this.emptyField()
+		}
+		if (this.state.username && this.state.password) {
+			var user = new EdiUser(this.state.username, this.state.password)
+			this.dispatchEvent(new LoginEvent(LoginEvent.LOGIN, user))
+		}
+	}
+
 	handleKeyUp = event => {
 		if (event.keyCode === 13) {
 			event.preventDefault()
@@ -57,14 +97,7 @@ class Login extends EventDispatcher {
 		this.setState({ selectedIndex: event.target.value })
 	}
 
-	findServiceAreaLabel = item => {
-		var lbl = ''
-		if (item != null) lbl = item.id.facilityId + ' - ' + item.serviceAreaName
-		return lbl
-	}
-
 	showPassword = () => {
-		debugger
 		if (this.state.checkBox) {
 			this.setState({ checkBox: false })
 			this.setState({ passwordVisiblity: 'password' })
@@ -74,14 +107,13 @@ class Login extends EventDispatcher {
 		}
 	}
 
-	changeHandler = (event) => {
-		debugger
-		toast.warning("Need to implement changeHandler")
-		// this._selServ = event.target.selectedItem.id.serviceAreaId
+	changeHandler = event => {
+		this._selServ = event.target.value
+		this.setState({ serviceAreaValue: event.target.value })
 	}
 
 	render() {
-		const { username, password, error } = this.state
+		const { error, serviceArea } = this.state
 		return (
 			<div className="login-root-container">
 				<div className="login-child-container" data-text="Reflection">
@@ -94,28 +126,26 @@ class Login extends EventDispatcher {
 							<Typography variant="body2" display="block" gutterBottom>
 								<span className="fonts">User Name :</span>
 							</Typography>
-							<TextFeildComponent id="username" type="text" style={{ width: '307px' }} value={username} onChange={this.handleChangeTxt} error={error.username} />
+							<TextFeildComponent id="username" type="text" style={{ width: '307px' }} value={this.state.username} onChange={this.handleChangeTxt} error={error.username} />
 						</div>
 						<div className="passwordfield">
 							<Typography variant="body2" display="block" gutterBottom>
 								<span className="fonts">Password :</span>
 							</Typography>
-							<TextFeildComponent id="password" type={this.state.passwordVisiblity} style={{ width: '307px' }} value={password} onChange={this.handleChangeTxt} error={error.password} />
+							<TextFeildComponent id="password" type={this.state.passwordVisiblity} style={{ width: '307px' }} value={this.state.password} onChange={this.handleChangeTxt} error={error.password} onBlur={this.loginUser} />
 						</div>
 						<div className="comboBox-field">
 							<Typography variant="body2" display="block" gutterBottom>
 								<span className="fonts">Service Area :</span>
 							</Typography>
-							<ComboBox name="serviceArea" id="serviceArea" onChange={(event) => this.changeHandler(event)} /> 
-							{/* width="200" labelFunction="findServiceAreaLabel" selectedIndex="0" */}
+							<ComboBox name="serviceArea" id="serviceArea" valueKey="serviceArea" labelKey="serviceArea" dataProvider={serviceArea.map(item => item.id.serviceAreaId)} onChange={event => this.changeHandler(event)} value={this.state.saveServiceArea} />
 						</div>
 						<div style={{ display: 'flex', padding: '5px', width: '140px' }}>
-							{/* <Checkbox id="showPassword" color={"primary"} onClick={this.showPassword} value={this.state.checkBox} /> &nbsp; <span style={{ fontSize: "smaller" }}> Show Password? </span> */}
 							<input type="checkbox" id="showPassword" cstyle={{ height: '15px', width: '15px' }} onClick={this.showPassword} value={this.state.checkBox} />
 							&nbsp; <span style={{ fontSize: 'smaller' }}> Show Password? </span>
 						</div>
 						<div className="login-button">
-							<ButtonComponent id="signInButton" label="Login" />
+							<ButtonComponent id="signInButton" label="Login" onClick={() => this.mediator.onServiceArea()} />
 						</div>
 						{/* <p className="versionField">Version 2.0, Content © 2021, MIT .All rights reserved. Build Date: {preval`module.exports = new Date().toLocaleString();`}.</p> */}
 					</div>

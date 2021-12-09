@@ -39,13 +39,14 @@ const StyledTab = withStyles(theme => ({
 		minHeight: '35px',
 		margin: '0px',
 		maxWidth: 'unset',
-		border: '1px solid lightGrey',
+		border: '1px solid black',
 		'&:focus': {
 			opacity: 1
 		}
 	},
 	selected: {
-		backgroundColor: '#b3d7fd'
+		// color: 'white',
+		backgroundColor: '#82988c'
 	},
 	wrapper: {
 		display: 'flow-root',
@@ -68,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 	demo: {
 		backgroundColor: props => props.customstyle.backgroundColor,
 		boxShadow: props => props.customstyle.boxShadow,
-		width: props => (props.customstyle.centered ? 'fit-content' : '100%'),
+		width: props => (props.customstyle.centered ? 'fit-content' : props.width),
 		marginLeft: 'auto',
 		marginRight: 'auto'
 	}
@@ -99,24 +100,24 @@ function CustomizedTabs(props) {
 					aria-label="styled tabs example">
 					{props.tabList
 						? props.tabList.map((tab, index) => (
-								<StyledTab
-									key={tab.path}
-									customstyle={{
-										tabColor: props.customstyle.tabColor,
-										textTransform: props.customstyle.textTransform
-									}}
-									label={
-										tab.badge ? (
-											<Badge invisible={!tab.badge.active} badgeContent={'!'} color="secondary" variant="dot">
-												{tab.label}
-											</Badge>
-										) : (
-											tab.label
-										)
-									}
-									value={tab.path}
-								/>
-						  ))
+							<StyledTab
+								key={tab.path}
+								customstyle={{
+									tabColor: props.customstyle.tabColor,
+									textTransform: props.customstyle.textTransform
+								}}
+								label={
+									tab.badge ? (
+										<Badge invisible={!tab.badge.active} badgeContent={'!'} color="secondary" variant="dot">
+											{tab.label}
+										</Badge>
+									) : (
+										tab.label
+									)
+								}
+								value={tab.path}
+							/>
+						))
 						: ''}
 				</StyledTabs>
 				<Typography className={classes.padding} />
