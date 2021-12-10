@@ -12,6 +12,8 @@ import ArrayCollection from '../../../../../../vo/ArrayCollection'
 import { LoginEvent } from '../model/events/LoginEvent.ts'
 import EdiUserRoleMap from '../model/vo/EdiUserRoleMap.ts'
 import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../shared/utils'
+import store from '../../../../../../AppConfig/store/configureStore'
+import { saveLoginModel } from '../../../../../../AppConfig/store/actions/loginAction'
 
 export class LoginService extends ServiceProxyBase {
 	/**
@@ -61,7 +63,16 @@ export class LoginService extends ServiceProxyBase {
 		})
 		// var rpcCall: AsyncToken = this.service.authenticateUser(user.userId, user.password)
 		// rpcCall.addResponder(new AsyncResponder(this.loginResultDBEvent, this.failureFaultEvent))
-		return this.callServiceMethod('post', 'DHub/api/authenticationsvc/authenticateUser', formData, null, this.loginResultDBEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/authenticationsvc/authenticateUser', 
+			formData, 
+			null, 
+			this.loginResultDBEvent.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 
 	public saveServiceArea(roleMap: EdiUserRoleMap): AxiosPromise<any> {
@@ -80,6 +91,7 @@ export class LoginService extends ServiceProxyBase {
 
 	protected loginResultDBEvent(event: any, token: Object = null): void {
 		this.loginModel = new EdiUserBase().fromJson({ user: event.result })
+		store.dispatch(saveLoginModel(this.loginModel))
 		// this.loginModel.fromJson({ user: event.result })
 		var serv: ArrayCollection = ArrayCollection.from(this.loginModel.user.ediUserRoleMaps)
 		var servSelected: ArrayCollection = new ArrayCollection()

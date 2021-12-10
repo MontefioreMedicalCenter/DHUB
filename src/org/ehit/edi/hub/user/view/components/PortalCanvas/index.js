@@ -7,10 +7,17 @@ import CustomizedTabs from '../../../../../../../../shared/components/Tabs'
 import { tabStyles, tabList } from './content'
 import { PRIVATE_ROUTES } from '../../../../../../../../AppConfig/AppRouter/constant'
 import { Paper } from '@material-ui/core'
+import { useDispatch, useSelector } from 'react-redux'
+import AlertDialog from '../../../../../../../../shared/components/AlertDialog'
+import { removeMessage } from '../../../../../../../../AppConfig/store/actions/homeAction'
 
 const PortalCanvas = () => {
     const history = useHistory()
+    const dispatch = useDispatch()
+    const loginModel = useSelector(state => state.loginState.loginModel)
+    debugger
     const dayString = `${moment()}`
+    const alertData = useSelector(state => state.homeState.alertPopup)
     const dateString = `${moment().format('MMM D, YYYY')}`
     const timeString = `${moment().format('HH:mm:ss')}`
     const [tabValue, handleTabChange] = useState(0)
@@ -35,7 +42,7 @@ const PortalCanvas = () => {
                     {dayString.slice(0, 3)},&nbsp;
                     {dateString} -&nbsp;
                     {timeString} |&nbsp;
-                    {/* {loginModel && loginModel.user ? loginModel.user.userId : ''} |&nbsp; */}
+                    {loginModel && loginModel.user ? loginModel.user.userId : ''} |&nbsp;
                     <span className="logout-btn" onClick={handleLogout}>
                         logout
                     </span>
@@ -74,6 +81,7 @@ const PortalCanvas = () => {
                 }}>
                 Version 2.0, Content © 2020, MIT .All rights reserved.
             </p>
+            <AlertDialog {...alertData} onClose={() => dispatch(removeMessage())} />
         </div>
     )
 }

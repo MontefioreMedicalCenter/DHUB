@@ -1,14 +1,13 @@
-import { Paper, Tab, Tabs } from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import React from 'react'
+import { Switch, Route } from 'react-router'
+import { adminTabList } from '../../../../../../../../../AppConfig/AppRouter/constant'
 import { EventDispatcher } from '../../../../../../../../../flexicious'
-import DeliveryControl from '../DeliveryControl'
-import DeliveryLog from '../DeliveryLog'
-import ErrorLog from '../ErrorLog'
-import ManageUser from '../ManageUser'
-import PollControl from '../PollControl'
-import X12CombineTrigger from '../X12CombineTrigger'
+import CustomizedTabs from '../../../../../../../../../shared/components/Tabs'
+import { tabStyles } from '../../../../../user/view/components/PortalCanvas/content'
 import './admin.scss'
-// import { adminTabList } from './content'
+import { adminTabListTab } from './content'
+
 
 class Admin extends EventDispatcher {
     constructor() {
@@ -25,42 +24,33 @@ class Admin extends EventDispatcher {
 
     render() {
         return (
-            <div style={{ marginTop: '5px' }}>
-                {/* <Paper className="audit-inner-tab-cont">
-							<Tabs
-								value={this.state.tabValue}
-								onChange={(e,value) => {
-									this.handleTabChange(e, value)
-								}}
-								indicatorColor="primary"
-								textColor="primary"
-								centered>
-								{adminTabList.map(tab => (
-									<Tab style={{ margin: '0px' }} label={tab.label} />
-								))}
-							</Tabs>
-                </Paper> */}
-                <div style={{ display: 'inline-block' }}>
-                    <Paper style={{ width: "100%", marginTop: "5px", marginBottom: "5px", background: '#c0cec6', border: '1px solid black' }}>
-                        <Tabs value={this.state.tabValue} onChange={(e, value) => this.handleTabChange(e, value)} indicatorColor="primary" textColor="primary" centered >
-                            <Tab name="Dispatch Poll" label="Dispatch Poll" style={{ borderRight: "1px solid black", textTransform: "none" }} />
-                            <Tab name="Dispatch Delivery" label="Dispatch Delivery" style={{ borderRight: "1px solid black", textTransform: "none" }} />
-                            <Tab name="Triggers" label="Triggers" style={{ borderRight: "1px solid black", textTransform: "none" }} />
-                            <Tab name="Manage User" label="Manage User" style={{ borderRight: "1px solid black", textTransform: "none" }} />
-                            <Tab name="Error Log" label="Error Log" style={{ borderRight: "1px solid black", textTransform: "none" }} />
-                            <Tab name="Delivery Log" label="Delivery Log" style={{ textTransform: "none" }} />
-                        </Tabs>
-                    </Paper>
-                </div>
-                <Paper className="paper-Style" >
-                    {this.state.tabValue === 0 && <PollControl />}
-                    {this.state.tabValue === 1 && <DeliveryControl />}
-                    {this.state.tabValue === 2 && <X12CombineTrigger />}
-                    {this.state.tabValue === 3 && <ManageUser />}
-                    {this.state.tabValue === 4 && <ErrorLog />}
-                    {this.state.tabValue === 5 && <DeliveryLog />}
+                <Paper className="audit-inner-tab-cont">
+                    <hr className='hrTag'/>
+                    <div className='sub-Tab' >
+                        <CustomizedTabs
+                            customstyle={tabStyles}
+                            setTabValue={(e, value) => {
+                                this.handleTabChange(e, value)
+                            }}
+                            tabValue={this.state.tabValue}
+                            tabList={adminTabListTab}
+                            width='70%'
+                        />
+                        <Switch>
+                            {adminTabList.map((route, idx) => {
+                                return route.component ? (
+                                    <Route
+                                        key={idx}
+                                        path={route.url}
+                                        exact={route.exact}
+                                        name={route.name}
+                                        render={props => <route.component {...props} />}
+                                    />
+                                ) : null
+                            })}
+                        </Switch>
+                    </div>
                 </Paper>
-            </div>
         )
     }
 }

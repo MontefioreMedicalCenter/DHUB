@@ -6,6 +6,9 @@ const sendResponse = require('./sendResponse')
 const path = require('path')
 const authenticateUser = require('./response/authenticateUser')
 const saveServiceArea = require('./response/saveServiceArea')
+const activatePoller = require('./response/activatePoller')
+const activatePoll = require('./response/activatePoll')
+const dispatchPoll = require('./response/dispatchPoll')
 const multer = require('multer')
 // const loginResponse = require('./response/loginResponse')
 
@@ -37,6 +40,19 @@ app.post('/DHub/api/authenticationsvc/authenticateUser', (req, res) => {
 app.post('/DHub/api/authenticationsvc/saveServiceArea', (req, res) => {
 	sendResponse(res, 200, saveServiceArea)
 })
+
+app.post('/DHub/api/adminsvc/activatePoller', (req, res) => {
+	sendResponse(res, 200, activatePoller)
+})
+
+app.post('//DHub/api/adminsvc/activatePoll', (req, res) => {
+	sendResponse(res, 200, activatePoll)
+})
+
+app.post('/DHub/api/adminsvc/dispatchPoll', (req, res) => {
+	sendResponse(res, 200, dispatchPoll)
+})
+
 
 app.use(require('express').static(path.join(__dirname, 'build')))
 

@@ -144,7 +144,7 @@ export default class DataGrid extends MaterialDataGrid {
 			this.showSpinnerOnFilterPageSort = false
 		}
 		this.headerPaddingLeft = 4
-		this.headerColors = this.columnGroupColors = [0xffffff, 0x99bbe8]
+		this.headerColors = this.columnGroupColors = [0xffffff, 0x82988c]
 		this.rollOverColor = 0xffe79d
 		this.enableActiveCellHighlight = true
 		this.activeCellColor = 0xbdd4f1
