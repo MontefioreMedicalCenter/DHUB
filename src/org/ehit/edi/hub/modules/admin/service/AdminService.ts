@@ -1,17 +1,18 @@
-import { AxiosPromise } from "axios"
-import { toast } from "react-toastify"
-import ServiceProxyBase from "../../../../../../../service/cfc/ServiceProxyBase"
-import GlobalEventDispatcher from "../../../../../../../service/utils/GlobalEventDispatcher"
+import { AxiosPromise } from 'axios'
+import { toast } from 'react-toastify'
+import ServiceProxyBase from '../../../../../../../service/cfc/ServiceProxyBase'
+import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEventDispatcher'
 import qs from 'qs'
-import { stringifyCircularObjectWithModifiedKeys } from "../../../../../../../shared/utils"
-import { AdminModel } from "../model/AdminModel.ts"
+import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
+import { AdminModel } from '../model/AdminModel.ts'
+import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 
 export class AdminService extends ServiceProxyBase {
 	/**
 	 * Name of the Remote Service Destination
 	 */
 	/** to make getInstance  */
-	 dispatch(evt) {
+	dispatch(evt) {
 		GlobalEventDispatcher.instance().dispatchEvent(evt)
 	}
 
@@ -70,52 +71,43 @@ export class AdminService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.deliveryLogResultEvent, this.failureFaultEvent))
 	}
 
-	public getPollControl(triggerOnly: boolean = false): void {
-		var rpcCall: AsyncToken = this.service.getPollControl(triggerOnly)
-		if (triggerOnly) rpcCall.addResponder(new AsyncResponder(this.combineTriggerResultEvent, this.failureFaultEvent))
-		else rpcCall.addResponder(new AsyncResponder(this.pollControlResultEvent, this.failureFaultEvent))
+	public getPollControl(triggerOnly: boolean = false): AxiosPromise<any> {
+		var formData = qs.stringify({
+			triggerOnly: stringifyCircularObjectWithModifiedKeys(triggerOnly)
+		})
+		// var rpcCall: AsyncToken = this.service.getPollControl(triggerOnly)
+		// if (triggerOnly) rpcCall.addResponder(new AsyncResponder(this.combineTriggerResultEvent, this.failureFaultEvent))
+		// else rpcCall.addResponder(new AsyncResponder(this.pollControlResultEvent, this.failureFaultEvent))
+		if (triggerOnly) {
+			return this.callServiceMethod('post', 'DHub/api/adminsvc/getPollControl', formData, null, this.combineTriggerResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		} else {
+			return this.callServiceMethod('post', 'DHub/api/adminsvc/getPollControl', formData, null, this.pollControlResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		}
 	}
 
-	public getPollerStatus(): void {
-		var rpcCall: AsyncToken = this.service.getPollerStatus()
-		rpcCall.addResponder(new AsyncResponder(this.pollerStatusResultEvent, this.failureFaultEvent))
+	public getPollerStatus(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getPollerStatus()
+		// rpcCall.addResponder(new AsyncResponder(this.pollerStatusResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/getPollerStatus', null, null, this.pollerStatusResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public activatePoller(active: boolean): AxiosPromise<any> {
 		var formData = qs.stringify({
-			active : active
+			active: active
 		})
 		// var rpcCall: AsyncToken = this.service.activatePoller(active)
 		// rpcCall.addResponder(new AsyncResponder(this.pollerStatusResultEvent, this.failureFaultEvent))
 		// toast.warning("Need to Implement have a issue")
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/activatePoller', 
-			formData, 
-			null, 
-			this.pollerStatusResultEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/activatePoller', formData, null, this.pollerStatusResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public dispatchPoll(pollControlId: string): AxiosPromise<any> {
 		var formData = qs.stringify({
-			pollControlId : stringifyCircularObjectWithModifiedKeys(pollControlId)
+			pollControlId: stringifyCircularObjectWithModifiedKeys(pollControlId)
 		})
 		// var rpcCall: AsyncToken = this.service.dispatchPoll(pollControlId)
 		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/dispatchPoll', 
-			formData, 
-			null, 
-			this.successEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/dispatchPoll', formData, null, this.successEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	/*	public function getRemoteDirListing(event:DispatchPollEvent):void
@@ -149,9 +141,8 @@ export class AdminService extends ServiceProxyBase {
 
 	public activatePoll(pollControlId: string, active: boolean): AxiosPromise<any> {
 		var formData = qs.stringify({
-			pollControlId : stringifyCircularObjectWithModifiedKeys(pollControlId),
-			active : active
-
+			pollControlId: stringifyCircularObjectWithModifiedKeys(pollControlId),
+			active: active
 		})
 		// var rpcCall: AsyncToken = this.service.activatePoll(pollControlId, active)
 		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
@@ -233,7 +224,8 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected pollControlResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.pollControl = <ArrayCollection>event.result
+		// this.adminModel.pollControl = <ArrayCollection>event.result
+		this.adminModel.pollControl = ArrayCollection.from(event.result)
 	}
 
 	protected pollerStatusResultEvent(event: ResultEvent, token: Object = null): void {
@@ -299,7 +291,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected successEvent(event: ResultEvent, token: Object = null): void {
-		toast.success('Polled Successfully!!' + event.result)
+		toast.success('Polled Successfully!!  ' + event.result)
 	}
 
 	protected failureFaultEvent(response: FaultEvent, token: Object = null): void {

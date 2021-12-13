@@ -64,12 +64,10 @@ export class AdminModel extends VoBase {
 	}
 
 	public get pollControl(): ArrayCollection {
-		debugger
 		return this._pollControls
 	}
 
 	public set pollControl(value: ArrayCollection) {
-		debugger
 		this._pollControls = value
 		this._errMsg = null
 		this.dispatch(new AdminEvent(AdminEvent.POLL_CONTROL))

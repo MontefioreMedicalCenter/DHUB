@@ -5,6 +5,7 @@ import { adminTabList } from '../../../../../../../../../AppConfig/AppRouter/con
 import { EventDispatcher } from '../../../../../../../../../flexicious'
 import CustomizedTabs from '../../../../../../../../../shared/components/Tabs'
 import { tabStyles } from '../../../../../user/view/components/PortalCanvas/content'
+import { AdminMediator } from '../../AdminMediator.ts'
 import './admin.scss'
 import { adminTabListTab } from './content'
 
@@ -17,39 +18,42 @@ class Admin extends EventDispatcher {
         }
     }
 
+    componentDidMount() {
+        this.mediator = new AdminMediator().onRegister(this)
+    }
+
     handleTabChange = (e, value) => {
         this.setState({ tabValue: value })
     }
 
     render() {
         return (
-                <Paper className="audit-inner-tab-cont">
-                    <hr className='hrTag'/>
-                    <div className='sub-Tab' >
-                        <CustomizedTabs
-                            customstyle={tabStyles}
-                            setTabValue={(e, value) => {
-                                this.handleTabChange(e, value)
-                            }}
-                            tabValue={this.state.tabValue}
-                            tabList={adminTabListTab}
-                            width='70%'
-                        />
-                        <Switch>
-                            {adminTabList.map((route, idx) => {
-                                return route.component ? (
-                                    <Route
-                                        key={idx}
-                                        path={route.url}
-                                        exact={route.exact}
-                                        name={route.name}
-                                        render={props => <route.component {...props} />}
-                                    />
-                                ) : null
-                            })}
-                        </Switch>
-                    </div>
-                </Paper>
+            <Paper className="audit-inner-tab-cont">
+                <div className='sub-Tab' >
+                    <CustomizedTabs
+                        customstyle={tabStyles}
+                        setTabValue={(e, value) => {
+                            this.handleTabChange(e, value)
+                        }}
+                        tabValue={this.state.tabValue}
+                        tabList={adminTabListTab}
+                        width='70%'
+                    />
+                    <Switch>
+                        {adminTabList.map((route, idx) => {
+                            return route.component ? (
+                                <Route
+                                    key={idx}
+                                    path={route.url}
+                                    exact={route.exact}
+                                    name={route.name}
+                                    render={props => <route.component {...props} />}
+                                />
+                            ) : null
+                        })}
+                    </Switch>
+                </div>
+            </Paper>
         )
     }
 }

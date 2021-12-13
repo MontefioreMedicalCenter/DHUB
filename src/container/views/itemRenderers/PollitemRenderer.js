@@ -16,8 +16,8 @@ class PollitemRenderer extends React.Component {
     }
     render() {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5px', marginBottom: '3px' }}>
-                <ColorButton id="poll" variant="contained" style={{ height: '25px', width: '80px' }} onClick={(e) => this.poll(e)}>Poll</ColorButton>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '2px' }}>
+                <ColorButton id="poll" variant="contained" style={{ height: '20px', width: '80px' }} onClick={(e) => this.poll(e)}>Poll</ColorButton>
             </div>
         )
     }

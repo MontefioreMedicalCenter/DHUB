@@ -8,12 +8,11 @@ class ActiveitemRenderer extends React.Component {
     }
     render() {
         return (
-            <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Checkbox
                     id="activeChk"
                     onClick={(e) => this.activatePoll(e)}
-                    checked={this.props.row.getData().activeFlag === 1 ? true : false}
-                    style={{padding : '0px', height : '35px'}}
+                    checked={this.props.row.getData().activeFlag === 'Y' ? true : false}
                 />
             </div>
         )

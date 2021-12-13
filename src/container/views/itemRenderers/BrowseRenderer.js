@@ -15,8 +15,8 @@ class BrowseRenderer extends React.Component{
     }
     render(){
         return(
-            <div style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'5px', marginBottom:'3px'}}>
-                <ColorButton variant="contained" style={{height:'25px', width: '100px'}} onClick={(e) => this.browse(e)} >Browse</ColorButton>
+            <div style={{display:'flex', flexDirection:'column', alignItems:'center', margin:'2px'}}>
+                <ColorButton variant="contained" style={{height:'20px', width: '100px'}} onClick={(e) => this.browse(e)} >Browse</ColorButton>
             </div>
         )
     }

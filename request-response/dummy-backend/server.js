@@ -10,6 +10,8 @@ const activatePoller = require('./response/activatePoller')
 const activatePoll = require('./response/activatePoll')
 const dispatchPoll = require('./response/dispatchPoll')
 const multer = require('multer')
+const getPollControl = require('./response/getPollControl')
+const getPollerStatus = require('./response/getPollerStatus')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -53,6 +55,13 @@ app.post('/DHub/api/adminsvc/dispatchPoll', (req, res) => {
 	sendResponse(res, 200, dispatchPoll)
 })
 
+app.post('/DHub/api/adminsvc/getPollControl', (req, res) => {
+	sendResponse(res, 200, getPollControl)
+})
+
+app.post('/DHub/api/adminsvc/getPollerStatus', (req, res) => {
+	sendResponse(res, 200, getPollerStatus)
+})
 
 app.use(require('express').static(path.join(__dirname, 'build')))
 

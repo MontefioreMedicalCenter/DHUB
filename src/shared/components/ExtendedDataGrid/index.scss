@@ -617,6 +617,29 @@ body {
     position:absolute;
 }
 
+.flexiciousGrid .flexDataGridCell {
+    .MuiIconButton-root {
+        padding: 0px !important;
+    }
+}
+.editor {
+    .MuiOutlinedInput-root {
+        height: inherit !important;
+    }
+    .MuiSelect-outlined {
+        padding: 3px;
+    }
+    input {
+        height: 15px !important;
+    }
+    .MuiAutocomplete-inputRoot .MuiAutocomplete-input {
+        padding: 0px !important;
+    }
+}
+.flexiciousGrid input {
+    height: 25px !important;
+}
+
 .flexiciousGrid  .flexDataGridCell .triStateCheckBox {
     /*padding-left: 0;*/
     background-position: 4px,4px ;
@@ -634,7 +657,7 @@ body {
 }
 .flexiciousGrid .flexDataGridCell .cellRenderer {
     display: table-cell;
-    white-space: pre-wrap !important;
+    // white-space: pre-wrap !important;
     vertical-align: middle;
 }
 

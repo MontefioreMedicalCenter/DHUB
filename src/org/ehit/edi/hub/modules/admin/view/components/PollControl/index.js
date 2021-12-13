@@ -32,6 +32,7 @@ class PollControl extends EventDispatcher {
 
 
     activatePoll = (e, data) => {
+        const rowData = data.row.getData()
         this._pollControl = data
         var _selected = e.target.checked
         store.dispatch(
@@ -40,22 +41,28 @@ class PollControl extends EventDispatcher {
                 'Are you sure you want to activate/deactivate Poll?',
                 'Yes_No',
                 () => {
-                    // this.onConfirm(data.column.getDataField(), _selected)
-                    this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.ACTIVATE_POLL, /*_pollControl.id.pollControlId*/data.column.getDataField(), _selected));
+                    if (rowData.activeFlag === 'Y') {
+                        rowData.activeFlag = 'N'
+                    } else {
+                        rowData.activeFlag = 'Y'
+                        this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.ACTIVATE_POLL, /*_pollControl.id.pollControlId*/data.column.getDataField(), _selected));
+                    }
+                    data.cell.refreshCell()
                 },
                 () => { }
             )
         )
     }
 
-    poll = (e, data) =>{
+    poll = (e, data) => {
         store.dispatch(
             showMessage(
                 'Confirm Poll',
                 'Are you sure you want to trigger this Poll?',
                 'Yes_No',
                 () => {
-                    this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.DISPATCH_POLL, data.column.getHeaderText()));
+                    debugger
+                    this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.DISPATCH_POLL, data.row.getData().id.pollControlId));
                 },
                 () => { }
             )
@@ -69,20 +76,19 @@ class PollControl extends EventDispatcher {
 
     render() {
         return (
-            <Paper style={{ background: 'linear-gradient(to left, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)', height: "760px", marginTop: "2px" }}>
+            <Paper style={{ background: 'linear-gradient(to left, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)', height: "790px", marginTop: "2px" }}>
                 <Paper>
                     {/* <CustomCheckBox /> */}
                     <Checkbox id="pollStatusChk" color="secondary" onClick={this.activatePoller} />
                     <span>Is Poll Active?</span>
                 </Paper>
                 <div className='poolControlGrid'>
-                    <DataGrid id="grid" width="100%" height="100%" enableCopy="true" styleName="gridStyle" dataProvider={[{ systemId: 'test',
-                                                                                                                            id:{pollControlId : 'test2'} }]} alternatingItemColors={[0xe1e8e4, 0xffffff]} enableEagerDraw="true">
+                    <DataGrid id="grid" ref={g => (this.grid = g)} width="100%" height="100%" enableCopy="true" styleName="gridStyle" alternatingItemColors={[0xe1e8e4, 0xffffff]} enableEagerDraw="true">
                         <ReactDataGridColumnLevel rowHeight="20" enableFilters="true" enablePaging="true" pageSize="50">
                             <ReactDataGridColumn width="100" dataField="systemId" textAlign="center" headerAlign="center" enableCellClickRowSelect="false" headerText="System Id" />
-                            <ReactDataGridColumn width="200" dataField="id.pollControlId" headerAlign="center" enableCellClickRowSelect="false" filterControl="TextInput"
+                            <ReactDataGridColumn width="350" dataField="id.pollControlId" headerAlign="center" enableCellClickRowSelect="false" filterControl="TextInput"
                                 filterOperation="Contains" headerText="Control Id" />
-                            <ReactDataGridColumn width="200" dataField="pollControlDescr" headerAlign="center" enableCellClickRowSelect="false" filterControl="TextInput"
+                            <ReactDataGridColumn width="450" dataField="pollControlDescr" headerAlign="center" enableCellClickRowSelect="false" filterControl="TextInput"
                                 filterOperation="Contains" headerText="Poll Control Desc" />
                             <ReactDataGridColumn width="200" dataField="deliveryMode" headerAlign="center" enableCellClickRowSelect="false" headerText="Delivery Mode" />
                             <ReactDataGridColumn dataField="activeFlag" enableCellClickRowSelect="false" width="200" headerText="Active" headerAlign="center" itemRenderer={new ClassFactory(ActiveitemRenderer)}
@@ -90,13 +96,13 @@ class PollControl extends EventDispatcher {
                                     this.activatePoll(e, data)
                                 }}
                             />
-                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="200" headerAlign="center" headerText="Poll" itemRenderer={new ClassFactory(PollitemRenderer)} 
+                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="200" headerAlign="center" headerText="Poll" itemRenderer={new ClassFactory(PollitemRenderer)}
                                 onHandlePoll={(e, data) => {
                                     this.poll(e, data)
                                 }}
                             />
-                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="50" headerAlign="center" headerText="Browse" fontWeight="bold" itemRenderer={new ClassFactory(BrowseRenderer)} 
-                                 onHandleBrowse={(e, data) => {
+                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="50" headerAlign="center" headerText="Browse" fontWeight="bold" itemRenderer={new ClassFactory(BrowseRenderer)}
+                                onHandleBrowse={(e, data) => {
                                     this.browse(e, data)
                                 }}
                             />

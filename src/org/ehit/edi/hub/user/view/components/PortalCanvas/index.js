@@ -47,7 +47,7 @@ const PortalCanvas = () => {
                     </span>
                 </div>
             </Paper>
-            <div style={{ marginTop: '5px' }}>
+            <div>
                 <CustomizedTabs
                     customstyle={tabStyles}
                     setTabValue={handleTabChange}
@@ -75,7 +75,7 @@ const PortalCanvas = () => {
                 style={{
                     fontSize: '13px',
                     textAlign: 'right',
-                    margin: '0px',
+                    margin: '5px',
                     padding: '0px 10px'
                 }}>
                 Version 2.0, Content © 2020, MIT .All rights reserved.

@@ -506,7 +506,8 @@
 
 .flexiciousGrid .flexDataGridCell .cellIcon {
   position: absolute;
-  left: 10px !important;
+  /* left: 10px !important; */
+  z-index: 99;
 }
 
 .flexiciousGrid .flexDataGridCell .triStateCheckBox {
@@ -525,7 +526,7 @@
 }
 .flexiciousGrid .flexDataGridCell .cellRenderer {
   display: table-cell;
-  white-space: pre-wrap !important;
+  /* white-space: pre-wrap !important; */
   vertical-align: middle;
   text-align: center;
 }
