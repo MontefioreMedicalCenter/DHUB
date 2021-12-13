@@ -101,7 +101,6 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	public dispatchPoll(pollControlId: string): AxiosPromise<any> {
-		debugger
 		var formData = qs.stringify({
 			pollControlId : stringifyCircularObjectWithModifiedKeys(pollControlId)
 		})
@@ -238,7 +237,6 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected pollerStatusResultEvent(event: ResultEvent, token: Object = null): void {
-		debugger
 		this.adminModel.pollerStatus = event.result
 	}
 

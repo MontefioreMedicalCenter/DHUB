@@ -39,7 +39,6 @@ export class PollControlMediator extends Mediator {
 	}
 
 	private getPollers(event: AdminEvent): void {
-		debugger
 		// this.view.grid.dataProvider = this.adminModel.pollControl
 		this.view.grid.setDataProvider(this.adminModel.pollControl)
 		// this.view.grid.refreshCells()
@@ -52,18 +51,15 @@ export class PollControlMediator extends Mediator {
 	}
 
 	private dispatchPoll(event: DispatchPollEvent): void {
-		debugger
 		this.service.dispatchPoll(event.pollId)
 	}
 
 	private activatePoll(event: DispatchPollEvent): void {
-		debugger
 		if (event.pollId == 'DeliveryHub') this.service.activatePoller(event.isActivated)
 		else this.service.activatePoll(event.pollId, event.isActivated)
 	}
 
 	private getRemoteDirListing(event: DispatchPollEvent): void {
-		debugger
 		toast.warning(" Need to Implement getRemoteDirListing")
 		// this.listFiles = new FileBrowserEditor()
 		// this.listFiles.height = this.contextView.height - 50
@@ -75,7 +71,6 @@ export class PollControlMediator extends Mediator {
 	}
 
 	private remoteDirListingResult(event: DispatchPollEvent): void {
-		debugger
 		if (event.dirListErrorMsg == null) {
 			this.listFiles.title = event.dirListResult.getItemAt(0).fileName + '  - Successfully Connected'
 			this.listFiles.titleIcon = PollControlMediator.acceptIcon
@@ -90,7 +85,6 @@ export class PollControlMediator extends Mediator {
 	}
 
 	/*override*/ public onRemove(): void {
-		debugger
 		this.eventMap.unmapListeners()
 		super.onRemove()
 	}

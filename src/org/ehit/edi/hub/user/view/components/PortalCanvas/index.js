@@ -15,7 +15,6 @@ const PortalCanvas = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const loginModel = useSelector(state => state.loginState.loginModel)
-    debugger
     const dayString = `${moment()}`
     const alertData = useSelector(state => state.homeState.alertPopup)
     const dateString = `${moment().format('MMM D, YYYY')}`

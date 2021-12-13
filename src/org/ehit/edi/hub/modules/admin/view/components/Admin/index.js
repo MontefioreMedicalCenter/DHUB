@@ -18,7 +18,6 @@ class Admin extends EventDispatcher {
     }
 
     handleTabChange = (e, value) => {
-        debugger
         this.setState({ tabValue: value })
     }
 

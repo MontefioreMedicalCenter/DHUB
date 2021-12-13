@@ -64,7 +64,7 @@ class PollControl extends EventDispatcher {
 
     browse = (e, data) => {
         var _pollControl = data.column.getHeaderText()
-        dispatchEvent(new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST, _pollControl));
+        this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST, _pollControl));
     }
 
     render() {
