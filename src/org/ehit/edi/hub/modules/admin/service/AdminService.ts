@@ -6,6 +6,7 @@ import qs from 'qs'
 import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
 import { AdminModel } from '../model/AdminModel.ts'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
+import { DispatchPollEvent } from '../model/events/DispatchPollEvent.ts'
 
 export class AdminService extends ServiceProxyBase {
 	/**
@@ -119,14 +120,24 @@ export class AdminService extends ServiceProxyBase {
 
 			}*/
 
-	public getRemoteDirListing(browseType: string, configId: string, dirName: string = null): void {
-		var rpcCall: AsyncToken = this.service.getRemoteDirListing(configId, dirName)
-		/*	if(event.type == DispatchPollEvent.REMOTE_DIR_LIST)
-			rpcCall.addResponder(new AsyncResponder(dirListSuccessEvent, dirListFailureFaultEvent));
-			else
-			*/
-		if (browseType == 'Poll') rpcCall.addResponder(new AsyncResponder(this.pollDirListSuccessEvent, this.pollDirListFailureFaultEvent))
-		if (browseType == 'Delivery') rpcCall.addResponder(new AsyncResponder(this.deliveryDirListSuccessEvent, this.deliveryDirListFailureFaultEvent))
+	public getRemoteDirListing(browseType: string, configId: string, dirName: string = null): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getRemoteDirListing(configId, dirName)
+		// /*	if(event.type == DispatchPollEvent.REMOTE_DIR_LIST)
+		// 	rpcCall.addResponder(new AsyncResponder(dirListSuccessEvent, dirListFailureFaultEvent));
+		// 	else
+		// 	*/
+		// if (browseType == 'Poll') rpcCall.addResponder(new AsyncResponder(this.pollDirListSuccessEvent, this.pollDirListFailureFaultEvent))
+		// if (browseType == 'Delivery') rpcCall.addResponder(new AsyncResponder(this.deliveryDirListSuccessEvent, this.deliveryDirListFailureFaultEvent))
+		var formData = qs.stringify({
+			pollControlId: stringifyCircularObjectWithModifiedKeys({configId, dirName})
+		})
+		if(browseType === 'Poll'){
+			return this.callServiceMethod('post', 'DHub/api/adminsvc/getRemoteDirListing', formData, null, this.pollDirListSuccessEvent.bind(this), this.pollDirListFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		}else{
+			toast.warning('Need to Implement Delivery in Admin service')
+			// if (browseType == 'Delivery') rpcCall.addResponder(new AsyncResponder(this.deliveryDirListSuccessEvent, this.deliveryDirListFailureFaultEvent))
+		}
+		
 	}
 
 	public ping(channelId: string): void {
@@ -303,7 +314,7 @@ export class AdminService extends ServiceProxyBase {
 
 	protected pollDirListSuccessEvent(event: ResultEvent, token: Object = null): void {
 		var dispatchPollEvent: DispatchPollEvent = new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST_RESULT)
-		dispatchPollEvent.dirListResult = <ArrayCollection>event.result
+		dispatchPollEvent.dirListResult = ArrayCollection.from(event.result)
 		this.dispatch(dispatchPollEvent)
 	}
 
@@ -314,7 +325,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected pollDirListFailureFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
+		var msg = event.message
 		var dispatchPollEvent: DispatchPollEvent = new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST_RESULT)
 		dispatchPollEvent.dirListErrorMsg = msg.faultString
 		this.dispatch(dispatchPollEvent)

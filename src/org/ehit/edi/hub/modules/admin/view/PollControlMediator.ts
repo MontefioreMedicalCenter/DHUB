@@ -4,7 +4,9 @@ import { AdminModel } from "../model/AdminModel.ts"
 import { AdminEvent } from "../model/events/AdminEvent.ts"
 import { DispatchPollEvent } from "../model/events/DispatchPollEvent.ts"
 import { AdminService } from "../service/AdminService.ts"
+import FileBrowserEditor from "./components/FileBrowserEditor"
 import PollControl from "./components/PollControl"
+import Accept from '../../../../../../../../src/assets/images/accept.png'
 
 export class PollControlMediator extends Mediator {
 	/*[Inject]*/
@@ -60,27 +62,36 @@ export class PollControlMediator extends Mediator {
 	}
 
 	private getRemoteDirListing(event: DispatchPollEvent): void {
-		toast.warning(" Need to Implement getRemoteDirListing")
+		// toast.warning(" Need to Implement getRemoteDirListing")
 		// this.listFiles = new FileBrowserEditor()
 		// this.listFiles.height = this.contextView.height - 50
 		// this.listFiles.width = this.contextView.width - 50
 		// PopUpManager.addPopUp(this.listFiles, this.contextView, true)
 		// PopUpManager.centerPopUp(this.listFiles)
-		// this.service.getRemoteDirListing('Poll', event.pollId, event.dirName)
-		// this.listFiles.pollControlId = event.pollId
+		this.service.getRemoteDirListing('Poll', event.pollId, event.dirName)
+		// this.listFiles.pollControlId=event.pollId
+		var pollControlId = event.pollId
+		this.view.setState({ browseButton : true, pollControlId : pollControlId})
 	}
 
 	private remoteDirListingResult(event: DispatchPollEvent): void {
 		if (event.dirListErrorMsg == null) {
-			this.listFiles.title = event.dirListResult.getItemAt(0).fileName + '  - Successfully Connected'
-			this.listFiles.titleIcon = PollControlMediator.acceptIcon
+			// this.listFiles.title = event.dirListResult.getItemAt(0).fileName + '  - Successfully Connected'
+			// this.listFiles.titleIcon = PollControlMediator.acceptIcon
+			// event.dirListResult.removeItemAt(0)
+			// this.listFiles.grid.dataProvider = event.dirListResult
+			// this.listFiles.grid.refreshCells()
+			var title = event.dirListResult.getItemAt(0).fileName
+			var titleIcon = Accept
 			event.dirListResult.removeItemAt(0)
-			this.listFiles.grid.dataProvider = event.dirListResult
-			this.listFiles.grid.refreshCells()
+			var dataProviderFileBrowserEditor = event.dirListResult
+			this.view.setState({title: title, dataProviderFileBrowserEditor: dataProviderFileBrowserEditor, headerIcon:titleIcon})
 		} else {
-			this.listFiles.title = 'Failed To Connect'
-			this.listFiles.titleIcon = PollControlMediator.denyIcon
-			this.listFiles.errTxt.text = event.dirListErrorMsg
+			// this.listFiles.title = 'Failed To Connect'
+			// this.listFiles.titleIcon = PollControlMediator.denyIcon
+			// this.listFiles.errTxt.text = event.dirListErrorMsg
+			var title = 'Failed To Connect'
+			this.view.setState({title: title})
 		}
 	}
 

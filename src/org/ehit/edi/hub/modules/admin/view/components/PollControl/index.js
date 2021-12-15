@@ -1,4 +1,4 @@
-import { Checkbox, Paper } from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import React from 'react'
 import { showMessage } from '../../../../../../../../../AppConfig/store/actions/homeAction'
 import store from '../../../../../../../../../AppConfig/store/configureStore'
@@ -6,14 +6,23 @@ import ActiveitemRenderer from '../../../../../../../../../container/views/itemR
 import BrowseRenderer from '../../../../../../../../../container/views/itemRenderers/BrowseRenderer'
 import PollitemRenderer from '../../../../../../../../../container/views/itemRenderers/PollitemRenderer'
 import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
-// import CustomCheckBox from '../../../../../../../../../shared/components/CustomCheckBox'
+import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
+import CustomCheckBox from '../../../../../../../../../shared/components/CustomCheckBox'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import { DispatchPollEvent } from '../../../model/events/DispatchPollEvent.ts'
 import { PollControlMediator } from '../../PollControlMediator.ts'
+import FileBrowserEditor from '../FileBrowserEditor'
 import './poolControl.scss'
 class PollControl extends EventDispatcher {
     constructor() {
         super()
+        this.state = {
+            browseButton: false,
+            pollControlId: '',
+            title: '',
+            dataProviderFileBrowserEditor: [],
+            headerIcon: ''
+        }
         this._pollControl = {}
     }
 
@@ -45,7 +54,7 @@ class PollControl extends EventDispatcher {
                         rowData.activeFlag = 'N'
                     } else {
                         rowData.activeFlag = 'Y'
-                        this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.ACTIVATE_POLL, /*_pollControl.id.pollControlId*/data.column.getDataField(), _selected));
+                        this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.ACTIVATE_POLL, /*_pollControl.id.pollControlId*/data.row.getData().id.pollControlId, _selected));
                     }
                     data.cell.refreshCell()
                 },
@@ -61,7 +70,6 @@ class PollControl extends EventDispatcher {
                 'Are you sure you want to trigger this Poll?',
                 'Yes_No',
                 () => {
-                    debugger
                     this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.DISPATCH_POLL, data.row.getData().id.pollControlId));
                 },
                 () => { }
@@ -70,17 +78,16 @@ class PollControl extends EventDispatcher {
     }
 
     browse = (e, data) => {
-        var _pollControl = data.column.getHeaderText()
-        this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST, _pollControl));
+        var _pollControl = data.row.getData()
+        this.dispatchEvent(new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST, _pollControl.configId));
     }
 
     render() {
         return (
             <Paper style={{ background: 'linear-gradient(to left, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)', height: "790px", marginTop: "2px" }}>
-                <Paper>
-                    {/* <CustomCheckBox /> */}
-                    <Checkbox id="pollStatusChk" color="secondary" onClick={this.activatePoller} />
-                    <span>Is Poll Active?</span>
+                <Paper style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <CustomCheckBox id="pollStatusChk" onHandleClick={this.activatePoller} />
+                    <span style={{ marginTop: '7px' }}>Is Poll Active?</span>
                 </Paper>
                 <div className='poolControlGrid'>
                     <DataGrid id="grid" ref={g => (this.grid = g)} width="100%" height="100%" enableCopy="true" styleName="gridStyle" alternatingItemColors={[0xe1e8e4, 0xffffff]} enableEagerDraw="true">
@@ -101,7 +108,7 @@ class PollControl extends EventDispatcher {
                                     this.poll(e, data)
                                 }}
                             />
-                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="50" headerAlign="center" headerText="Browse" fontWeight="bold" itemRenderer={new ClassFactory(BrowseRenderer)}
+                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="200" headerAlign="center" headerText="Browse" fontWeight="bold" itemRenderer={new ClassFactory(BrowseRenderer)}
                                 onHandleBrowse={(e, data) => {
                                     this.browse(e, data)
                                 }}
@@ -109,6 +116,28 @@ class PollControl extends EventDispatcher {
                         </ReactDataGridColumnLevel>
                     </DataGrid>
                 </div>
+
+                <AdvanceDialog
+                    open={this.state.browseButton}
+                    headerTitle={this.state.title}
+                    handleClose={() => {
+                        this.setState({ browseButton: false })
+                    }}
+                    icon={this.state.headerIcon}
+                    style={{ height: '5px' }}
+                    bodyRenderer={
+                        <FileBrowserEditor
+                            ref={g => (this.fileBrowserEditor = g)}
+                            parentDocument={this}
+                            fileName={this.state.title}
+                            pollControlId={this.state.pollControlId}
+                            dataProviderFileBrowserEditor={this.state.dataProviderFileBrowserEditor}
+                            closePopup={() => {
+                                this.setState({ browseButton: false })
+                            }}
+                        />
+                    }
+                />
 
             </Paper>
         )

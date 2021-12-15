@@ -1,23 +1,39 @@
-// import { Checkbox } from '@material-ui/core'
-// import {CircleOutlinedIcon} from '@material-ui/icons'
-// import { CircleRoundedIcon } from '@material-ui/icons/CircleRoundedIcon'
-// import { CheckCircleOutlined } from '@material-ui/icons'
-// import AbcIcon from '@mui/icons-material/Abc';
-// import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
-// import DeleteIcon from '@mui/icons-material/Delete';
-// import DeleteIcon from '@mui/icons-material/Delete';
+import { Checkbox, styled } from '@material-ui/core'
 import React from 'react'
 
+
+const Red = styled("span")(({ theme }) => ({
+    padding:"2px",
+    borderRadius: "50%",
+    width: 10,
+    height: 10,
+    alignItems: "center",
+    backgroundImage: "linear-gradient(to bottom, #ff0000, #ff7d7d, #ffffff)",
+    border: '1px solid black'
+  }));
+
+  const Green = styled("span")(({ theme }) => ({
+    padding:"2px",
+    borderRadius: "50%",
+    width: 10,
+    height: 10,
+    alignItems: "center",
+    backgroundImage: "linear-gradient(to bottom, #04ff00, #7cff7a, #ffffff)",
+    border: '1px solid black'
+  }));
+
 class CustomCheckBox extends React.Component {
+    onClick = (e) => {
+        this.props.onHandleClick(e, this.props)
+    }
     render() {
         return (
             <div>
-                {/* <CheckBox
-                    icon={<CircleRoundedIcon />}
-                    // checkedIcon={<CircleRoundedIcon style={{ color: 'red' }} />}
-                /> */}
-                {/* <CheckCircleOutlined /> */}
-                {/* <svg data-testid={DeleteIcon}></svg> */}
+                <Checkbox
+                    icon={<Red />}
+                    checkedIcon={<Green  />}
+                   onClick={(e) => this.onClick(e)}
+                />
                  
             </div>
         )
