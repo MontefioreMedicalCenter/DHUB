@@ -13,6 +13,8 @@ const multer = require('multer')
 const getPollControl = require('./response/getPollControl')
 const getPollerStatus = require('./response/getPollerStatus')
 const getRemoteDirListing = require('./response/getRemoteDirListing')
+const getDeliveryControl = require('./response/getDeliveryControl') 
+const activateDelivery = require('./response/activateDelivery')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -66,6 +68,14 @@ app.post('/DHub/api/adminsvc/getPollerStatus', (req, res) => {
 
 app.post('/DHub/api/adminsvc/getRemoteDirListing', (req, res) => {
 	sendResponse(res, 200, getRemoteDirListing)
+})
+
+app.post('/DHub/api/adminsvc/getDeliveryControl', (req, res) => {
+	sendResponse(res, 200, getDeliveryControl)
+})
+
+app.post('/DHub/api/adminsvc/activateDelivery' , (req, res) => {
+	sendResponse(res, 200, activateDelivery)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

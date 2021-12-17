@@ -20,27 +20,27 @@ class FileBrowserEditor extends EventDispatcher {
 	}
 
 	flexdatagridcolumnlevel1_itemLoadHandler = () => {
-        var parentDocument = this.props.parentDocument
+		var parentDocument = this.props.parentDocument
 		var dispatchPollEvent = new DispatchPollEvent(DispatchPollEvent.REMOTE_DIR_LIST, this.pollControlId)
-		dispatchPollEvent.dirName=this.props.fileName
-        parentDocument.dispatchEvent(dispatchPollEvent)
+		dispatchPollEvent.dirName = parentDocument.state.title
+		parentDocument.dispatchEvent(dispatchPollEvent)
 	}
 
 	render() {
 		return (
 			<Paper style={{ height: 600, width: '1143px' }}>
-				<DataGrid id="grid" width="100%" height="100%" dataProvider={this.props.dataProviderFileBrowserEditor} fileName = {this.props.title} enableCopy="true" styleName="gridStyle" enableEagerDraw="true" initialSortField="fileDate" initialSortAscending="false" preferencePersistenceKey={'partialLazyLoaded'}>
-					<ReactDataGridColumnLevel rowHeight="21" childrenField="directoryListEntry" itemLoadMode="server" itemLoad={this.flexdatagridcolumnlevel1_itemLoadHandler} enableFilters="true" enablePaging="true" pageSize="50">
-						<ReactDataGridColumn width="400" dataField="fileName" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" headerText="File Name" />
-						<ReactDataGridColumn width="50" dataField="fileSize" enableCellClickRowSelect="false" headerText="Size" />
-						<ReactDataGridColumn width="50" dataField="fileDate" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" headerText="File Date" /*filterConverterFunction="convertDate"*/ />
-						<ReactDataGridColumn width="50" dataField="isDir" enableCellClickRowSelect="false" headerText="Dir" />
-						<ReactDataGridColumnLevel>
-							<ReactDataGridColumnLevel width="400" dataField="fileName" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" headerText="File Name" />
-							<ReactDataGridColumn width="50" dataField="fileSize" enableCellClickRowSelect="false" headerText="Size" />
-							<ReactDataGridColumn width="50" dataField="fileDate" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" headerText="File Date" /*filterConverterFunction="convertDate"*/ />
-							<ReactDataGridColumn width="50" dataField="isDir" enableCellClickRowSelect="false" headerText="Dir" />
-							<ReactDataGridColumn width="50" enableCellClickRowSelect="false" headerAlign="center" headerText="Has Interfaces" /* ItemRenderer */ />
+				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} styleName="gridStyle" enableEagerDraw={true} initialSortField="fileDate" initialSortAscending={false} preferencePersistenceKey='partialLazyLoaded'>
+					<ReactDataGridColumnLevel rowHeight="21" itemLoadMode="server" itemLoad={this.flexdatagridcolumnlevel1_itemLoadHandler} enableFilters={true} enablePaging={true} pageSize="50">
+						<ReactDataGridColumn width="400" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="File Name" />
+						<ReactDataGridColumn width="50" dataField="fileSize" enableCellClickRowSelect={false} headerText="Size" />
+						<ReactDataGridColumn width="50" dataField="fileDate" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="File Date" /*filterConverterFunction="convertDate"*/ />
+						<ReactDataGridColumn width="50" dataField="isDir" enableCellClickRowSelect={false} headerText="Dir" />
+						<ReactDataGridColumnLevel itemLoadMode="server">
+							<ReactDataGridColumn width="400" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="File Name" />
+							<ReactDataGridColumn width="150" dataField="fileSize" enableCellClickRowSelect={false} headerText="Size" />
+							<ReactDataGridColumn width="100" dataField="fileDate" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="File Date" /*filterConverterFunction="convertDate"*/ />
+							<ReactDataGridColumn width="100" dataField="isDir" enableCellClickRowSelect={false} headerText="Dir" />
+							<ReactDataGridColumn width="100" enableCellClickRowSelect={false} headerAlign="center" headerText="Has Interfaces" /* ItemRenderer */ />
 						</ReactDataGridColumnLevel>
 					</ReactDataGridColumnLevel>
 				</DataGrid>

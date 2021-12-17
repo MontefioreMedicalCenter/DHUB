@@ -27,7 +27,7 @@ class Login extends EventDispatcher {
 			password: 'support',
 			serviceArea: [],
 			selectedIndex: 1,
-			checkBox: false,
+			checkBox: true,
 			passwordVisiblity: 'password',
 			serviceAreaValue: ''
 		}
@@ -89,7 +89,7 @@ class Login extends EventDispatcher {
 	handleKeyUp = event => {
 		if (event.keyCode === 13) {
 			event.preventDefault()
-			document.getElementById('loginBtn').click()
+			document.getElementById('signInButton').click()
 		}
 	}
 
@@ -100,10 +100,10 @@ class Login extends EventDispatcher {
 	showPassword = () => {
 		if (this.state.checkBox) {
 			this.setState({ checkBox: false })
-			this.setState({ passwordVisiblity: 'password' })
+			this.setState({ passwordVisiblity: 'text' })
 		} else {
 			this.setState({ checkBox: true })
-			this.setState({ passwordVisiblity: 'text' })
+			this.setState({ passwordVisiblity: 'password' })
 		}
 	}
 

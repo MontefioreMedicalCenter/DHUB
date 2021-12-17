@@ -83,9 +83,11 @@ export class PollControlMediator extends Mediator {
 			// this.listFiles.grid.refreshCells()
 			var title = event.dirListResult.getItemAt(0).fileName
 			var titleIcon = Accept
-			event.dirListResult.removeItemAt(0)
-			var dataProviderFileBrowserEditor = event.dirListResult
-			this.view.setState({title: title, dataProviderFileBrowserEditor: dataProviderFileBrowserEditor, headerIcon:titleIcon})
+			event.dirListResult.removeItemAt(0)	
+			this.view.setState({title: title, headerIcon:titleIcon})
+			this.view.fileBrowserEditor.grid.setDataProvider(event.dirListResult)
+			this.view.fileBrowserEditor.grid.rebuildBody()
+			// var dataProviderFileBrowserEditor = event.dirListResult
 		} else {
 			// this.listFiles.title = 'Failed To Connect'
 			// this.listFiles.titleIcon = PollControlMediator.denyIcon

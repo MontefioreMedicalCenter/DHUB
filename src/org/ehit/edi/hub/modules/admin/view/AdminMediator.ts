@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 import Mediator from '../../../../../../../modules/main/view/Mediator.ts'
 import { LoginEvent } from '../../../user/model/events/LoginEvent.ts'
 import LoginModel from '../../../user/model/LoginModel'
@@ -11,16 +12,17 @@ export class AdminMediator extends Mediator {
 	public adminService: AdminService = AdminService.getInstance()
 
 
-	public onRegister(view): void {
+	public onRegister(view): AdminMediator {
 		this.view = view
 		this.mapListener(this.eventDispatcher, AdminEvent.REMOVE_ADMIN, this.remove, AdminEvent)
 		this.mapListener(this.eventDispatcher, LoginEvent.LOGOUT, this.remove, LoginEvent)
 		// this.mapListener(this.view.viewStack, Event.CHANGE, this.refreshTab, Event) //NEED TO Implement
-		if (this.view.state.tabValue === 0) {
+		if (this.view.state.tabValue === '/main/admin') {
 			// this.dispatch(new AdminEvent(AdminEvent.GET_POLL_CONTROL)) /** Directly called service call's from Admin Command */
 			this.adminService.getPollControl()
 			this.adminService.getPollerStatus()
 		}
+		return this
 	}
 
 	private remove(event: LoginEvent): void {
@@ -28,39 +30,56 @@ export class AdminMediator extends Mediator {
 		super.onRemove()
 	}
 
-	private refreshTab(event: Event): void {
-		if (this.view.viewStack.selectedIndex == 0) {
-			if (!this.mediatorMap.hasMediatorForView(this.view.pollControl)) {
-				this.mediatorMap.createMediator(this.view.pollControl)
-			} else this.dispatch(new AdminEvent(AdminEvent.GET_POLL_CONTROL))
+	private refreshTab(value): void {
+		if (value === '/main/admin') {
+			// if (!this.mediatorMap.hasMediatorForView(this.view.pollControl)) {
+			// 	this.mediatorMap.createMediator(this.view.pollControl)
+			// } else this.dispatch(new AdminEvent(AdminEvent.GET_POLL_CONTROL))
+			this.adminService.getPollControl()
+			this.adminService.getPollerStatus() 
 		}
-		if (this.view.viewStack.selectedIndex == 1) {
-			if (!this.mediatorMap.hasMediatorForView(this.view.deliveryControl)) {
-				this.mediatorMap.createMediator(this.view.deliveryControl)
-			} else this.dispatch(new AdminEvent(AdminEvent.GET_DELIVERY_CONTROL))
+		if (value === '/main/admin/dispatchDelivery') {
+			// if (!this.mediatorMap.hasMediatorForView(this.view.deliveryControl)) {
+			// 	this.mediatorMap.createMediator(this.view.deliveryControl)
+			// } else this.dispatch(new AdminEvent(AdminEvent.GET_DELIVERY_CONTROL))
+
+			// toast.warning("Need to Implement dispatchDelivery")
+			 this.adminService.getDeliveryControl();/** Directly called service call's from Admin Command */
 		}
-		if (this.view.viewStack.selectedIndex == 2) {
-			if (!this.mediatorMap.hasMediatorForView(this.view.combineTrigger)) {
-				this.mediatorMap.createMediator(this.view.combineTrigger)
-			} else this.dispatch(new AdminEvent(AdminEvent.GET_COMBINE_TRIGGER))
+		if (value === '/main/admin/triggers') {
+			// if (!this.mediatorMap.hasMediatorForView(this.view.combineTrigger)) {
+			// 	this.mediatorMap.createMediator(this.view.combineTrigger)
+			// } else this.dispatch(new AdminEvent(AdminEvent.GET_COMBINE_TRIGGER))
+
+			toast.warning("Need to Implement triggers")
+			// this.adminService.getPollControl(true);/** Directly called service call's from Admin Command */
 		}
 
-		if (this.view.viewStack.selectedIndex == 3) {
-			if (!this.mediatorMap.hasMediatorForView(this.view.manageUser)) {
-				this.mediatorMap.createMediator(this.view.manageUser)
-			} else this.dispatch(new AdminEvent(AdminEvent.GET_USERS_AND_ROLES))
+		if (value === '/main/admin/manageUser') {
+			// if (!this.mediatorMap.hasMediatorForView(this.view.manageUser)) {
+			// 	this.mediatorMap.createMediator(this.view.manageUser)
+			// } else this.dispatch(new AdminEvent(AdminEvent.GET_USERS_AND_ROLES))
+
+			toast.warning("Need to Implement manageUser")
+			// this.adminService.getUserAndRoles();/** Directly called service call's from Admin Command */
 		}
-		if (this.view.viewStack.selectedIndex == 4) {
-			if (!this.mediatorMap.hasMediatorForView(this.view.errorLog)) {
-				this.mediatorMap.createMediator(this.view.errorLog)
-			} else this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
+		if (value === '/main/admin/errorLog') {
+			// if (!this.mediatorMap.hasMediatorForView(this.view.errorLog)) {
+			// 	this.mediatorMap.createMediator(this.view.errorLog)
+			// } else this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
+
+			toast.warning("Need to Implement errorLog")
+			// this.adminService.findErrorLog(event.startDate, event.endDate);/** Directly called service call's from Admin Command */
 		}
 
-		if (this.view.viewStack.selectedIndex == 5) {
-			if (!this.mediatorMap.hasMediatorForView(this.view.deliveryLog)) {
-				this.mediatorMap.createMediator(this.view.deliveryLog)
-			} else this.dispatch(new AdminEvent(AdminEvent.GET_DELIVERY_LOG))
+		if (value === '/main/admin/deliveryLog') {
+		// 	if (!this.mediatorMap.hasMediatorForView(this.view.deliveryLog)) {
+		// 		this.mediatorMap.createMediator(this.view.deliveryLog)
+		// 	} else this.dispatch(new AdminEvent(AdminEvent.GET_DELIVERY_LOG))
+		toast.warning("Need to Implement deliveryLog")
+		// this.adminService.findDeliveryLog(event.startDate, event.endDate);/** Directly called service call's from Admin Command */
 		}
+
 	}
 
 	/*override*/ public onRemove(): void {

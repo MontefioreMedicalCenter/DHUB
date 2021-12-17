@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './main.style.scss'
 import { useHistory, Switch, Route } from 'react-router'
 import DoingMoreLogo from '../../../../../../../../../src/assets/images/Montefiore.gif'
@@ -20,6 +20,12 @@ const PortalCanvas = () => {
     const dateString = `${moment().format('MMM D, YYYY')}`
     const timeString = `${moment().format('HH:mm:ss')}`
     const [tabValue, handleTabChange] = useState(0)
+
+    useEffect(() => {
+		if (Object.keys(loginModel).length === 0) {
+			history.push('/')
+		}
+	}, [loginModel, history])
 
     const handleLogout = () => {
         history.push('/')

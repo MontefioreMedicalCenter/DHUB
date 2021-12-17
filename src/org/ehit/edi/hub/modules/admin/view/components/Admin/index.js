@@ -14,7 +14,7 @@ class Admin extends EventDispatcher {
     constructor() {
         super()
         this.state = {
-            tabValue: 0,
+            tabValue: '/main/admin',
         }
     }
 
@@ -22,8 +22,9 @@ class Admin extends EventDispatcher {
         this.mediator = new AdminMediator().onRegister(this)
     }
 
-    handleTabChange = (e, value) => {
+     handleTabChange = (e, value) => {
         this.setState({ tabValue: value })
+        this.mediator.refreshTab(value)
     }
 
     render() {

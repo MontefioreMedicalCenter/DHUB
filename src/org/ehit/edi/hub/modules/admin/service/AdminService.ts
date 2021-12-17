@@ -7,6 +7,7 @@ import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../sh
 import { AdminModel } from '../model/AdminModel.ts'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 import { DispatchPollEvent } from '../model/events/DispatchPollEvent.ts'
+import { DispatchDeliveryEvent } from '../model/events/DispatchDeliveryEvent.ts'
 
 export class AdminService extends ServiceProxyBase {
 	/**
@@ -133,10 +134,11 @@ export class AdminService extends ServiceProxyBase {
 		})
 		if(browseType === 'Poll'){
 			return this.callServiceMethod('post', 'DHub/api/adminsvc/getRemoteDirListing', formData, null, this.pollDirListSuccessEvent.bind(this), this.pollDirListFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
-		}else{
-			toast.warning('Need to Implement Delivery in Admin service')
-			// if (browseType == 'Delivery') rpcCall.addResponder(new AsyncResponder(this.deliveryDirListSuccessEvent, this.deliveryDirListFailureFaultEvent))
 		}
+		if (browseType === 'Delivery'){
+			return this.callServiceMethod('post', 'DHub/api/adminsvc/getRemoteDirListing', formData, null, this.deliveryDirListSuccessEvent.bind(this), this.deliveryDirListFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		} 
+		
 		
 	}
 
@@ -157,12 +159,27 @@ export class AdminService extends ServiceProxyBase {
 		})
 		// var rpcCall: AsyncToken = this.service.activatePoll(pollControlId, active)
 		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
-		return this.callServiceMethod('post', '/DHub/api/adminsvc/activatePoll', formData, null, this.successEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/activatePoll', formData, null, this.successEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public activateDelivery(deliveryControlId: string, active: boolean): void {
-		var rpcCall: AsyncToken = this.service.activateDelivery(deliveryControlId, active)
-		rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
+	public activateDelivery(deliveryControlId: string, active: boolean): AxiosPromise<any> {
+		// toast.warning("Need to Implement activateDelivery")
+		var formData = qs.stringify({
+			deliveryControlId: stringifyCircularObjectWithModifiedKeys(deliveryControlId),
+			active: active
+		})
+		// var rpcCall: AsyncToken = this.service.activateDelivery(deliveryControlId, active)
+		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/adminsvc/activateDelivery', 
+			formData, 
+			null, 
+			this.successEvent.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 
 	public findErrorLog(startDate: Date = null, endDate: Date = null): void {
@@ -213,9 +230,20 @@ export class AdminService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent, this.failureFaultEvent))
 	}
 
-	public getDeliveryControl(): void {
-		var rpcCall: AsyncToken = this.service.getDeliveryControl()
-		rpcCall.addResponder(new AsyncResponder(this.deliveryControlResultEvent, this.failureFaultEvent))
+	public getDeliveryControl(): AxiosPromise<any> {
+
+		// var rpcCall: AsyncToken = this.service.getDeliveryControl()
+		// rpcCall.addResponder(new AsyncResponder(this.deliveryControlResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/adminsvc/getDeliveryControl', 
+			null, 
+			null, 
+			this.deliveryControlResultEvent.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 
 	protected pollLogResultEvent(event: ResultEvent, token: Object = null): void {
@@ -244,7 +272,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected deliveryControlResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.deliveryControl = <ArrayCollection>event.result
+		this.adminModel.deliveryControl = ArrayCollection.from(event.result)
 	}
 
 	protected errorLogResultEvent(event: ResultEvent, token: Object = null): void {
@@ -320,7 +348,7 @@ export class AdminService extends ServiceProxyBase {
 
 	protected deliveryDirListSuccessEvent(event: ResultEvent, token: Object = null): void {
 		var dispatchDeliveryEvent: DispatchDeliveryEvent = new DispatchDeliveryEvent(DispatchDeliveryEvent.REMOTE_DIR_LIST_RESULT)
-		dispatchDeliveryEvent.dirListResult = <ArrayCollection>event.result
+		dispatchDeliveryEvent.dirListResult = ArrayCollection.from(event.result)
 		this.dispatch(dispatchDeliveryEvent)
 	}
 
@@ -332,7 +360,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected deliveryDirListFailureFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
+		var msg = event.message
 		var dispatchDeliveryEvent: DispatchDeliveryEvent = new DispatchDeliveryEvent(DispatchDeliveryEvent.REMOTE_DIR_LIST_RESULT)
 		dispatchDeliveryEvent.dirListErrorMsg = msg.faultString
 		this.dispatch(dispatchDeliveryEvent)

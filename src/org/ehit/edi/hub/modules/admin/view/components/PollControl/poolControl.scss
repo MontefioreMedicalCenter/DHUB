@@ -9,3 +9,21 @@
     height: 760px;
     margin-top: 2px;
 }
+
+.popUpHeaderStyle{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.paperStyle{
+    background: linear-gradient(to left, white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white);
+    height: 790px;
+    margin-top: 2px;
+}
+
+.topBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

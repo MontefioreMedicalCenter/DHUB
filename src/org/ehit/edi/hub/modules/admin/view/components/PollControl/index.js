@@ -13,6 +13,16 @@ import { DispatchPollEvent } from '../../../model/events/DispatchPollEvent.ts'
 import { PollControlMediator } from '../../PollControlMediator.ts'
 import FileBrowserEditor from '../FileBrowserEditor'
 import './poolControl.scss'
+import Accept from '../../../../../../../../../assets/images/accept.png'
+
+const HeaderTitle = ({ title }) => {
+    return (
+        <div className='popUpHeaderStyle'>
+            <span>{title}</span>
+            <img src={Accept} alt="accept" />
+        </div>
+    )
+}
 class PollControl extends EventDispatcher {
     constructor() {
         super()
@@ -84,31 +94,31 @@ class PollControl extends EventDispatcher {
 
     render() {
         return (
-            <Paper style={{ background: 'linear-gradient(to left, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)', height: "790px", marginTop: "2px" }}>
-                <Paper style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Paper className='paperStyle'>
+                <Paper className='topBox' >
                     <CustomCheckBox id="pollStatusChk" onHandleClick={this.activatePoller} />
                     <span style={{ marginTop: '7px' }}>Is Poll Active?</span>
                 </Paper>
                 <div className='poolControlGrid'>
-                    <DataGrid id="grid" ref={g => (this.grid = g)} width="100%" height="100%" enableCopy="true" styleName="gridStyle" alternatingItemColors={[0xe1e8e4, 0xffffff]} enableEagerDraw="true">
-                        <ReactDataGridColumnLevel rowHeight="20" enableFilters="true" enablePaging="true" pageSize="50">
-                            <ReactDataGridColumn width="100" dataField="systemId" textAlign="center" headerAlign="center" enableCellClickRowSelect="false" headerText="System Id" />
-                            <ReactDataGridColumn width="350" dataField="id.pollControlId" headerAlign="center" enableCellClickRowSelect="false" filterControl="TextInput"
+                    <DataGrid id="grid" ref={g => (this.grid = g)} width="100%" height="100%" enableCopy={true} styleName="gridStyle" alternatingItemColors={[0xe1e8e4, 0xffffff]} enableEagerDraw={true}>
+                        <ReactDataGridColumnLevel rowHeight="20" enableFilters={true} enablePaging={true} pageSize="50">
+                            <ReactDataGridColumn width="100" dataField="systemId" textAlign="center" headerAlign="center" enableCellClickRowSelect={false} headerText="System Id" />
+                            <ReactDataGridColumn width="350" dataField="id.pollControlId" headerAlign="center" enableCellClickRowSelect={false} filterControl="TextInput"
                                 filterOperation="Contains" headerText="Control Id" />
-                            <ReactDataGridColumn width="450" dataField="pollControlDescr" headerAlign="center" enableCellClickRowSelect="false" filterControl="TextInput"
+                            <ReactDataGridColumn width="450" dataField="pollControlDescr" headerAlign="center" enableCellClickRowSelect={false} filterControl="TextInput"
                                 filterOperation="Contains" headerText="Poll Control Desc" />
-                            <ReactDataGridColumn width="200" dataField="deliveryMode" headerAlign="center" enableCellClickRowSelect="false" headerText="Delivery Mode" />
-                            <ReactDataGridColumn dataField="activeFlag" enableCellClickRowSelect="false" width="200" headerText="Active" headerAlign="center" itemRenderer={new ClassFactory(ActiveitemRenderer)}
+                            <ReactDataGridColumn width="200" dataField="deliveryMode" headerAlign="center" enableCellClickRowSelect={false} headerText="Delivery Mode" />
+                            <ReactDataGridColumn dataField="activeFlag" enableCellClickRowSelect={false} width="200" headerText="Active" headerAlign="center" itemRenderer={new ClassFactory(ActiveitemRenderer)}
                                 onHandleActivatePoll={(e, data) => {
                                     this.activatePoll(e, data)
                                 }}
                             />
-                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="200" headerAlign="center" headerText="Poll" itemRenderer={new ClassFactory(PollitemRenderer)}
+                            <ReactDataGridColumn id="poll" sortable={false} enableCellClickRowSelect={false} width="200" headerAlign="center" headerText="Poll" itemRenderer={new ClassFactory(PollitemRenderer)}
                                 onHandlePoll={(e, data) => {
                                     this.poll(e, data)
                                 }}
                             />
-                            <ReactDataGridColumn id="poll" sortable="false" enableCellClickRowSelect="false" width="200" headerAlign="center" headerText="Browse" fontWeight="bold" itemRenderer={new ClassFactory(BrowseRenderer)}
+                            <ReactDataGridColumn id="poll" sortable={false} enableCellClickRowSelect={false} width="200" headerAlign="center" headerText="Browse" fontWeight="bold" itemRenderer={new ClassFactory(BrowseRenderer)}
                                 onHandleBrowse={(e, data) => {
                                     this.browse(e, data)
                                 }}
@@ -119,7 +129,7 @@ class PollControl extends EventDispatcher {
 
                 <AdvanceDialog
                     open={this.state.browseButton}
-                    headerTitle={this.state.title}
+                    headerTitle={<HeaderTitle title={this.state.title} />}
                     handleClose={() => {
                         this.setState({ browseButton: false })
                     }}

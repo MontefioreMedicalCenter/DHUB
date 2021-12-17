@@ -82,6 +82,7 @@ function CustomizedTabs(props) {
 
 	const handleCallToRouter = (event, value) => {
 		history.push(value)
+		props.setTabValue(event, value)
 	}
 	const path = history.location.pathname
 	return (
