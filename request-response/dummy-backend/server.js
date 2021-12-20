@@ -15,6 +15,7 @@ const getPollerStatus = require('./response/getPollerStatus')
 const getRemoteDirListing = require('./response/getRemoteDirListing')
 const getDeliveryControl = require('./response/getDeliveryControl') 
 const activateDelivery = require('./response/activateDelivery')
+const deliverPayload = require('./response/deliverPayload')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -68,6 +69,10 @@ app.post('/DHub/api/adminsvc/getPollerStatus', (req, res) => {
 
 app.post('/DHub/api/adminsvc/getRemoteDirListing', (req, res) => {
 	sendResponse(res, 200, getRemoteDirListing)
+})
+
+app.post('/DHub/api/adminsvc/deliverPayload', (req, res) => {
+	sendResponse(res, 200, deliverPayload)
 })
 
 app.post('/DHub/api/adminsvc/getDeliveryControl', (req, res) => {

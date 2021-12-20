@@ -1,14 +1,5 @@
-import { Button, styled } from '@material-ui/core';
 import React from 'react'
-
-const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText("#cec0c0"),
-    backgroundColor: "#e0693f",
-    '&:hover': {
-      backgroundColor: "#C13504",
-    },
-  }));
-
+import CustomColorButton from './CustomColorButton';
 class BrowseRenderer extends React.Component{
     browse = (e) => {
         this.props.column.handleBrowse(e, this.props)
@@ -16,7 +7,7 @@ class BrowseRenderer extends React.Component{
     render(){
         return(
             <div style={{display:'flex', flexDirection:'column', alignItems:'center', margin:'2px'}}>
-                <ColorButton variant="contained" style={{height:'20px', width: '100px'}} onClick={(e) => this.browse(e)} >Browse</ColorButton>
+                <CustomColorButton variant="contained" style={{height:'20px', width: '100px'}} onClick={(e) => this.browse(e)} >Browse</CustomColorButton>
             </div>
         )
     }

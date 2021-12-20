@@ -8,6 +8,8 @@ import { AdminModel } from '../model/AdminModel.ts'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 import { DispatchPollEvent } from '../model/events/DispatchPollEvent.ts'
 import { DispatchDeliveryEvent } from '../model/events/DispatchDeliveryEvent.ts'
+import store from '../../../../../../../AppConfig/store/configureStore'
+import { showMessage } from '../../../../../../../AppConfig/store/actions/homeAction'
 
 export class AdminService extends ServiceProxyBase {
 	/**
@@ -379,9 +381,25 @@ export class AdminService extends ServiceProxyBase {
 		this.dispatch(dispatchPollEvent)
 	}
 
-	public deliverPayload(deliveryControlId: string, properties: string, payload: ByteArray = null): void {
-		var rpcCall: AsyncToken = this.service.deliverPayload(deliveryControlId, properties, payload)
-		rpcCall.addResponder(new AsyncResponder(this.successFileSendEvent, this.failureFileSendEvent))
+	public deliverPayload(deliveryControlId: string, properties: string, payload: ByteArray = null): AxiosPromise<any> {
+		const formData = new FormData()
+		if (payload && payload.length) {
+			for (let loop = 0; loop < payload.length; loop++) {
+				formData.append('payload', payload[loop])
+			}
+		}
+		// var rpcCall: AsyncToken = this.service.deliverPayload(deliveryControlId, properties, payload)
+		// rpcCall.addResponder(new AsyncResponder(this.successFileSendEvent, this.failureFileSendEvent))
+		return this.callServiceMethod(
+			'post',
+			'DHub/api/adminsvc/deliverPayload',
+			formData,
+			null,
+			this.successFileSendEvent.bind(this),
+			this.failureFileSendEvent.bind(this),
+			'form',
+			this.getHeaderData(),
+		)
 	}
 
 	public republishError(errorId: string, properties: string): void {
@@ -390,8 +408,9 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected successFileSendEvent(event: ResultEvent, token: Object = null): void {
-		var deliverToPayer: boolean = <Boolean>event.result
-		Alert.show('Dispatched Successfully', 'Success', this.mx.controls.Alert.OK)
+		var deliverToPayer = event.result
+		// Alert.show('Dispatched Successfully', 'Success', this.mx.controls.Alert.OK)
+		store.dispatch(showMessage('Success', 'Dispatched Successfully', 'Ok', () => {}))
 	}
 
 	/**
