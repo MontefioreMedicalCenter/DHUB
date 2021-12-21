@@ -16,6 +16,7 @@ const getRemoteDirListing = require('./response/getRemoteDirListing')
 const getDeliveryControl = require('./response/getDeliveryControl') 
 const activateDelivery = require('./response/activateDelivery')
 const deliverPayload = require('./response/deliverPayload')
+const triggerCombineX12 = require('./response/triggerCombineX12')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -51,8 +52,12 @@ app.post('/DHub/api/adminsvc/activatePoller', (req, res) => {
 	sendResponse(res, 200, activatePoller)
 })
 
-app.post('//DHub/api/adminsvc/activatePoll', (req, res) => {
+app.post('/DHub/api/adminsvc/activatePoll', (req, res) => {
 	sendResponse(res, 200, activatePoll)
+})
+
+app.post('/DHub/api/adminsvc/triggerCombineX12', (req, res) => {
+	sendResponse(res, 200, triggerCombineX12)
 })
 
 app.post('/DHub/api/adminsvc/dispatchPoll', (req, res) => {

@@ -14,12 +14,13 @@ import { PollControlMediator } from '../../PollControlMediator.ts'
 import FileBrowserEditor from '../FileBrowserEditor'
 import './poolControl.scss'
 import Accept from '../../../../../../../../../assets/images/accept.png'
+import Deny from '../../../../../../../../../assets/images/deny.png'
 
 const HeaderTitle = ({ title }) => {
     return (
-        <div className='popUpHeaderStyle'>
+        <div style={{display: 'flex', alignItems: 'center', columnGap: '10px'}}>
             <span>{title}</span>
-            <img src={Accept} alt="accept" />
+            {title === 'Failed To Connect' ? <img src={Deny} alt="deny" />: <div> <img src={Accept}  alt="accept" /></div>  }
         </div>
     )
 }

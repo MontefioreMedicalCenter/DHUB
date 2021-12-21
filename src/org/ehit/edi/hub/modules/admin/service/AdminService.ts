@@ -149,9 +149,13 @@ export class AdminService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.pingSuccessEvent, this.pingFailureFaultEvent))
 	}
 
-	public triggerCombineX12(pollControlId: string): void {
-		var rpcCall: AsyncToken = this.service.triggerCombineX12(pollControlId)
-		rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
+	public triggerCombineX12(pollControlId: string): AxiosPromise<any> {
+		var formData = qs.stringify({
+			pollControlId: stringifyCircularObjectWithModifiedKeys(pollControlId),
+		})
+		// var rpcCall: AsyncToken = this.service.triggerCombineX12(pollControlId)
+		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/triggerCombineX12', formData, null, this.successEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public activatePoll(pollControlId: string, active: boolean): AxiosPromise<any> {
@@ -257,7 +261,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected combineTriggerResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.combineTrigger = <ArrayCollection>event.result
+		this.adminModel.combineTrigger = ArrayCollection.from(event.result)//---------------------------------
 	}
 
 	protected dispatchPollResultEvent(event: ResultEvent, token: Object = null): void {
@@ -362,9 +366,9 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected deliveryDirListFailureFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg = event.message
+		var msg = event.error.message //event.message
 		var dispatchDeliveryEvent: DispatchDeliveryEvent = new DispatchDeliveryEvent(DispatchDeliveryEvent.REMOTE_DIR_LIST_RESULT)
-		dispatchDeliveryEvent.dirListErrorMsg = msg.faultString
+		dispatchDeliveryEvent.dirListErrorMsg = msg//.faultString
 		this.dispatch(dispatchDeliveryEvent)
 	}
 

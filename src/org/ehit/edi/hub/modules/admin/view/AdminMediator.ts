@@ -51,8 +51,8 @@ export class AdminMediator extends Mediator {
 			// 	this.mediatorMap.createMediator(this.view.combineTrigger)
 			// } else this.dispatch(new AdminEvent(AdminEvent.GET_COMBINE_TRIGGER))
 
-			toast.warning("Need to Implement triggers")
-			// this.adminService.getPollControl(true);/** Directly called service call's from Admin Command */
+			// toast.warning("Need to Implement triggers")
+			this.adminService.getPollControl(true);/** Directly called service call's from Admin Command */
 		}
 
 		if (value === '/main/admin/manageUser') {
