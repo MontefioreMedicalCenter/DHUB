@@ -261,7 +261,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected combineTriggerResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.combineTrigger = ArrayCollection.from(event.result)//---------------------------------
+		this.adminModel.combineTrigger = ArrayCollection.from(event.result)
 	}
 
 	protected dispatchPollResultEvent(event: ResultEvent, token: Object = null): void {

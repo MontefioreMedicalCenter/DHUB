@@ -9,16 +9,12 @@ import PollControl from "./components/PollControl"
 import Accept from '../../../../../../../../src/assets/images/accept.png'
 
 export class PollControlMediator extends Mediator {
-	/*[Inject]*/
 	public view: PollControl
 
-	/*[Inject]*/
 	public adminModel: AdminModel = AdminModel.getInstance()
 
-	/*[Inject]*/
 	public service: AdminService = AdminService.getInstance()
 
-	// private log: ILogger = this.Log.getLogger('PollControlMediator')
 
 	private listFiles: FileBrowserEditor
 
