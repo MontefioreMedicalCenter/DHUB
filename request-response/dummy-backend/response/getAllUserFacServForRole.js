@@ -1,4 +1,4 @@
-[
+module.exports = [
     {
         "id": {
             "activeFlag": 1,
