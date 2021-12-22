@@ -17,6 +17,8 @@ const getDeliveryControl = require('./response/getDeliveryControl')
 const activateDelivery = require('./response/activateDelivery')
 const deliverPayload = require('./response/deliverPayload')
 const triggerCombineX12 = require('./response/triggerCombineX12')
+const getUsersAndRoleswithFs = require('./response/getUsersAndRoleswithFs')
+const getAllUserFacServForRole = require('./response/getAllUserFacServForRole')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -86,6 +88,14 @@ app.post('/DHub/api/adminsvc/getDeliveryControl', (req, res) => {
 
 app.post('/DHub/api/adminsvc/activateDelivery' , (req, res) => {
 	sendResponse(res, 200, activateDelivery)
+})
+
+app.post('/DHub/api/adminsvc/getUsersAndRoleswithFs' , (req, res) => {
+	sendResponse(res, 200, getUsersAndRoleswithFs)
+})
+
+app.post('/DHub/api/adminsvc/getAllUserFacServForRole' , (req, res) => {
+	sendResponse(res, 200, getAllUserFacServForRole)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

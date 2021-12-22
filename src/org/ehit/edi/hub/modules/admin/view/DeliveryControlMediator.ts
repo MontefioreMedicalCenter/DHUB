@@ -88,7 +88,8 @@ export class DeliveryControlMediator extends Mediator {
 			// this.listFiles.titleIcon = DeliveryControlMediator.denyIcon
 			// this.listFiles.errTxt.text = event.dirListErrorMsg
 			var title = 'Failed To Connect'
-			this.view.setState({ title: title }) 
+			var errTxt = event.dirListErrorMsg
+			this.view.setState({ title: title, errTxt: errTxt }) 
 		}
 	}
 

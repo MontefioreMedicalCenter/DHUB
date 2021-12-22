@@ -10,6 +10,7 @@ import { DispatchPollEvent } from '../model/events/DispatchPollEvent.ts'
 import { DispatchDeliveryEvent } from '../model/events/DispatchDeliveryEvent.ts'
 import store from '../../../../../../../AppConfig/store/configureStore'
 import { showMessage } from '../../../../../../../AppConfig/store/actions/homeAction'
+import { AdminEvent } from '../model/events/AdminEvent.ts'
 
 export class AdminService extends ServiceProxyBase {
 	/**
@@ -226,14 +227,34 @@ export class AdminService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.userAndRolesMapResultEvent, this.failureFaultEvent))
 	}
 
-	public getUserAndRoles1(): void {
-		var rpcCall: AsyncToken = this.service.getUsersAndRoleswithFs() //getUsersAndRoles();
-		rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent1, this.failureFaultEvent))
+	public getUserAndRoles1(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getUsersAndRoleswithFs() //getUsersAndRoles();
+		// rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent1, this.failureFaultEvent))
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/adminsvc/getUsersAndRoleswithFs', 
+			null, 
+			null, 
+			this.userAndRolesResultEvent1.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 
-	public getUserAndRoles2(): void {
-		var rpcCall: AsyncToken = this.service.getAllUserFacServForRole() //getUsersAndRoles();
-		rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent, this.failureFaultEvent))
+	public getUserAndRoles2(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getAllUserFacServForRole() //getUsersAndRoles();
+		// rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/adminsvc/getAllUserFacServForRole', 
+			null, 
+			null, 
+			this.userAndRolesResultEvent.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 
 	public getDeliveryControl(): AxiosPromise<any> {
@@ -325,13 +346,13 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected userAndRolesResultEvent1(event: ResultEvent, token: Object = null): void {
-		var ret: ArrayCollection = <ArrayCollection>event.result
+		var ret: ArrayCollection = ArrayCollection.from(event.result)
 		var adminEvent: AdminEvent = new AdminEvent(AdminEvent.FILL_USER_ROLE)
 		adminEvent.eventData = ret
 		this.dispatch(adminEvent)
 	}
 	protected userAndRolesResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.usersAndRoles = <ArrayCollection>event.result
+		this.adminModel.usersAndRoles = ArrayCollection.from(event.result)
 		//Alert.show("adminModel.usersAndRoles: " + adminModel.usersAndRoles.getItemAt(0).id.facilityId)
 	}
 

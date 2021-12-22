@@ -42,7 +42,8 @@ class DeliveryControl extends EventDispatcher {
 			title: '',
 			dataProviderFileBrowserEditor: [],
 			headerIcon: '',
-			icon: 'accept'
+			icon: 'accept',
+			errTxt: ''
 		}
 		this._deliveryControl = {}
 	}

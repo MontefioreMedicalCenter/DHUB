@@ -60,8 +60,8 @@ export class AdminMediator extends Mediator {
 			// 	this.mediatorMap.createMediator(this.view.manageUser)
 			// } else this.dispatch(new AdminEvent(AdminEvent.GET_USERS_AND_ROLES))
 
-			toast.warning("Need to Implement manageUser")
-			// this.adminService.getUserAndRoles();/** Directly called service call's from Admin Command */
+			// toast.warning("Need to Implement manageUser")
+			this.adminService.getUserAndRoles();/** Directly called service call's from Admin Command */
 		}
 		if (value === '/main/admin/errorLog') {
 			// if (!this.mediatorMap.hasMediatorForView(this.view.errorLog)) {

@@ -53,7 +53,7 @@ class X12CombineTrigger extends EventDispatcher {
 		store.dispatch(
 			showMessage(
 				'Confirm Trigger',
-				'Are you sure you want to combine the X12 for \n System Id : {0} \n Control Id : {1}?',
+				'Are you sure you want to combine the X12 for System-Id : ' +data.row.getData().systemId + ' Control-Id : '+data.row.getData().id.pollControlId+'?',
 				'Yes_No',
 				() => {
 					this.dispatchEvent(new CombineTriggerEvent(CombineTriggerEvent.COMBINE, data.row.getData().id.pollControlId))
