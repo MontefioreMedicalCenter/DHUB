@@ -56,7 +56,6 @@ export class ManageUserMediator extends Mediator {
 	}
 
 	private popUserRole(event: AdminEvent): void {
-		debugger
 		this.view.usrRoles = event.eventData
 	}
 
