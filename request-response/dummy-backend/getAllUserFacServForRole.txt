@@ -1,0 +1,4 @@
+POST /DHub/api/adminsvc/getAllUserFacServForRole HTTP/1.1
+Host: localhost:8080
+Cookie: JSESSIONID=Uv1tAqBcAkZwxVMrj00tsVoAVitFdGacB7mSHtpC.odcfsvvwd04
+
