@@ -19,6 +19,9 @@ const deliverPayload = require('./response/deliverPayload')
 const triggerCombineX12 = require('./response/triggerCombineX12')
 const getUsersAndRoleswithFs = require('./response/getUsersAndRoleswithFs')
 const getAllUserFacServForRole = require('./response/getAllUserFacServForRole')
+const activateUser = require('./response/activateUser')
+const manageRole = require('./response/manageRole')
+const deleteUser = require('./response/deleteUser')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -96,6 +99,18 @@ app.post('/DHub/api/adminsvc/getUsersAndRoleswithFs' , (req, res) => {
 
 app.post('/DHub/api/adminsvc/getAllUserFacServForRole' , (req, res) => {
 	sendResponse(res, 200, getAllUserFacServForRole)
+})
+
+app.post('/DHub/api/manageUsersvc/activateUser' , (req, res) => {
+	sendResponse(res, 200, activateUser)
+})
+
+app.post('/DHub/api/manageUsersvc/manageRole' , (req, res) => {
+	sendResponse(res, 200, manageRole)
+})
+
+app.post('/DHub/api/manageUsersvc/deleteUser' , (req, res) => {
+	sendResponse(res, 200, deleteUser)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

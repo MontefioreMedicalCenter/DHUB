@@ -6,7 +6,9 @@ export class EdiUserFacServForRolePK extends VoBase {
 	private _userId: string
 	private _activeFlag: number
 
-	constructor() {}
+	constructor() {
+		super()
+	}
 
 	public set facilityId(value: string) {
 		this._facilityId = value

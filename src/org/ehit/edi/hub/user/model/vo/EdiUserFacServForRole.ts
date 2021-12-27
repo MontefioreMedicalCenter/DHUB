@@ -4,7 +4,9 @@ import { EdiUserFacServForRolePK } from './EdiUserFacServForRolePK.ts'
 export class EdiUserFacServForRole extends VoBase {
 	private _id: EdiUserFacServForRolePK
 
-	constructor() {}
+	constructor() {
+		super()
+	}
 
 	public get id(): EdiUserFacServForRolePK {
 		return this._id

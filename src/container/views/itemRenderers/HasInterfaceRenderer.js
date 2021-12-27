@@ -14,7 +14,8 @@ class HasInterfaceRenderer extends React.Component{
                 checkedIcon={this.props.row.getData().activeFlag === 'Y' ? <Green /> : <Red />}
                 icon={this.props.row.getData().activeFlag === 'N' ? <Red /> : <Green />}
                 onClick={e => this.activateRole0(e)}
-                checked={this.props.row.getData().activeFlag === 'Y' ? true : false}
+                checked={this.props.column.parentDocument.hasRole(this.props, 'Interfaces')}
+                disabled={this.props.column.parentDocument.hasRole(this.props, 'Admin')}
                 />
             </div>
         )
