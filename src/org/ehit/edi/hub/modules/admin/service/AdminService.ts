@@ -11,6 +11,7 @@ import { DispatchDeliveryEvent } from '../model/events/DispatchDeliveryEvent.ts'
 import store from '../../../../../../../AppConfig/store/configureStore'
 import { showMessage } from '../../../../../../../AppConfig/store/actions/homeAction'
 import { AdminEvent } from '../model/events/AdminEvent.ts'
+import { ManageUserEvent } from '../model/events/ManageUserEvent.ts'
 
 export class AdminService extends ServiceProxyBase {
 	/**
@@ -315,24 +316,44 @@ export class AdminService extends ServiceProxyBase {
 		this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
 	}
 
-	public getAllFacility(): void {
-		var rpcCall: AsyncToken = this.service.getAllFacility()
-		rpcCall.addResponder(new AsyncResponder(this.getAllFacilityEvent, this.failureFaultEvent))
+	public getAllFacility(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getAllFacility()
+		// rpcCall.addResponder(new AsyncResponder(this.getAllFacilityEvent, this.failureFaultEvent))
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/adminsvc/getAllFacilityId', 
+			null, 
+			null, 
+			this.getAllFacilityEvent.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 	protected getAllFacilityEvent(event: ResultEvent, token: Object = null): void {
-		var ret: ArrayCollection = <ArrayCollection>event.result
+		var ret = ArrayCollection.from(event.result)
 		var adminEvent: ManageUserEvent = new ManageUserEvent(ManageUserEvent.ADD_USER_START2)
 		adminEvent.eventData = ret
 		this.dispatch(adminEvent)
 	}
 	//getAllServy
-	public getAllServy(): void {
-		var rpcCall: AsyncToken = this.service.getAllServiceArea()
-		rpcCall.addResponder(new AsyncResponder(this.getAllServyEvent, this.failureFaultEvent))
+	public getAllServy(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getAllServiceArea()
+		// rpcCall.addResponder(new AsyncResponder(this.getAllServyEvent, this.failureFaultEvent))
+		return this.callServiceMethod(
+			'post', 
+			'DHub/api/adminsvc/getAllServiceArea', 
+			null, 
+			null, 
+			this.getAllServyEvent.bind(this), 
+			this.failureFaultEvent.bind(this), 
+			'form', 
+			this.getHeaderFormData()
+		)
 	}
 	protected getAllServyEvent(event: ResultEvent, token: Object = null): void {
 		//Alert.show("getAllServyEvent")
-		var ret: ArrayCollection = <ArrayCollection>event.result
+		var ret = ArrayCollection.from(event.result)
 		var adminEvent: ManageUserEvent = new ManageUserEvent(ManageUserEvent.ADD_USER_END)
 		adminEvent.eventData = ret
 		this.dispatch(adminEvent)

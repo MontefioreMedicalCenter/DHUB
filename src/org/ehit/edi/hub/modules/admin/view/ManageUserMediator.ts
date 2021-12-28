@@ -1,4 +1,5 @@
 import Mediator from "../../../../../../../modules/main/view/Mediator.ts"
+import ArrayCollection from "../../../../../../../vo/ArrayCollection"
 import { AdminModel } from "../model/AdminModel.ts"
 import { AdminEvent } from "../model/events/AdminEvent.ts"
 import { ManageUserEvent } from "../model/events/ManageUserEvent.ts"
@@ -18,8 +19,8 @@ export class ManageUserMediator extends Mediator {
 	public adService: AdminService = AdminService.getInstance()
 
 	// private log: ILogger = this.Log.getLogger('ManageUserMediator')
-	// private _facL: ArrayCollection
-	// private _serL: ArrayCollection
+	private _facL: ArrayCollection
+	private _serL: ArrayCollection
 
 	/*override*/ public onRegister(view): ManageUserMediator {
 		this.view = view
@@ -79,17 +80,9 @@ export class ManageUserMediator extends Mediator {
 	}
 
 	private addNewUser(event: ManageUserEvent): void {
-		this._serL = event.eventData
-		var addUser: AddUser = new AddUser()
-		//Alert.show("addNewUser: " + addUser.facL)
-		addUser.facL = this._facL
-		addUser.serL = this._serL
-		//addUser.facLs.dataProvider=_facL;
-		//addUser.serLs.dataProvider=_serL;
-		PopUpManager.addPopUp(addUser, this.contextView, true)
-		PopUpManager.centerPopUp(addUser)
-		this.mediatorMap.createMediator(addUser)
-		//addUser.userId.setFocus();
+		this.view.setState({addNewUser: true})
+		this.view.addUser.facL = this._facL
+		this.view.addUser.serL = this._serL
 	}
 
 	private deleteUser(event: ManageUserEvent): void {

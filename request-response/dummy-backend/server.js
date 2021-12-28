@@ -22,6 +22,9 @@ const getAllUserFacServForRole = require('./response/getAllUserFacServForRole')
 const activateUser = require('./response/activateUser')
 const manageRole = require('./response/manageRole')
 const deleteUser = require('./response/deleteUser')
+const getAllFacilityId = require('./response/getAllFacilityId')
+const getAllServiceArea = require('./response/getAllServiceArea')
+const addNewUser = require('./response/addNewUser')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -111,6 +114,18 @@ app.post('/DHub/api/manageUsersvc/manageRole' , (req, res) => {
 
 app.post('/DHub/api/manageUsersvc/deleteUser' , (req, res) => {
 	sendResponse(res, 200, deleteUser)
+})
+
+app.post('/DHub/api/adminsvc/getAllFacilityId' , (req, res) => {
+	sendResponse(res, 200, getAllFacilityId)
+})
+
+app.post('/DHub/api/adminsvc/getAllServiceArea' , (req, res) => {
+	sendResponse(res, 200, getAllServiceArea)
+})
+
+app.post('/DHub/api/manageUsersvc/addNewUser' , (req, res) => {
+	sendResponse(res, 200, addNewUser)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

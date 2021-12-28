@@ -10,16 +10,22 @@ import HasRemitsRenderer from '../../../../../../../../../container/views/itemRe
 import IsAdminRenderer from '../../../../../../../../../container/views/itemRenderers/IsAdminRenderer'
 import IsUserActiveRenderer from '../../../../../../../../../container/views/itemRenderers/IsUserActiveRenderer'
 import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
+import StyledPager from '../../../../../uitl/StyledPager'
 import { EdiUserFacServForRole } from '../../../../../user/model/vo/EdiUserFacServForRole.ts'
 import EdiUserRoleMap from '../../../../../user/model/vo/EdiUserRoleMap.ts'
 import { ManageUserEvent } from '../../../model/events/ManageUserEvent.ts'
 import { ManageUserMediator } from '../../ManageUserMediator.ts'
+import AddUser from '../AddUser'
 import './manageUser.scss'
 
 class ManageUser extends EventDispatcher {
     constructor() {
         super()
+        this.state = {
+            addNewUser:false
+        }
         this._usrRoles = []
         this._userFacServ = null
     }
@@ -115,12 +121,17 @@ class ManageUser extends EventDispatcher {
         }
         return ret
     }
+
+    onAddClick = () => {
+        this.dispatchEvent(new ManageUserEvent(ManageUserEvent.ADD_USER_START1));
+    }
+
     render() {
         return (
             <Paper className="page_style">
                 <div className="manageUserGrid">
-                    <DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy="true" enableEagerDraw="true" showSpinnerOnFilterPageSort="true" styleName="gridStyle" initialSortField="userId" alternatingItemColors={[0xe1e8e4, 0xffffff]}>
-                        <ReactDataGridColumnLevel rowHeight="21" enableFilters="true" enablePaging="true" /*pagerRenderer={MontefioreUtils.pagerFactory}*/ /*pagerRenderer="org.ehit.edi.hub.uitl.StyledPager"*/ pageSize="50">
+                    <DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy="true" enableEagerDraw="true" showSpinnerOnFilterPageSort="true" styleName="gridStyle" initialSortField="userId" alternatingItemColors={[0xe1e8e4, 0xffffff]} onAddClick={this.onAddClick}>
+                        <ReactDataGridColumnLevel rowHeight="21" enableFilters="true" enablePaging="true" pagerRenderer={new ClassFactory(StyledPager)} pageSize="50">
                             <ReactDataGridColumn width="300" dataField="id.userId" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" fontWeight="bold" headerAlign="center" headerText="Users" textAlign="center" useHandCursor="true" useUnderLine="true" />
                             <ReactDataGridColumn
                                 width="225"
@@ -201,6 +212,7 @@ class ManageUser extends EventDispatcher {
                             />
                         </ReactDataGridColumnLevel>
                     </DataGrid>
+                <AdvanceDialog open={this.state.addNewUser} handleClose={() => this.setState({ addNewUser: false })} bodyRenderer={<AddUser ref={g => (this.addUser = g)} closePopup={() => { return this.setState({ addNewUser: false }) }} /> }/>
                 </div>
             </Paper>
         )

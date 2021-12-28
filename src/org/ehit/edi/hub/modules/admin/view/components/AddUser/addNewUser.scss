@@ -1,0 +1,23 @@
+.add-user-containers{
+    width: 30vw;
+    height: 500px;
+    padding: 5px;
+    overflow: auto;
+    margin: 5px;
+    align-items: center;    
+}
+
+.container-space{
+    padding: 5px;
+    min-width: 300px;
+    font-size: 13px;
+    font-weight: 500;
+    align-items: baseline;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.required-font-style{
+    color:#A0A0A0;
+    font-family: monospace ;
+}

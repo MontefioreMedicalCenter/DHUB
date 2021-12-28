@@ -1,19 +1,22 @@
-import ServiceProxyBase from "../../../../../../../service/cfc/ServiceProxyBase"
-import GlobalEventDispatcher from "../../../../../../../service/utils/GlobalEventDispatcher"
-import { EdiUserFacServForRole } from "../../../user/model/vo/EdiUserFacServForRole.ts"
-import { AdminModel } from "../model/AdminModel.ts"
+import ServiceProxyBase from '../../../../../../../service/cfc/ServiceProxyBase'
+import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEventDispatcher'
+import { EdiUserFacServForRole } from '../../../user/model/vo/EdiUserFacServForRole.ts'
+import { AdminModel } from '../model/AdminModel.ts'
 import qs from 'qs'
-import { stringifyCircularObjectWithModifiedKeys } from "../../../../../../../shared/utils"
-import { AdminEvent } from "../model/events/AdminEvent.ts"
-import { AdminService } from "./AdminService.ts"
+import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
+import { AdminEvent } from '../model/events/AdminEvent.ts'
+import { AdminService } from './AdminService.ts'
 import { AxiosPromise } from 'axios'
+import { EdiUserBase } from '../../../user/model/vo/EdiUserBase.ts'
+import { ManageUserEvent } from '../model/events/ManageUserEvent.ts'
+import { toast } from 'react-toastify'
 
 export class ManageUserService extends ServiceProxyBase {
 	/**
 	 * Name of the Remote Service Destination
 	 */
 	/** to make getInstance  */
-	 dispatch(evt) {
+	dispatch(evt) {
 		GlobalEventDispatcher.instance().dispatchEvent(evt)
 	}
 
@@ -31,47 +34,34 @@ export class ManageUserService extends ServiceProxyBase {
 
 	public manageRole(user: EdiUserFacServForRole, activate: boolean, roleId: string = null): AxiosPromise<any> {
 		var formData = qs.stringify({
-			userId: stringifyCircularObjectWithModifiedKeys(user.id.userId),
+			userId: user.id.userId,
 			roleId: roleId,
 			Activate: activate
 		})
 		// var rpcCall: AsyncToken = this.service.manageRole(user.id.facilityId, user.id.serviceAreaId, user.id.userId, activate, roleId)
 		// rpcCall.addResponder(new AsyncResponder(this.resultEvent, this.faultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/manageUsersvc/manageRole',
-			formData, 
-			null, 
-			this.resultEvent.bind(this), 
-			this.faultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
-
+		return this.callServiceMethod('post', 'DHub/api/manageUsersvc/manageRole', formData, null, this.resultEvent.bind(this), this.faultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public manageRole4User(fac: string, ser: string, uid: string, activate: boolean, roleId: string = null): void {
-		//Alert.show("manageRole4User: " + fac + "/" + ser + "/" + uid + "/" + roleId)
-		var rpcCall: AsyncToken = this.service.manageRole(fac, ser, uid, activate, roleId)
-		rpcCall.addResponder(new AsyncResponder(this.resultEvent, this.faultEvent))
+	public manageRole4User(fac: string, ser: string, uid: string, activate: boolean, roleId: string = null): AxiosPromise<any> {
+		// //Alert.show("manageRole4User: " + fac + "/" + ser + "/" + uid + "/" + roleId)
+		var formData = qs.stringify({
+			userId: uid,
+			roleId: roleId,
+			Activate: activate
+		})
+		// var rpcCall: AsyncToken = this.service.manageRole(fac, ser, uid, activate, roleId)
+		// rpcCall.addResponder(new AsyncResponder(this.resultEvent, this.faultEvent))
+		return this.callServiceMethod('post', 'DHub/api/manageUsersvc/manageRole', formData, null, this.resultEvent.bind(this), this.faultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public deleteUser(user: EdiUserFacServForRole): AxiosPromise<any> {
 		var formData = qs.stringify({
-			userId: stringifyCircularObjectWithModifiedKeys(user.id.userId),
+			userId: stringifyCircularObjectWithModifiedKeys(user.id.userId)
 		})
 		// var rpcCall: AsyncToken = this.service.deleteUser(user.id.userId)
 		// rpcCall.addResponder(new AsyncResponder(this.resultEvent, this.faultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/manageUsersvc/deleteUser',
-			formData, 
-			null, 
-			this.resultEvent.bind(this), 
-			this.faultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/manageUsersvc/deleteUser', formData, null, this.resultEvent.bind(this), this.faultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public activateUser0(user: EdiUserBase, activate: boolean): void {
@@ -86,17 +76,7 @@ export class ManageUserService extends ServiceProxyBase {
 		})
 		// var rpcCall: AsyncToken = this.service.activateUser(user.id.userId, activate)
 		// rpcCall.addResponder(new AsyncResponder(this.resultEvent, this.faultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/manageUsersvc/activateUser',
-			formData, 
-			null, 
-			this.resultEvent.bind(this), 
-			this.faultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
-
+		return this.callServiceMethod('post', 'DHub/api/manageUsersvc/activateUser', formData, null, this.resultEvent.bind(this), this.faultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public editUser(userId: string): void {
@@ -104,10 +84,14 @@ export class ManageUserService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.resultEvent, this.faultEvent))
 	}
 
-	public addNewUser(user: EdiUserBase): void {
+	public addNewUser(user: EdiUserBase): AxiosPromise<any> {
 		//Alert.show("addNewUser")
-		var rpcCall: AsyncToken = this.service.addNewUser(user)
-		rpcCall.addResponder(new AsyncResponder(this.newUserResultEvent, this.addUserFaultEvent))
+		var formData = qs.stringify({
+			userId: stringifyCircularObjectWithModifiedKeys(user)
+		})
+		// var rpcCall: AsyncToken = this.service.addNewUser(user)
+		// rpcCall.addResponder(new AsyncResponder(this.newUserResultEvent, this.addUserFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/manageUsersvc/addNewUser', formData, null, this.newUserResultEvent.bind(this), this.addUserFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	/*protected function manageRoleResultEvent(event:ResultEvent, token:Object=null):void
@@ -131,13 +115,13 @@ export class ManageUserService extends ServiceProxyBase {
 	protected resultEvent(event: ResultEvent, token: Object = null): void {
 		//adminModel.usersAndRoles=event.result as ArrayCollection;//commented in Flex
 		// this.dispatch(new AdminEvent(AdminEvent.GET_USERS_AND_ROLES))
-		this.adminService.getUserAndRoles();
+		this.adminService.getUserAndRoles()
 		//dispatch(new ManageUserEvent(ManageUserEvent.SAVE_USER_DONE));//commented in Flex
 	}
 
 	protected addUserFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
-		Alert.show('Unable to add/delete user \n\r' + msg.faultString)
+		var msg: ErrorMessage = <ErrorMessage>event.error.message
+		toast.error('Unable to add/delete user \n\r' + msg)
 	}
 
 	protected faultEvent(event: FaultEvent, token: Object = null): void {

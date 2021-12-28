@@ -1,6 +1,7 @@
 import { BaseEvent } from "../../../../../../../../flexicious"
 import ArrayCollection from "../../../../../../../../vo/ArrayCollection"
 import { EdiUserBase } from "../../../../user/model/vo/EdiUserBase.ts"
+import { EdiUserFacServForRole } from "../../../../user/model/vo/EdiUserFacServForRole.ts"
 import EdiUserRoleMap from "../../../../user/model/vo/EdiUserRoleMap.ts"
 
 export class ManageUserEvent extends BaseEvent {
