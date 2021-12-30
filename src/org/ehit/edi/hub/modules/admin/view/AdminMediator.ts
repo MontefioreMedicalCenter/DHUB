@@ -67,9 +67,8 @@ export class AdminMediator extends Mediator {
 			// if (!this.mediatorMap.hasMediatorForView(this.view.errorLog)) {
 			// 	this.mediatorMap.createMediator(this.view.errorLog)
 			// } else this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
-
-			toast.warning("Need to Implement errorLog")
-			// this.adminService.findErrorLog(event.startDate, event.endDate);/** Directly called service call's from Admin Command */
+			// toast.warning("Need to Implement errorLog")
+			// this.adminService.findErrorLog();/** Directly called service call's from Mediator itself because of date */
 		}
 
 		if (value === '/main/admin/deliveryLog') {

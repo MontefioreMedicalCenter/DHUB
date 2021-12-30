@@ -25,6 +25,8 @@ const deleteUser = require('./response/deleteUser')
 const getAllFacilityId = require('./response/getAllFacilityId')
 const getAllServiceArea = require('./response/getAllServiceArea')
 const addNewUser = require('./response/addNewUser')
+const findErrorLog = require('./response/findErrorLog')
+const deleteErrorLogs = require('./response/deleteErrorLogs')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -126,6 +128,14 @@ app.post('/DHub/api/adminsvc/getAllServiceArea' , (req, res) => {
 
 app.post('/DHub/api/manageUsersvc/addNewUser' , (req, res) => {
 	sendResponse(res, 200, addNewUser)
+})
+
+app.post('/DHub/api/adminsvc/findErrorLog', (req,res) => {
+	sendResponse(res, 200, findErrorLog)
+})
+
+app.post('/DHub/api/adminsvc/deleteErrorLogs', (req,res) => {
+	sendResponse(res, 200, deleteErrorLogs)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

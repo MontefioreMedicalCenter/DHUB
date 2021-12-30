@@ -134,16 +134,14 @@ export class AdminService extends ServiceProxyBase {
 		// if (browseType == 'Poll') rpcCall.addResponder(new AsyncResponder(this.pollDirListSuccessEvent, this.pollDirListFailureFaultEvent))
 		// if (browseType == 'Delivery') rpcCall.addResponder(new AsyncResponder(this.deliveryDirListSuccessEvent, this.deliveryDirListFailureFaultEvent))
 		var formData = qs.stringify({
-			pollControlId: stringifyCircularObjectWithModifiedKeys({configId, dirName})
+			pollControlId: stringifyCircularObjectWithModifiedKeys({ configId, dirName })
 		})
-		if(browseType === 'Poll'){
+		if (browseType === 'Poll') {
 			return this.callServiceMethod('post', 'DHub/api/adminsvc/getRemoteDirListing', formData, null, this.pollDirListSuccessEvent.bind(this), this.pollDirListFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 		}
-		if (browseType === 'Delivery'){
+		if (browseType === 'Delivery') {
 			return this.callServiceMethod('post', 'DHub/api/adminsvc/getRemoteDirListing', formData, null, this.deliveryDirListSuccessEvent.bind(this), this.deliveryDirListFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
-		} 
-		
-		
+		}
 	}
 
 	public ping(channelId: string): void {
@@ -153,7 +151,7 @@ export class AdminService extends ServiceProxyBase {
 
 	public triggerCombineX12(pollControlId: string): AxiosPromise<any> {
 		var formData = qs.stringify({
-			pollControlId: stringifyCircularObjectWithModifiedKeys(pollControlId),
+			pollControlId: stringifyCircularObjectWithModifiedKeys(pollControlId)
 		})
 		// var rpcCall: AsyncToken = this.service.triggerCombineX12(pollControlId)
 		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
@@ -178,29 +176,25 @@ export class AdminService extends ServiceProxyBase {
 		})
 		// var rpcCall: AsyncToken = this.service.activateDelivery(deliveryControlId, active)
 		// rpcCall.addResponder(new AsyncResponder(this.successEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/activateDelivery', 
-			formData, 
-			null, 
-			this.successEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/activateDelivery', formData, null, this.successEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public findErrorLog(startDate: Date = null, endDate: Date = null): void {
+	public findErrorLog(startDate: Date = null, endDate: Date = null): AxiosPromise<any> {
 		var now: Date = new Date()
-		var currentDate: number = now.date
-		var currentMonth: number = now.month
-		var currentYear: number = now.fullYear
+		var currentDate: number = now.getDate()
+		var currentMonth: number = now.getMonth()
+		var currentYear: number = now.getFullYear()
 		var twoDays: Date = new Date(currentYear, currentMonth, currentDate - 2)
 
 		if (startDate == null) startDate = twoDays
 		if (endDate == null) endDate = now
-		var rpcCall: AsyncToken = this.service.findErrorLog(startDate, endDate)
-		rpcCall.addResponder(new AsyncResponder(this.errorLogResultEvent, this.failureFaultEvent))
+		var formData = qs.stringify({
+			startDate: startDate,
+			endDate: endDate
+		})
+		// var rpcCall: AsyncToken = this.service.findErrorLog(startDate, endDate)
+		// rpcCall.addResponder(new AsyncResponder(this.errorLogResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/findErrorLog', formData, null, this.errorLogResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public findErrorLogById(logId: string): void {
@@ -213,9 +207,14 @@ export class AdminService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.errorLogDeleteResultEvent, this.failureFaultEvent))
 	}
 
-	public deleteErrorLogs(errorLogs: ArrayCollection): void {
-		var rpcCall: AsyncToken = this.service.deleteErrorLogs(errorLogs)
-		rpcCall.addResponder(new AsyncResponder(this.errorLogDeleteResultEvent, this.failureFaultEvent))
+	public deleteErrorLogs(errorLogs: ArrayCollection): AxiosPromise<any> {
+		debugger
+		var formData = qs.stringify({
+			errorLogs: stringifyCircularObjectWithModifiedKeys(errorLogs)
+		})
+		// var rpcCall: AsyncToken = this.service.deleteErrorLogs(errorLogs)
+		// rpcCall.addResponder(new AsyncResponder(this.errorLogDeleteResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/deleteErrorLogs', formData, null, this.errorLogDeleteResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public getUserAndRoles(): void {
@@ -231,47 +230,19 @@ export class AdminService extends ServiceProxyBase {
 	public getUserAndRoles1(): AxiosPromise<any> {
 		// var rpcCall: AsyncToken = this.service.getUsersAndRoleswithFs() //getUsersAndRoles();
 		// rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent1, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/getUsersAndRoleswithFs', 
-			null, 
-			null, 
-			this.userAndRolesResultEvent1.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/getUsersAndRoleswithFs', null, null, this.userAndRolesResultEvent1.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public getUserAndRoles2(): AxiosPromise<any> {
 		// var rpcCall: AsyncToken = this.service.getAllUserFacServForRole() //getUsersAndRoles();
 		// rpcCall.addResponder(new AsyncResponder(this.userAndRolesResultEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/getAllUserFacServForRole', 
-			null, 
-			null, 
-			this.userAndRolesResultEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/getAllUserFacServForRole', null, null, this.userAndRolesResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public getDeliveryControl(): AxiosPromise<any> {
-
 		// var rpcCall: AsyncToken = this.service.getDeliveryControl()
 		// rpcCall.addResponder(new AsyncResponder(this.deliveryControlResultEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/getDeliveryControl', 
-			null, 
-			null, 
-			this.deliveryControlResultEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/getDeliveryControl', null, null, this.deliveryControlResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	protected pollLogResultEvent(event: ResultEvent, token: Object = null): void {
@@ -304,7 +275,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected errorLogResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.errorLog = <ArrayCollection>event.result
+		this.adminModel.errorLog = ArrayCollection.from(event.result)
 	}
 
 	protected errorContentResultEvent(event: ResultEvent, token: Object = null): void {
@@ -313,22 +284,15 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected errorLogDeleteResultEvent(event: ResultEvent, token: Object = null): void {
-		this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
+		// this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
+		debugger
+		this.findErrorLog()
 	}
 
 	public getAllFacility(): AxiosPromise<any> {
 		// var rpcCall: AsyncToken = this.service.getAllFacility()
 		// rpcCall.addResponder(new AsyncResponder(this.getAllFacilityEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/getAllFacilityId', 
-			null, 
-			null, 
-			this.getAllFacilityEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/getAllFacilityId', null, null, this.getAllFacilityEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 	protected getAllFacilityEvent(event: ResultEvent, token: Object = null): void {
 		var ret = ArrayCollection.from(event.result)
@@ -340,16 +304,7 @@ export class AdminService extends ServiceProxyBase {
 	public getAllServy(): AxiosPromise<any> {
 		// var rpcCall: AsyncToken = this.service.getAllServiceArea()
 		// rpcCall.addResponder(new AsyncResponder(this.getAllServyEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/adminsvc/getAllServiceArea', 
-			null, 
-			null, 
-			this.getAllServyEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/getAllServiceArea', null, null, this.getAllServyEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 	protected getAllServyEvent(event: ResultEvent, token: Object = null): void {
 		//Alert.show("getAllServyEvent")
@@ -410,7 +365,7 @@ export class AdminService extends ServiceProxyBase {
 	protected deliveryDirListFailureFaultEvent(event: FaultEvent, token: Object = null): void {
 		var msg = event.error.message //event.message
 		var dispatchDeliveryEvent: DispatchDeliveryEvent = new DispatchDeliveryEvent(DispatchDeliveryEvent.REMOTE_DIR_LIST_RESULT)
-		dispatchDeliveryEvent.dirListErrorMsg = msg//.faultString
+		dispatchDeliveryEvent.dirListErrorMsg = msg //.faultString
 		this.dispatch(dispatchDeliveryEvent)
 	}
 
@@ -436,16 +391,7 @@ export class AdminService extends ServiceProxyBase {
 		}
 		// var rpcCall: AsyncToken = this.service.deliverPayload(deliveryControlId, properties, payload)
 		// rpcCall.addResponder(new AsyncResponder(this.successFileSendEvent, this.failureFileSendEvent))
-		return this.callServiceMethod(
-			'post',
-			'DHub/api/adminsvc/deliverPayload',
-			formData,
-			null,
-			this.successFileSendEvent.bind(this),
-			this.failureFileSendEvent.bind(this),
-			'form',
-			this.getHeaderData(),
-		)
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/deliverPayload', formData, null, this.successFileSendEvent.bind(this), this.failureFileSendEvent.bind(this), 'form', this.getHeaderData())
 	}
 
 	public republishError(errorId: string, properties: string): void {
