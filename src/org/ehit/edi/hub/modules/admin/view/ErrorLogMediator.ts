@@ -103,32 +103,41 @@ export class ErrorLogMediator extends Mediator {
 		this.errorLog = null
 	}
 
-	private searchByDate(event: MouseEvent): void {
+	private searchByDate(event: MouseEvent): void { //called this mediator function from LogSearch component
 		var MS_PER_DAY: number = 1000 * 60 * 60 * 24
-		var startDate: Date = this.view.LogSearch.startDate.selectedDate
-		var endDate: Date = this.view.LogSearch.endDate.selectedDate
-		var dateDiff: Date = new Date(endDate.time - startDate.time)
-		var difference: number = Math.abs(Math.round(dateDiff.time / MS_PER_DAY))
+		var startDate: Date = this.view.logSearch.state.startDate
+		var endDate: Date = this.view.logSearch.state.endDate
+		var dateDiff: Date = new Date(endDate.getTime() - startDate.getTime())
+		var difference: number = Math.abs(Math.round(dateDiff.getTime() / MS_PER_DAY))
 		if (startDate > endDate) {
-			this.view.errTxt.text = 'Start Date should be less than End Date.'
+			// this.view.errTxt.text = 'Start Date should be less than End Date.'
+			toast.error("Start Date should be less than End Date.")
 			return
 		} else if (difference > 60) {
-			this.view.errTxt.text = 'Please select Date Range within two months.'
+			// this.view.errTxt.text = 'Please select Date Range within two months.'
+			toast.error('Please select Date Range within two months.')
 			return
-		} else this.view.errTxt.text = ''
-		this.dispatch(new AdminEvent(this.AdminEvent.GET_ERROR_LOG, startDate, endDate))
+		} else {
+			// this.view.errTxt.text = ''
+			// this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG, startDate, endDate))calling Service call directly
+			this.adminService.findErrorLog(startDate, endDate);
+		}
 	}
 
 	private switchToFileId(event: MouseEvent): void {
-		if (this.view.LogSearch.selectIdSearch.selected) this.eventMap.mapListener(this.view.LogSearch.fileIdSearchBtn, MouseEvent.CLICK, this.searchByFileId, MouseEvent)
+		if(this.view.logSearch.selectIdSearch.checked) { this.searchByFileId()}
+		// if (this.view.LogSearch.selectIdSearch.selected) this.eventMap.mapListener(this.view.LogSearch.fileIdSearchBtn, MouseEvent.CLICK, this.searchByFileId, MouseEvent)
+
 	}
 
-	private searchByFileId(event: MouseEvent): void {
-		if (this.view.LogSearch.fileIdTxt.text.length < 1) {
-			this.view.errTxt.text = 'Please enter a valid Id'
+	private searchByFileId(event: MouseEvent): void { //called this mediator function from LogSearch component
+		if (this.view.logSearch.state.idField.length < 1) {
+			// this.view.errTxt.text = 'Please enter a valid Id'
+			toast.error('Please enter a valid Id')
 			return
 		}
-		this.dispatch(new AdminEvent(this.AdminEvent.GET_ERROR_LOG_BYID, null, null, this.view.LogSearch.fileIdTxt.text))
+		// this.dispatch(new AdminEvent(this.AdminEvent.GET_ERROR_LOG_BYID, null, null, this.view.LogSearch.fileIdTxt.text))
+		this.adminService.findErrorLogById(this.view.logSearch.state.idField);
 	}
 
 	/*override*/ public onRemove(): void {

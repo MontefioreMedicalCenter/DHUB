@@ -27,6 +27,7 @@ const getAllServiceArea = require('./response/getAllServiceArea')
 const addNewUser = require('./response/addNewUser')
 const findErrorLog = require('./response/findErrorLog')
 const deleteErrorLogs = require('./response/deleteErrorLogs')
+const findErrorLogById = require('./response/findErrorLogById')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -136,6 +137,10 @@ app.post('/DHub/api/adminsvc/findErrorLog', (req,res) => {
 
 app.post('/DHub/api/adminsvc/deleteErrorLogs', (req,res) => {
 	sendResponse(res, 200, deleteErrorLogs)
+})
+
+app.post('/DHub/api/adminsvc/findErrorLogById', (req,res) => {
+	sendResponse(res, 200, findErrorLogById)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

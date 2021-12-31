@@ -197,9 +197,13 @@ export class AdminService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/adminsvc/findErrorLog', formData, null, this.errorLogResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public findErrorLogById(logId: string): void {
-		var rpcCall: AsyncToken = this.service.findErrorLogById(logId)
-		rpcCall.addResponder(new AsyncResponder(this.errorLogResultEvent, this.failureFaultEvent))
+	public findErrorLogById(logId: string): AxiosPromise<any> {
+		var formData = qs.stringify({
+			Id: stringifyCircularObjectWithModifiedKeys(logId)
+		})
+		// var rpcCall: AsyncToken = this.service.findErrorLogById(logId)
+		// rpcCall.addResponder(new AsyncResponder(this.errorLogResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/findErrorLogById', formData, null, this.errorLogResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public deleteErrorLog(errorId: string): void {
@@ -208,7 +212,6 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	public deleteErrorLogs(errorLogs: ArrayCollection): AxiosPromise<any> {
-		debugger
 		var formData = qs.stringify({
 			errorLogs: stringifyCircularObjectWithModifiedKeys(errorLogs)
 		})
@@ -285,7 +288,6 @@ export class AdminService extends ServiceProxyBase {
 
 	protected errorLogDeleteResultEvent(event: ResultEvent, token: Object = null): void {
 		// this.dispatch(new AdminEvent(AdminEvent.GET_ERROR_LOG))
-		debugger
 		this.findErrorLog()
 	}
 

@@ -34,7 +34,8 @@ class LogSearch extends React.Component {
             file: null,
             radioValue: '1',
             endDate: new Date(),
-            startDate: new Date(twoDays)
+            startDate: new Date(twoDays),
+            idField: ''
         }
     }
 
@@ -70,9 +71,21 @@ class LogSearch extends React.Component {
             var file = new EdiFileBase();
             file.fileContent = this.state.file.files
             file.reportOnly = true
-            // this.dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))//Need to implement
+            // this.dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))//Need to have call and check this
             this.fileName.innerText = 'browse..'
         }
+    }
+
+    searchByDate = () => {
+        this.props.parentDocument.mediator.searchByDate()
+    }
+
+    switchToFileId = () => {
+        this.props.parentDocument.mediator.switchToFileId()
+    }
+
+    handleOnDateChange = (date, value) => {
+        this.setState({ [value]: date })
     }
 
 
@@ -85,10 +98,10 @@ class LogSearch extends React.Component {
                 {this.state.radioValue === '1' && (
                     <div className='searchField'>
                         <span>Start Date:</span>
-                        <LogSearchDatePicker ref={g => (this.startDate = g)} id='startDate' selectedDate={this.state.startDate} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{ width: '160px' }} />
+                        <LogSearchDatePicker ref={g => (this.startDate = g)} id='startDate' selectedDate={this.state.startDate} onDateChange={date => this.handleOnDateChange(date, 'startDate')} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{ width: '160px' }} />
                         <span>End Date:</span>
-                        <LogSearchDatePicker ref={g => (this.endDate = g)} id='endDate' selectedDate={this.state.endDate} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{ width: '160px' }} />
-                        <SearchIconButton>
+                        <LogSearchDatePicker ref={g => (this.endDate = g)} id='endDate' selectedDate={this.state.endDate} onDateChange={date => this.handleOnDateChange(date, 'endDate')} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{ width: '160px' }} />
+                        <SearchIconButton onClick={this.searchByDate}>
                             <img src={search} alt='search' />
                         </SearchIconButton>
                     </div>
@@ -100,10 +113,12 @@ class LogSearch extends React.Component {
                             id='userId'
                             variant='outlined'
                             autoComplete='off'
+                            value={this.state.idField}
+                            onChange={(e) => this.setState({ idField: e.target.value })}
                             InputProps={{ inputProps: { style: { height: '20px', padding: '5px', fontSize: '13px', marginLeft: '10px', fontFamily: 'sans-serif' } } }}
                             style={{ width: '440px', marginLeft: '10px' }}
                         />
-                        <SearchIconButton>
+                        <SearchIconButton onClick={this.switchToFileId}>
                             <img src={search} alt='search' />
                         </SearchIconButton>
                     </div>
@@ -119,11 +134,11 @@ class LogSearch extends React.Component {
                     </div>
                 )}
                 <div className='radioStyles'>
-                    <input type='radio' id='selectDate' name='radioBtn' value='selectDate' onClick={() => this.handleOnRadioClick('1')} defaultChecked={true} />
+                    <input ref={g => {this.selectDate = g}} type='radio' id='selectDate' name='radioBtn' value='selectDate' onClick={() => this.handleOnRadioClick('1')} defaultChecked={true} />
                     <span>Date Range</span>
-                    <input type='radio' id='selectIdSearch' name='radioBtn' value='selectIdSearch' onClick={() => this.handleOnRadioClick('2')} />
+                    <input ref={g => {this.selectIdSearch = g}} type='radio' id='selectIdSearch' name='radioBtn' value='selectIdSearch' onClick={() => this.handleOnRadioClick('2')} />
                     <span>Id.</span>
-                    <input type='radio' id='selectRpt' name='radioBtn' value='selectRpt' onClick={() => this.handleOnRadioClick('3')} />
+                    <input ref={g => {this.selectRpt = g}} type='radio' id='selectRpt' name='radioBtn' value='selectRpt' onClick={() => this.handleOnRadioClick('3')} />
                     <span>Reports</span>
                 </div>
             </div>
