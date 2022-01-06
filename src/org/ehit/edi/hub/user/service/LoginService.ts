@@ -16,9 +16,6 @@ import store from '../../../../../../AppConfig/store/configureStore'
 import { saveLoginModel } from '../../../../../../AppConfig/store/actions/loginAction'
 
 export class LoginService extends ServiceProxyBase {
-	/**
-	 * Name of the Remote Service Destination
-	 */
 
 	dispatchEvent(evt) {
 		GlobalEventDispatcher.instance().dispatchEvent(evt)
@@ -31,16 +28,9 @@ export class LoginService extends ServiceProxyBase {
 	// Define a ChannelSet object.
 	public cs: ChannelSet
 
-	/**
-	 * The RemoteObject will be injected in by the framework.
-	 * This is configured in ConfigureServicesCommand.
-	 */
-	/*[Inject(name="AuthenticationService")]*/
 	public service: RemoteObject
 	private loginToken: AsyncToken
-	/*[Inject]*/
 	public loginModel: LoginModel = LoginModel.getInstance()
-	/*[Inject]*/
 	public remitsModel: RemitsModel
 
 	public get loggedIn(): boolean {

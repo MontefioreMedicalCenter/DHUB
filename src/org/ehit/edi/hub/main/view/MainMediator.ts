@@ -7,7 +7,7 @@ export class MainMediator extends Mediator {
 	public main: Main
 
 	/*override*/ public onRegister(view): void {
-		this.mapListener(this.eventDispatcher, LoginEvent.LOGIN_SUCCESS, this.addPortal, LoginEvent)
+		// this.mapListener(this.eventDispatcher, LoginEvent.LOGIN_SUCCESS, this.addPortal, LoginEvent) // Added this to login mediator
 		this.mapListener(this.eventDispatcher, LoginEvent.LOGOUT, this.addLogin, LoginEvent)
 	}
 

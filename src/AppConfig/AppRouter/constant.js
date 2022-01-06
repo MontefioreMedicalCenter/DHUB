@@ -14,8 +14,7 @@ import PortalCanvas from "../../org/ehit/edi/hub/user/view/components/PortalCanv
 
 const ROUTES = [
 	{ name: 'login', url: '/', private: false, component: Login, exact: true },
-	{ name: 'main', url: '/main', private: true, component: PortalCanvas, exact: false },
-	{ name: 'admin', url: '/main/admin', private: true, component: Admin, exact: false },
+	{ name: 'main', url: '/main', private: true, component: PortalCanvas, exact: false }
 ]
 
 export const PRIVATE_ROUTES = [

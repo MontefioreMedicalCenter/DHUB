@@ -19,15 +19,17 @@ const PortalCanvas = () => {
     const alertData = useSelector(state => state.homeState.alertPopup)
     const dateString = `${moment().format('MMM D, YYYY')}`
     const timeString = `${moment().format('HH:mm:ss')}`
-    const [tabValue, handleTabChange] = useState(0)
+    const [tabValue, handleTabChange] = useState('/main/admin')
 
     useEffect(() => {
 		if (Object.keys(loginModel).length === 0) {
 			history.push('/')
+            localStorage.clear()
 		}
 	}, [loginModel, history])
 
     const handleLogout = () => {
+        localStorage.clear()
         history.push('/')
     }
 
@@ -60,6 +62,7 @@ const PortalCanvas = () => {
                     tabValue={tabValue}
                     tabList={tabList}
                     width='70%'
+                    tabType="main-tab"
                 />
                 <div className="container-main-view">
                     <Switch>
