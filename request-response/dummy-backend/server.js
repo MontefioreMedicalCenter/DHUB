@@ -28,6 +28,9 @@ const addNewUser = require('./response/addNewUser')
 const findErrorLog = require('./response/findErrorLog')
 const deleteErrorLogs = require('./response/deleteErrorLogs')
 const findErrorLogById = require('./response/findErrorLogById')
+const findDeliveryLog = require('./response/findDeliveryLog')
+const findDeliveryLogById = require('./response/findDeliveryLogById')
+const getFile = require('./response/getFile')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -133,6 +136,18 @@ app.post('/DHub/api/manageUsersvc/addNewUser' , (req, res) => {
 
 app.post('/DHub/api/adminsvc/findErrorLog', (req,res) => {
 	sendResponse(res, 200, findErrorLog)
+})
+
+app.post('/DHub/api/adminsvc/findDeliveryLog', (req,res) => {
+	sendResponse(res, 200, findDeliveryLog)
+})
+
+app.post('/DHub/api/adminsvc/findDeliveryLogById', (req,res) =>{
+	sendResponse(res, 200, findDeliveryLogById)
+})
+ 
+app.post('/DHub/api/fileManagersvc/getFile', (req,res) =>{
+	sendResponse(res, 200, getFile)
 })
 
 app.post('/DHub/api/adminsvc/deleteErrorLogs', (req,res) => {

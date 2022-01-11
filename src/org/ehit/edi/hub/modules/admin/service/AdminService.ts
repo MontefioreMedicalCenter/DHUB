@@ -57,24 +57,34 @@ export class AdminService extends ServiceProxyBase {
 		rpcCall.addResponder(new AsyncResponder(this.pollLogResultEvent, this.failureFaultEvent))
 	}
 
-	public findDeliveryLog(startDate: Date = null, endDate: Date = null): void {
+	public findDeliveryLog(startDate: Date = null, endDate: Date = null): AxiosPromise<any> {
 		var now: Date = new Date()
-		var currentDate: number = now.date
-		var currentMonth: number = now.month
-		var currentYear: number = now.fullYear
+		var currentDate: number = now.getDate()
+		var currentMonth: number = now.getMonth()
+		var currentYear: number = now.getFullYear()
 		var twoDays: Date = new Date(currentYear, currentMonth, currentDate - 2)
+
 		startDate = startDate == null && this.deliveryStartDt == null ? twoDays : startDate != null ? startDate : this.deliveryStartDt
 		endDate = endDate == null && this.deliveryEndDt == null ? now : endDate != null ? endDate : this.deliveryEndDt
 
 		this.deliveryStartDt = startDate
 		this.deliveryEndDt = endDate
-		var rpcCall: AsyncToken = this.service.findDeliveryLog(startDate, endDate)
-		rpcCall.addResponder(new AsyncResponder(this.deliveryLogResultEvent, this.failureFaultEvent))
+		var formData = qs.stringify({
+			startDate: startDate,
+			endDate: endDate
+		})
+		// var rpcCall: AsyncToken = this.service.findDeliveryLog(startDate, endDate)
+		// rpcCall.addResponder(new AsyncResponder(this.deliveryLogResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/findDeliveryLog', formData, null, this.deliveryLogResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public findDeliveryLogById(logId: string): void {
-		var rpcCall: AsyncToken = this.service.findDeliveryLogById(logId)
-		rpcCall.addResponder(new AsyncResponder(this.deliveryLogResultEvent, this.failureFaultEvent))
+	public findDeliveryLogById(logId: string): AxiosPromise<any> {
+		var formData = qs.stringify({
+			ID: stringifyCircularObjectWithModifiedKeys(logId)
+		})
+		// var rpcCall: AsyncToken = this.service.findDeliveryLogById(logId)
+		// rpcCall.addResponder(new AsyncResponder(this.deliveryLogResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/findDeliveryLogById', formData, null, this.deliveryLogResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public getPollControl(triggerOnly: boolean = false): AxiosPromise<any> {
@@ -253,7 +263,7 @@ export class AdminService extends ServiceProxyBase {
 	}
 
 	protected deliveryLogResultEvent(event: ResultEvent, token: Object = null): void {
-		this.adminModel.deliveryLog = <ArrayCollection>event.result
+		this.adminModel.deliveryLog = ArrayCollection.from(event.result)
 	}
 
 	protected combineTriggerResultEvent(event: ResultEvent, token: Object = null): void {

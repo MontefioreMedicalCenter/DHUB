@@ -9,8 +9,8 @@ export class FileEditorEvent extends BaseEvent {
 	private _file: EdiFileBase
 
 	constructor(type: string, file: EdiFileBase, bubbles: boolean = false, cancelable: boolean = false) {
-		this._file = file
 		super(type)
+		this._file = file
 	}
 
 	public get fileId(): number {

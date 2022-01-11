@@ -1,0 +1,54 @@
+import { toast } from 'react-toastify'
+import Mediator from '../../../../../../modules/main/view/Mediator.ts'
+import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
+import FileContainer from './components/FileContainer'
+
+export class FileContainerMediator extends Mediator {
+	/*[Inject]*/
+	public view: FileContainer
+
+	/*override*/ public onRegister(view): FileContainerMediator {
+		this.view = view
+		this.mapListener(this.eventDispatcher, FileEditorEvent.FILE_CONTENT, this.addFileContent, FileEditorEvent)
+		// this.mapListener(this.view.fileContentContainer, 'contentToReports', this.runReport)//need to implement
+		// this.mapListener(this.view.fileContentContainer, 'contentToX12Split', this.splitRemitsByBillingSystems)//need to implement
+		return this
+	}
+
+	private runReport(event: Event): void {
+		if (!this.mediatorMap.hasMediatorForView(this.view.reportContainer)) {
+			this.view.reportContainer.setfile(this.view.getfile())
+			this.mediatorMap.createMediator(this.view.reportContainer)
+		}
+	}
+
+	private splitRemitsByBillingSystems(event: Event): void {
+		if (!this.mediatorMap.hasMediatorForView(this.view.x12SplitContainer)) {
+			this.view.x12SplitContainer.setfile(this.view.getfile())
+			this.mediatorMap.createMediator(this.view.x12SplitContainer)
+		}
+	}
+
+	private addFileContent(event: FileEditorEvent): void {
+		this.view.setfile(event.file)
+		var fileEditor = this.view.props.parentDocument
+		fileEditor.title = event.file.origFileName
+		// this.mediatorMap.createMediator(this.view.fileContentContainer)
+		toast.warning("Working Need to Implement UI ")
+	}
+
+	/*override*/ public onRemove(): void {
+		this.eventMap.unmapListeners()
+		if (this.mediatorMap.hasMediatorForView(this.view.fileContentContainer)) {
+			this.mediatorMap.removeMediatorByView(this.view.fileContentContainer)
+		}
+		if (this.mediatorMap.hasMediatorForView(this.view.reportContainer)) {
+			this.mediatorMap.removeMediatorByView(this.view.reportContainer)
+		}
+		if (this.mediatorMap.hasMediatorForView(this.view.x12SplitContainer)) {
+			this.mediatorMap.removeMediatorByView(this.view.x12SplitContainer)
+		}
+		this.mediatorMap.removeMediatorByView(this.view)
+		super.onRemove()
+	}
+}
