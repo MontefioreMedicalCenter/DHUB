@@ -77,6 +77,9 @@ export class LoginMediator extends Mediator {
 	private popServiceArea(event: any): void {
 		// this.login.serviceArea.dataProvider = <ArrayCollection>event.serviceAreas
 		// this.login.serviceArea.selectedIndex = 0
+		event.serviceAreas.forEach(element => {
+			element.label = element.id.serviceAreaId
+		});
 		this.login.setState({ serviceArea: ArrayCollection.from(event.serviceAreas) })
 		this.login.setState({ selectedIndex: 0 })
 	}
@@ -96,7 +99,7 @@ export class LoginMediator extends Mediator {
 			// )
 
 			// this.loginService.saveServiceArea(<EdiUserRoleMap>this.login.serviceArea.selectedItem)
-			this.loginService.saveServiceArea(new EdiUserRoleMap().fromJson(this.login.state.serviceAreaValue))
+			this.loginService.saveServiceArea(this.login.state.serviceArea[this.login.state.selectedIndex])
 		}
 	}
 }
