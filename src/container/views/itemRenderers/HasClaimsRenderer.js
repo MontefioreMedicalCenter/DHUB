@@ -13,8 +13,8 @@ class HasClaimsRenderer extends React.Component{
                 <Checkbox 
                 id="claimsChk"
                 checked={this.props.column.parentDocument.hasRole(this.props, 'Claims')}
-                checkedIcon={this.props.row.getData().activeFlag === 'Y' ? <Green /> : <Red />}
-                icon={this.props.row.getData().activeFlag === 'N' ? <Red /> : <Green />}
+                checkedIcon={this.props.column.parentDocument.hasRole(this.props, 'Claims') === true ? <Green /> : <Red />}
+                icon={this.props.column.parentDocument.hasRole(this.props, 'Claims') === false ? <Red /> : <Green />}
                 onClick={e => this.activateRole0(e)}
                 disabled={this.props.column.parentDocument.hasRole(this.props, 'Admin')}
                 />

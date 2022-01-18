@@ -11,8 +11,8 @@ class HasEFTRenderer extends React.Component{
             <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
                 <Checkbox 
                 id="activeChk"
-                checkedIcon={this.props.row.getData().activeFlag === 'Y' ? <Green /> : <Red />}
-                icon={this.props.row.getData().activeFlag === 'N' ? <Red /> : <Green />}
+                checkedIcon={this.props.column.parentDocument.hasRole(this.props, 'Bank EFT') === true ? <Green /> : <Red />}
+                icon={this.props.column.parentDocument.hasRole(this.props, 'Bank EFT') === false ? <Red /> : <Green />}
                 onClick={e => this.activateRole0(e)}
                 checked={this.props.column.parentDocument.hasRole(this.props, 'Bank EFT')}
                 disabled={this.props.column.parentDocument.hasRole(this.props, 'Admin')}

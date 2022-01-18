@@ -11,8 +11,8 @@ class IsAdminRenderer extends React.Component{
             <div style={{ display: 'flex', height: '100%', justifyContent: 'center' }}>
                 <Checkbox 
                 id="activeChk"
-                checkedIcon={this.props.row.getData().activeFlag === 'Y' ? <Green /> : <Red />}
-                icon={this.props.row.getData().activeFlag === 'N' ? <Red /> : <Green />}
+                checkedIcon={this.props.column.parentDocument.hasRole(this.props, 'Admin') === true ? <Green /> : <Red />}
+                icon={this.props.column.parentDocument.hasRole(this.props, 'Admin') === false ? <Red /> : <Green />}
                 onClick={e => this.activateRole0(e)}
                 checked={this.props.column.parentDocument.hasRole(this.props, 'Admin')}
                 disabled={this.props.column.parentDocument.hasRole(this.props, 'Admin')}

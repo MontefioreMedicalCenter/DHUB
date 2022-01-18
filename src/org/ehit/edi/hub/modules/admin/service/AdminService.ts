@@ -406,9 +406,14 @@ export class AdminService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/adminsvc/deliverPayload', formData, null, this.successFileSendEvent.bind(this), this.failureFileSendEvent.bind(this), 'form', this.getHeaderData())
 	}
 
-	public republishError(errorId: string, properties: string): void {
-		var rpcCall: AsyncToken = this.service.republishError(errorId, properties)
-		rpcCall.addResponder(new AsyncResponder(this.successFileSendEvent, this.failureFileSendEvent))
+	public republishError(errorId: string, properties: string): AxiosPromise<any> {
+		var formData = ({
+			errorId: errorId,
+			DeliveryConfigId: properties
+		})
+		// var rpcCall: AsyncToken = this.service.republishError(errorId, properties)
+		// rpcCall.addResponder(new AsyncResponder(this.successFileSendEvent, this.failureFileSendEvent))
+		return this.callServiceMethod('post', 'DHub/api/adminsvc/republishError', formData, null, this.successFileSendEvent.bind(this), this.failureFileSendEvent.bind(this), 'form', this.getHeaderData())
 	}
 
 	protected successFileSendEvent(event: ResultEvent, token: Object = null): void {

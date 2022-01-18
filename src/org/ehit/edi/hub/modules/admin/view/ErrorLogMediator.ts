@@ -6,6 +6,9 @@ import { ErrorLogEvent } from "../model/events/ErrorLogEvent.ts"
 import { AdminService } from "../service/AdminService.ts"
 import { toast } from "react-toastify"
 import GlobalEventDispatcher from "../../../../../../../service/utils/GlobalEventDispatcher"
+import { FlexDataGridEvent } from "../../../../../../../flexicious"
+import { EdiFileBase } from "../../../main/model/EdiFileBase.ts"
+import { FileEditorEvent } from "../../../main/model/events/FileEditorEvent.ts"
 
 export class ErrorLogMediator extends Mediator {
 	public view: ErrorLog
@@ -20,10 +23,10 @@ export class ErrorLogMediator extends Mediator {
 		this.mapListener(this.eventDispatcher, AdminEvent.GET_ERROR_LOG, this.getAllErrorLogData, AdminEvent)
 		this.mapListener(this.eventDispatcher, AdminEvent.ERROR_LOG, this.addLogs, AdminEvent)
 		this.mapListener(this.eventDispatcher, AdminEvent.ERROR_MSG, this.addLogs, AdminEvent)
-		// this.mapListener(this.view.grid, FlexDataGridEvent.ITEM_CLICK, this.viewFile, FlexDataGridEvent)//Need to Implement
+		this.mapListener(this.view.grid, FlexDataGridEvent.ITEM_CLICK, this.viewFile, FlexDataGridEvent)
 		this.mapListener(this.eventDispatcher, AdminEvent.ERROR_LOG, this.addLogs, AdminEvent)
-		// this.mapListener(this.view.LogSearch.dateSearchBtn, MouseEvent.CLICK, this.searchByDate, MouseEvent)//Need to Implement
-		// this.mapListener(this.view.LogSearch.selectIdSearch, MouseEvent.CLICK, this.switchToFileId, MouseEvent)//Need to Implement
+		// this.mapListener(this.view.LogSearch.dateSearchBtn, MouseEvent.CLICK, this.searchByDate, MouseEvent)
+		// this.mapListener(this.view.LogSearch.selectIdSearch, MouseEvent.CLICK, this.switchToFileId, MouseEvent)
 		this.mapListener(this.view, ErrorLogEvent.DELETE_ERROR, this.onDelete)
 		var adminEvent: AdminEvent = new AdminEvent(AdminEvent.GET_ERROR_LOG)
 		this.dispatch(adminEvent)
@@ -48,45 +51,61 @@ export class ErrorLogMediator extends Mediator {
 	}
 
 	private viewFile(event: FlexDataGridEvent): void {
-		if (event.cell instanceof IFlexDataGridDataCell && event.cell.column != null) {
-			if (event.cell.column.dataField == 'fileId') {
+		if (event.cell.column != null) {
+			if (event.cell.getColumn().getDataField() === 'fileId') {
 				var file: EdiFileBase = new EdiFileBase()
-
-				file.fileId = event.cell.rowInfo.data.fileId
-				this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
+				file.fileId = event.cell.getRowInfo().getData().fileId
+				// this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
 			}
-			if (event.cell.column.dataField == 'errorMessage') {
-				var container1: ErrorContainer = new ErrorContainer()
-				PopUpManager.addPopUp(container1, this.contextView, true)
-				PopUpManager.centerPopUp(container1)
-				container1.title = 'Message'
-				container1.msgContent.text = event.cell.rowInfo.data.errorMessage
-			}
-
-			if (event.cell.column.dataField == 'userProps') {
-				var container2: ErrorContainer = new ErrorContainer()
-				PopUpManager.addPopUp(container2, this.contextView, true)
-				PopUpManager.centerPopUp(container2)
-				container2.title = 'Properties'
-				container2.msgContent.text = event.cell.rowInfo.data.userProps
+			if (event.cell.getColumn().getDataField() === 'errorMessage') {
+				this.view.setState({errorLog:true})
+				this.view.setState({errorContainerTitle : 'Message'})
+				this.view.setState({errorId: event.cell.getRowInfo().getData().id.errorId})
+				this.view.setState({msg: event.cell.getRowInfo().getData().errorMessage})
+				// this.view.errorContainer.setState({msgContent : event.cell.rowInfo.data.errorMessage})
+		// 		var container1: ErrorContainer = new ErrorContainer()
+		// 		PopUpManager.addPopUp(container1, this.contextView, true)
+		// 		PopUpManager.centerPopUp(container1)
+		// 		container1.title = 'Message'
+		// 		container1.msgContent.text = event.cell.rowInfo.data.errorMessage
 			}
 
-			if (event.cell.column.dataField == 'stackTrace') {
-				var container3: ErrorContainer = new ErrorContainer()
-				PopUpManager.addPopUp(container3, this.contextView, true)
-				PopUpManager.centerPopUp(container3)
-				container3.title = 'StackTrace'
-				container3.msgContent.text = event.cell.rowInfo.data.stackTrace
+			if (event.cell.getColumn().getDataField() === 'userProps') {
+				this.view.setState({errorLog:true})
+				this.view.setState({errorContainerTitle : 'Properties'})
+				this.view.setState({msg: event.cell.getRowInfo().getData().userProps})
+				// this.view.errorContainer.setState({msgContent : event.cell.rowInfo.getData().userProps})
+		// 		var container2: ErrorContainer = new ErrorContainer()
+		// 		PopUpManager.addPopUp(container2, this.contextView, true)
+		// 		PopUpManager.centerPopUp(container2)
+		// 		container2.title = 'Properties'
+		// 		container2.msgContent.text = event.cell.rowInfo.data.userProps
 			}
-			if (event.cell.column.colIndex == 12) {
-				var container4: ErrorContainer = new ErrorContainer()
-				PopUpManager.addPopUp(container4, this.contextView, true)
-				PopUpManager.centerPopUp(container4)
-				container4.title = 'Deliver Error '
-				this.mediatorMap.createMediator(container4)
-				container4.setErrorStore(<EdiErrorStore>event.cell.rowInfo.data)
-				container4.hBox.visible = true
-				container4.msgContent.text = event.cell.rowInfo.data.userProps
+
+			if (event.cell.getColumn().getDataField() === 'stackTrace') {
+				this.view.setState({errorLog:true})
+				this.view.setState({errorContainerTitle : 'StackTrace'})
+				this.view.setState({msg: event.cell.getRowInfo().getData().stackTrace})
+				// this.view.errorContainer.setState({msgContent : event.cell.rowInfo.getData().stackTrace})
+		// 		var container3: ErrorContainer = new ErrorContainer()
+		// 		PopUpManager.addPopUp(container3, this.contextView, true)
+		// 		PopUpManager.centerPopUp(container3)
+		// 		container3.title = 'StackTrace'
+		// 		container3.msgContent.text = event.cell.rowInfo.data.stackTrace
+			}
+			if (event.cell.getColumn().getColIndex() === 12) {
+				this.view.setState({errorLog:true})
+				this.view.setState({errorContainerTitle : 'Deliver Error '})
+				this.view.setState({msg: event.cell.getRowInfo().getData().userProps})
+				// this.view.errorContainer.setState({msgContent : event.cell.rowInfo.getData().userProps})
+		// 		var container4: ErrorContainer = new ErrorContainer()
+		// 		PopUpManager.addPopUp(container4, this.contextView, true)
+		// 		PopUpManager.centerPopUp(container4)
+		// 		container4.title = 'Deliver Error '
+		// 		this.mediatorMap.createMediator(container4)
+		// 		container4.setErrorStore(<EdiErrorStore>event.cell.rowInfo.data)
+		// 		container4.hBox.visible = true
+		// 		container4.msgContent.text = event.cell.rowInfo.data.userProps
 			}
 		}
 	}

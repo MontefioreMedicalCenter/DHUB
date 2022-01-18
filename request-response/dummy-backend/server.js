@@ -31,6 +31,7 @@ const findErrorLogById = require('./response/findErrorLogById')
 const findDeliveryLog = require('./response/findDeliveryLog')
 const findDeliveryLogById = require('./response/findDeliveryLogById')
 const getFile = require('./response/getFile')
+const republishError = require('./response/republishError')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -156,6 +157,10 @@ app.post('/DHub/api/adminsvc/deleteErrorLogs', (req,res) => {
 
 app.post('/DHub/api/adminsvc/findErrorLogById', (req,res) => {
 	sendResponse(res, 200, findErrorLogById)
+})
+
+app.post('/DHub/api/adminsvc/republishError', (req,res) => {
+	sendResponse(res, 200, republishError)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))
