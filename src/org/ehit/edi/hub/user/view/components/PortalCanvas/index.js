@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './main.style.scss'
 import { useHistory, Switch, Route } from 'react-router'
 import DoingMoreLogo from '../../../../../../../../../src/assets/images/Montefiore.gif'
@@ -10,6 +10,7 @@ import { Paper } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import AlertDialog from '../../../../../../../../shared/components/AlertDialog'
 import { removeMessage } from '../../../../../../../../AppConfig/store/actions/homeAction'
+import { PortalMediator } from '../../PortalMediator.ts'
 
 const PortalCanvas = () => {
     const history = useHistory()
@@ -19,7 +20,21 @@ const PortalCanvas = () => {
     const alertData = useSelector(state => state.homeState.alertPopup)
     const dateString = `${moment().format('MMM D, YYYY')}`
     const timeString = `${moment().format('HH:mm:ss')}`
-    const [tabValue, handleTabChange] = useState('/main/admin')
+    const [tabValue, handleTabChange] = useState('/main/claims')
+
+    var mediator = useRef(null)
+
+	useEffect(() => {
+		mediator.current = new PortalMediator().onRegister()
+        if(tabValue==='/main/claims'){
+            mediator.current.refreshTab(tabValue)
+        }
+
+		return () => {
+			mediator.current && mediator.current.onUnRegister()
+		}
+		// eslint-disable-next-line
+	}, [])
 
     useEffect(() => {
 		if (Object.keys(loginModel).length === 0) {
@@ -31,6 +46,11 @@ const PortalCanvas = () => {
     const handleLogout = () => {
         localStorage.clear()
         history.push('/')
+    }
+
+    const handleTabChangefunction = (e, value) => {
+        handleTabChange(value)
+        mediator.current.refreshTab(value)
     }
 
 
@@ -58,7 +78,9 @@ const PortalCanvas = () => {
             <div>
                 <CustomizedTabs
                     customstyle={tabStyles}
-                    setTabValue={handleTabChange}
+                    setTabValue={(e, value) => {
+                            handleTabChangefunction(e, value)
+                        }}
                     tabValue={tabValue}
                     tabList={tabList}
                     width='70%'

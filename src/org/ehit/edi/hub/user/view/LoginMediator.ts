@@ -44,7 +44,7 @@ export class LoginMediator extends Mediator {
 
 	private addPortal(e: LoginEvent): void {
 		localStorage.setItem('isAuthenticated', true)
-		this.login.props.history.push('/main/admin')
+		this.login.props.history.push('/main/claims')
 	}
 
 	private onLogin(event: LoginEvent): void {

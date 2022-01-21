@@ -32,6 +32,8 @@ const findDeliveryLog = require('./response/findDeliveryLog')
 const findDeliveryLogById = require('./response/findDeliveryLogById')
 const getFile = require('./response/getFile')
 const republishError = require('./response/republishError')
+const findClaimHeader = require('./response/findClaimHeader')
+const findClaimProcesses = require('./response/findClaimProcesses')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -161,6 +163,14 @@ app.post('/DHub/api/adminsvc/findErrorLogById', (req,res) => {
 
 app.post('/DHub/api/adminsvc/republishError', (req,res) => {
 	sendResponse(res, 200, republishError)
+})
+
+app.post('/DHub/api/claimsvc/findClaimHeader', (req,res) => {
+	sendResponse(res, 200, findClaimHeader)
+})
+
+app.post('/DHub/api/claimsvc/findClaimProcesses', (req,res) => {
+	sendResponse(res, 200, findClaimProcesses)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))
