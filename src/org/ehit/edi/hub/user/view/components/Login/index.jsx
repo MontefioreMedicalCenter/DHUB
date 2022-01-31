@@ -138,7 +138,7 @@ class Login extends EventDispatcher {
 							<Typography variant="body2" display="block" gutterBottom>
 								<span className="fonts">Service Area :</span>
 							</Typography>
-							<ComboBox name="serviceArea" id="serviceArea" valueKey="label" labelKey="label" dataProvider={serviceArea} onChange={event => this.changeHandler(event)} value={this.state.saveServiceArea} />
+							<ComboBox name="serviceArea" id="serviceArea" valueKey="label" labelKey="label" dataProvider={serviceArea} onChange={event => this.changeHandler(event)} value={this.state.serviceAreaValue} />
 						</div>
 						<div style={{ display: 'flex', padding: '5px', width: '140px' }}>
 							<input type="checkbox" id="showPassword" cstyle={{ height: '15px', width: '15px' }} onClick={this.showPassword} value={this.state.checkBox} />

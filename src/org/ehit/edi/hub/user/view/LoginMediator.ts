@@ -80,8 +80,8 @@ export class LoginMediator extends Mediator {
 		event.serviceAreas.forEach(element => {
 			element.label = element.id.serviceAreaId
 		});
-		this.login.setState({ serviceArea: ArrayCollection.from(event.serviceAreas) })
-		this.login.setState({ selectedIndex: 0 })
+		this.login._selServ = event.serviceAreas[0].label
+		this.login.setState({ serviceArea: ArrayCollection.from(event.serviceAreas), serviceAreaValue: event.serviceAreas[0].label })
 	}
 
 	private onServiceArea(event: MouseEvent): void {
@@ -99,7 +99,8 @@ export class LoginMediator extends Mediator {
 			// )
 
 			// this.loginService.saveServiceArea(<EdiUserRoleMap>this.login.serviceArea.selectedItem)
-			this.loginService.saveServiceArea(this.login.state.serviceArea[this.login.state.selectedIndex])
+			var selectedArea = this.login.state.serviceArea.filter(data => data.label === this.login.state.serviceAreaValue)
+			this.loginService.saveServiceArea(selectedArea[0])
 		}
 	}
 }

@@ -83,6 +83,8 @@ export class LoginService extends ServiceProxyBase {
 		this.loginModel = new EdiUserBase().fromJson({ user: event.result })
 		store.dispatch(saveLoginModel(this.loginModel))
 		// this.loginModel.fromJson({ user: event.result })
+		localStorage.setItem('user-id', event.result.userId)
+		localStorage.setItem('token', event.result.restApiKey)
 		var serv: ArrayCollection = ArrayCollection.from(this.loginModel.user.ediUserRoleMaps)
 		var servSelected: ArrayCollection = new ArrayCollection()
 		if (serv.length > 1) {
