@@ -1,7 +1,7 @@
 import { Paper } from '@material-ui/core'
 import moment from 'moment'
 import React from 'react'
-import { EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import { DateRange, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import { ClaimsMediator } from '../../ClaimsMediator.ts'
 import './claims.scss'
@@ -41,7 +41,7 @@ class Claims extends EventDispatcher {
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="processStatus" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalTransactionCount" enableCellClickRowSelect="false" headerText="Total Claims" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalDollarAmt" enableCellClickRowSelect="false" /*formatter="{ExampleUtils.globalCurrencyFormatter}"*/ textAlign="right" headerText="Total Amount" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="instanceStartTime" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.instanceStartTime} enableCellClickRowSelect="false" headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ />
+							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="instanceStartTime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.instanceStartTime} enableCellClickRowSelect="false" headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="instanceEndTime" enableCellClickRowSelect="false" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.instanceEndTime} headerText="Last Update Time" />
 							<ReactDataGridColumnLevel rowHeight="23" initialSortField="id.stepNum" nestIndent="30" headerColors="[0xC0C0C0,0xEEEEEE]" headerRollOverColors="[0xEEEEEE,0xC0C0C0]" alternatingItemColors={[0xe0e0e0, 0xffffff]}>
 								<ReactDataGridColumn dataField="id.stepNum" enableCellClickRowSelect="false" headerText="Step No." />
