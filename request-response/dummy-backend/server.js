@@ -34,6 +34,12 @@ const getFile = require('./response/getFile')
 const republishError = require('./response/republishError')
 const findClaimHeader = require('./response/findClaimHeader')
 const findClaimProcesses = require('./response/findClaimProcesses')
+const findRemitHeader = require('./response/findRemitHeader')
+const getPayerName = require('./response/getPayerName')
+const getSystemId = require('./response/getSystemId')
+const getStatus = require('./response/getStatus')
+const remitDetailSearch = require('./response/remitDetailSearch')
+const remitCoreSearch = require('./response/remitCoreSearch')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -171,6 +177,30 @@ app.post('/DHub/api/claimsvc/findClaimHeader', (req,res) => {
 
 app.post('/DHub/api/claimsvc/findClaimProcesses', (req,res) => {
 	sendResponse(res, 200, findClaimProcesses)
+})
+
+app.post('/DHub/api/remitssvc/findRemitHeader', (req,res) => {
+	sendResponse(res, 200, findRemitHeader)
+})
+
+app.post('/DHub/api/remitSearchsvc/getPayerName', (req,res) => {
+	sendResponse(res, 200, getPayerName)
+})
+
+app.post('/DHub/api/remitSearchsvc/getSystemId', (req,res) => {
+	sendResponse(res, 200, getSystemId)
+})
+
+app.post('/DHub/api/remitSearchsvc/getStatus', (req,res) => {
+	sendResponse(res, 200, getStatus)
+})
+
+app.post('/DHub/api/remitSearchsvc/remitDetailSearch', (req,res) => {
+	sendResponse(res, 200, remitDetailSearch)
+})
+
+app.post('/DHub/api/remitSearchsvc/remitCoreSearch', (req,res) => {
+	sendResponse(res, 200, remitCoreSearch)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

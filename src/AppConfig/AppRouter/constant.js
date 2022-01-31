@@ -7,10 +7,12 @@ import PollControl from "../../org/ehit/edi/hub/modules/admin/view/components/Po
 import X12CombineTrigger from "../../org/ehit/edi/hub/modules/admin/view/components/X12CombineTrigger"
 import BankEFT from "../../org/ehit/edi/hub/modules/BankEFT/view/components/BankEFT"
 import Claims from "../../org/ehit/edi/hub/modules/claims/view/components/Claims"
-import ClaimStatus from "../../org/ehit/edi/hub/modules/claimStatus/view/components"
+import Remits from "../../org/ehit/edi/hub/modules/remits/view/components/Remits"
 import Interfaces from "../../org/ehit/edi/hub/modules/interfaces/view/components/Interfaces"
 import Login from "../../org/ehit/edi/hub/user/view/components/Login"
 import PortalCanvas from "../../org/ehit/edi/hub/user/view/components/PortalCanvas"
+import RemitsTracker from "../../org/ehit/edi/hub/modules/remits/view/components/RemitsTracker"
+import MonthlyRemitRpt from "../../org/ehit/edi/hub/modules/remits/view/components/MonthlyRemitRpt"
 
 const ROUTES = [
 	{ name: 'login', url: '/', private: false, component: Login, exact: true },
@@ -29,7 +31,7 @@ export const PRIVATE_ROUTES = [
 		name: 'Remittance',
 		url: '/main/remittance',
 		private: true,
-		component: ClaimStatus,
+		component: Remits,
 		exact: false
 	},
 	{
@@ -52,6 +54,30 @@ export const PRIVATE_ROUTES = [
 		private: true,
 		component: Admin,
 		exact: false
+	}
+]
+
+export const remitsTabList = [
+	{
+		name: 'TrackRemittance',
+		url: '/main/remittance',
+		private: true,
+		component: RemitsTracker,
+		exact: true
+	},
+	{
+		name: 'QuickSearch',
+		url: '/main/remittance/quicksearch',
+		private: true,
+		component: RemitsTracker,
+		exact: true
+	},
+	{
+		name: 'RemitMonthlyReport',
+		url: '/main/remittance/remitsmonthlyreport',
+		private: true,
+		component: MonthlyRemitRpt,
+		exact: true
 	}
 ]
 

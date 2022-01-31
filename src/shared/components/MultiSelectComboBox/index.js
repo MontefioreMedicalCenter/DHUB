@@ -155,7 +155,7 @@ class MultiSelectComboBox extends React.Component {
 								</ListItemIcon>
 								<div style={{ width: '100%' }}>
 									<ListItemText id={labelId}>
-										<span style={{ color: item.textColor }}>{labelField ? item[labelField] : item}</span>
+										<span style={{ color: item && item.textColor }}>{labelField ? item[labelField] : item}</span>
 									</ListItemText>
 								</div>
 							</ListItem>
@@ -170,7 +170,7 @@ class MultiSelectComboBox extends React.Component {
 		)
 	}
 	render() {
-		return <AdvanceCustomMenu open={this.state.openMenu} onClick={() => this.setState({ openMenu: true })} onClose={() => this.setState({ openMenu: false })}bodyComponent={this.renderBodyComponent} label={' '} selectedData={this.props.label}  />
+		return <AdvanceCustomMenu open={this.state.openMenu} onClick={() => this.setState({ openMenu: true })} onClose={() => this.setState({ openMenu: false })} bodyComponent={this.renderBodyComponent} label={' '} selectedData={this.props.label} width={this.props.width} />
 	}
 }
 

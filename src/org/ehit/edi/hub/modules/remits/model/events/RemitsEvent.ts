@@ -1,6 +1,7 @@
+import { BaseEvent } from '../../../../../../../../flexicious'
 import ArrayCollection from '../../../../../../../../vo/ArrayCollection'
 
-export default class RemitsEvent extends Event {
+export default class RemitsEvent extends BaseEvent {
 	public static GET_REMIT_HEADER: string = 'getRemitHeader'
 	public static REMIT_HEADER: string = 'remitHeader'
 	public static GET_REMITS: string = 'getRemits'

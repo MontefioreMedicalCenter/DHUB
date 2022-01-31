@@ -1,8 +1,17 @@
+import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEventDispatcher'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 import VoBase from '../../../../../../../vo/VoBase'
 import RemitsEvent from './events/RemitsEvent.ts'
 
 export default class RemitsModel extends VoBase {
+	/** to make getInstance  */
+	dispatch(evt) {
+		GlobalEventDispatcher.instance().dispatchEvent(evt)
+	}
+
+	static instance: any
+	static getInstance: () => any
+	/** to make getInstance  */
 	private _remitsHeader: Object
 	private _remits: ArrayCollection
 
@@ -34,4 +43,13 @@ export default class RemitsModel extends VoBase {
 		this._errMsg = value
 		this.dispatch(new RemitsEvent(RemitsEvent.REMITS))
 	}
+}
+
+RemitsModel.prototype.typeName = RemitsModel.typeName = 'RemitsModel' //for quick inspection
+RemitsModel.instance = null
+RemitsModel.getInstance = () => {
+	if (!RemitsModel.instance) {
+		RemitsModel.instance = new RemitsModel()
+	}
+	return RemitsModel.instance
 }

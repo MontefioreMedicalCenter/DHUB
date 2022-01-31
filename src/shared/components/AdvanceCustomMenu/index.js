@@ -136,7 +136,7 @@ class AdvanceCustomMenu extends React.Component<Props> {
 	}
 
 	render() {
-		const { classes, label, bodyComponent, selectedData, anchorOrigin, transformOrigin, buttonColor, textColor, defaultValueSelected, disableCloseIcon } = this.props
+		const { classes, label, bodyComponent, selectedData, anchorOrigin, transformOrigin, buttonColor, textColor, defaultValueSelected, disableCloseIcon, width } = this.props
 		const { open } = this.state
 
 		return (
@@ -152,7 +152,8 @@ class AdvanceCustomMenu extends React.Component<Props> {
 					color="default"
 					style={{
 						backgroundColor: buttonColor,
-						color: textColor
+						color: textColor,
+						width: width
 					}}
 					onClick={this.handleToggle}>
 					<div className={classes.label}>{selectedData ? selectedData : label} </div>
