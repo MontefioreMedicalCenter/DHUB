@@ -1,6 +1,5 @@
 .whiteContainer{
     height: 120px;
-    // border: solid 1px red;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -20,6 +19,6 @@
 
 .pageStyle{
     background: linear-gradient(to left, white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white);
-    height: 800px;
+    height: calc(100vh - 135px);
     margin-top: 2px;
 }

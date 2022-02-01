@@ -6,6 +6,6 @@
 
 .page_style{
     background: linear-gradient(to left, white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white);
-    height: 800px;
+    height: calc(100vh - 135px);
     margin-top: 5px;
 }

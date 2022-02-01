@@ -22,7 +22,7 @@ class RemitsTracker extends EventDispatcher {
 		return (
 			<Paper className="page_style_remits">
 				{this.state.tabValue === '/main/remittance/quicksearch' && <RemitQuickSearch /> }
-				<div style={{height:this.state.tabValue === '/main/remittance/quicksearch'?'580px':'800px',width:'100%', marginTop:'2px'}}>
+				<div style={{height:this.state.tabValue === '/main/remittance/quicksearch'?'calc(100vh - 360px)':'calc(100vh - 135px)',width:'100%', marginTop:'2px'}}>
 					<DataGrid id="grid" width="100%" height="100%" enableCopy="true" enableExport="true" enablePrint="true" styleName="gridStyle" /*toolbarExcelHandlerFunction="onToolbarExport"*/ enableEagerDraw="false" showSpinnerOnFilterPageSort="true" initialSortField="logDatetime" initialSortAscending="false">
 						<ReactDataGridColumnLevel rowHeight="21" enableFilters="true" enablePaging="true" pageSize="500" /*rowTextColorFunction="getRowTextColor"*/>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />

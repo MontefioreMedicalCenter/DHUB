@@ -89,7 +89,7 @@ class DeliveryControl extends EventDispatcher {
 
 	render() {
 		return (
-			<Paper style={{ background: 'linear-gradient(to left, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)', height: '800px', marginTop: '2px' }}>
+			<Paper className='paperStyle'>
 				{/* <mx:VBox width="100%" borderAlpha="1" borderStyle="solid" borderVisible="true" horizontalAlign="center" verticalAlign="middle" verticalGap="0">
                     <mx:Text id="errTxt" color="red" fontWeight="bold" />
                 </mx:VBox> Need to Implement*/}

@@ -18,7 +18,7 @@
 
 .paperStyle{
     background: linear-gradient(to left, white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white);
-    height: 790px;
+    height: calc(100vh - 132px);
     margin-top: 2px;
 }
 
