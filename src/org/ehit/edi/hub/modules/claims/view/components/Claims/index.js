@@ -3,6 +3,8 @@ import moment from 'moment'
 import React from 'react'
 import { DateRange, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
+// import { EdiDateComboBox } from '../../../../../../../../../utils/dateFormatCombo/EdiDateComboBox.ts'
+import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
 import { ClaimsMediator } from '../../ClaimsMediator.ts'
 import './claims.scss'
 
@@ -33,7 +35,7 @@ class Claims extends EventDispatcher {
 		return (
 			<Paper className="page-style">
 				<div className="claimsGridStyle">
-					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint="true" enablePreferencePersistence="true" styleName="gridStyle" enableDrillDown="true" preferencePersistenceKey="outlookGroupedData" enableExport="true" enableCopy="true">
+					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint="true" enablePreferencePersistence="true" styleName="gridStyle" enableDrillDown="true" preferencePersistenceKey="outlookGroupedData" enableExport="true" enableCopy="true" parentDocument={this}>
 						<ReactDataGridColumnLevel rowHeight="21" childrenField="processInstanceSteps" enableFilters="true" enablePaging="true" /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" /*rowTextColorFunction="getRowTextColor"*/>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="senderName" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Sender" />
 							<ReactDataGridColumn dataField="fileName" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="File Name" useHandCursor="true" useUnderLine="true" />
@@ -41,7 +43,7 @@ class Claims extends EventDispatcher {
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="processStatus" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalTransactionCount" enableCellClickRowSelect="false" headerText="Total Claims" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalDollarAmt" enableCellClickRowSelect="false" /*formatter="{ExampleUtils.globalCurrencyFormatter}"*/ textAlign="right" headerText="Total Amount" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="instanceStartTime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.instanceStartTime} enableCellClickRowSelect="false" headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ />
+							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="instanceStartTime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.instanceStartTime} enableCellClickRowSelect="false" headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo}/>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="instanceEndTime" enableCellClickRowSelect="false" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.instanceEndTime} headerText="Last Update Time" />
 							<ReactDataGridColumnLevel rowHeight="23" initialSortField="id.stepNum" nestIndent="30" headerColors="[0xC0C0C0,0xEEEEEE]" headerRollOverColors="[0xEEEEEE,0xC0C0C0]" alternatingItemColors={[0xe0e0e0, 0xffffff]}>
 								<ReactDataGridColumn dataField="id.stepNum" enableCellClickRowSelect="false" headerText="Step No." />

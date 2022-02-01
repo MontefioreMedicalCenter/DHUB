@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { EdiFileBase } from '../../../main/model/EdiFileBase.ts'
 import { ProcessInstance } from '../model/vo/ProcessInstance.ts'
 import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
+import { DateRangeEvent } from '../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
 
 export class ClaimsMediator extends Mediator {
 	/*[Inject]*/
@@ -23,7 +24,7 @@ export class ClaimsMediator extends Mediator {
 
 	private claimsTimer
 
-	// private dateRange: DateRangeEvent
+	private dateRange: DateRangeEvent
 
 	public onRegister(view): ClaimsMediator {
 		this.view = view
@@ -127,15 +128,15 @@ export class ClaimsMediator extends Mediator {
 		this.searchByDateRange(this.dateRange)
 	}
 
-	private searchByDateRange(event: DateRangeEvent): void {
-		this.dateRange = event
+	private searchByDateRange(choosenStartDate, choosenEndDate) {
 		var startDate: Date = null
 		var endDate: Date = null
-		if (this.dateRange != null) {
-			startDate = event.dateRange.startDate
-			endDate = event.dateRange.endDate
+		if(choosenStartDate != null && choosenEndDate != null){
+			startDate = choosenStartDate
+			endDate = choosenEndDate
 		}
-		this.dispatch(new ClaimsEvent(ClaimsEvent.GET_CLAIMS, startDate, endDate))
+		// this.dispatch(new ClaimsEvent(ClaimsEvent.GET_CLAIMS, startDate, endDate))
+		this.claimsService.findClaimProcesses(startDate, endDate);//need to call this service directly because we dont have EdiHubContext
 	}
 
 	/*override*/ public onRemove(): void {
