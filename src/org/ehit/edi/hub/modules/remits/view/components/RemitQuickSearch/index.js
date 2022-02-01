@@ -77,40 +77,40 @@ class RemitQuickSearch extends EventDispatcher {
 	render() {
 		return (
 			<Paper className="pageStyleRemitsQuickSearch">
-				<Paper style={{ height: '100%', padding: '5px' }}>
+				<Paper style={{ height: '100%', padding: '5px', overflow: 'auto' }}>
 					<div className="column-divider">
 						<div className="mainDiv">
 							<div className="line">
-								<span className="font"> Received Date </span>
-								<div>
-									<input type="radio" id="fileDate" name="radioBtn" value="fileDate" onClick={() => this.handleOnRadioClick('fileDate')} defaultChecked={true} />
-									<span className="font">File</span>
-									<input type="radio" id="chkDate" name="radioBtn" value="chkDate" onClick={() => this.handleOnRadioClick('chkDate')} />
-									<span className="font">Check</span>
+								<span className="font" style={{display:'flex', flexDirection:'column', justifyContent:'center'}}> Received Date </span>
+								<div className="line">
+                                <div className="center"><input type="radio" id="fileDate" name="radioBtn" value="fileDate" onClick={() => this.handleOnRadioClick('fileDate')} defaultChecked={true} /></div>
+								<div className="center"><span className="font">File</span></div>	
+								<div className="center"><input type="radio" id="chkDate" name="radioBtn" value="chkDate" onClick={() => this.handleOnRadioClick('chkDate')} /></div>
+								<div className="center"><span className="font">Check</span></div>
 								</div>
-								<span className="font">From</span>
-								<span style={{ color: 'Red' }}>*</span>
+								<span className="font" style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>From</span>
+								<span style={{ color: 'Red', display:'flex', flexDirection:'column', justifyContent:'center' }} >*</span>
 								<RemitsQuickSearchDatePicker id="startDate" selectedDate={this.state.startDate} onDateChange={date => this.handleDateChange(date, 'startDate')} RemitsQuickSearchDatePickerStyle={{ width: '145px' }} />
-								<span className="font">To</span>
-								<span style={{ color: 'Red' }}>*</span>
+								<span className="font" style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>To</span>
+								<span style={{ color: 'Red', display:'flex', flexDirection:'column', justifyContent:'center' }}>*</span>
 								<RemitsQuickSearchDatePicker id="endDate" selectedDate={this.state.endDate} onDateChange={date => this.handleDateChange(date, 'endDate')} RemitsQuickSearchDatePickerStyle={{ width: '145px' }} />
 							</div>
 							<div className="line" style={{ marginRight: '310px' }}>
 								<span className="font2">Patient Account Number</span>
 								<div>
-									<TextField variant="outlined" id="patId" value={this.state.patId} error={this.state.patIdError} onChange={e => this.setState({ patId: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px' } } }} />
+									<TextField variant="outlined" id="patId" value={this.state.patId} error={this.state.patIdError} onChange={e => this.setState({ patId: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width:'182px', marginLeft:'5px'}}}} />
 								</div>
 							</div>
 							<div className="line" style={{ marginRight: '310px' }}>
 								<span className="font2">Check/EFT Trace Number</span>
 								<div>
-									<TextField variant="outlined" value={this.state.chkNo} error={this.state.chkNoError} onChange={e => this.setState({ chkNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px' } } }} />
+									<TextField variant="outlined" value={this.state.chkNo} error={this.state.chkNoError} onChange={e => this.setState({ chkNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width:'182px', marginLeft:'5px'}}}} />
 								</div>
 							</div>
 							<div className="line" style={{ marginRight: '310px' }}>
 								<span className="font2">System</span>
 								<div>
-									<MultiSelectComboBox id="systemIdBtn" name="systemIdBtn" label={this.state.systemIdBtnLabel} selectedData={this.state.systemIdBtnSelectedData} dataProvider={this.state.systemIdBtn_dataProvider} onChange={this.handleChangeCombo} width={'175px'} />
+									<MultiSelectComboBox id="systemIdBtn" name="systemIdBtn" label={this.state.systemIdBtnLabel} selectedData={this.state.systemIdBtnSelectedData} dataProvider={this.state.systemIdBtn_dataProvider} onChange={this.handleChangeCombo} width={'182px'} margin='0px'/>
 								</div>
 							</div>
 						</div>
@@ -118,19 +118,19 @@ class RemitQuickSearch extends EventDispatcher {
 							<div className="line">
 								<span className="font2">Payer Id</span>
 								<div>
-									<TextField variant="outlined" id="payerId" error={this.state.payerIdError} onChange={e => this.setState({ payerId: e.target.value })} value={this.state.payerId} InputProps={{ inputProps: { style: { padding: '0px', height: '35px' } } }} />
+									<TextField variant="outlined" id="payerId" error={this.state.payerIdError} onChange={e => this.setState({ payerId: e.target.value })} value={this.state.payerId} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width:'182px', marginLeft:'5px'}}}} />
 								</div>
 							</div>
 							<div className="line">
 								<span className="font2">Patient First Name</span>
 								<div>
-									<TextField variant="outlined" value={this.state.patFName} error={this.state.patFNameError} onChange={e => this.setState({ patFName: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px' } } }} />
+									<TextField variant="outlined" value={this.state.patFName} error={this.state.patFNameError} onChange={e => this.setState({ patFName: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width:'182px', marginLeft:'5px'}}}} />
 								</div>
 							</div>
 							<div className="line">
 								<span className="font2">PCN #</span>
 								<div>
-									<TextField variant="outlined" value={this.state.claimNo} error={this.state.claimNoError} onChange={e => this.setState({ claimNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px' } } }} />
+									<TextField variant="outlined" value={this.state.claimNo} error={this.state.claimNoError} onChange={e => this.setState({ claimNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width:'182px', marginLeft:'5px'}}}} />
 								</div>
 							</div>
 							<div className="line" style={{ marginRight: '152px' }}>
@@ -142,19 +142,19 @@ class RemitQuickSearch extends EventDispatcher {
 							<div className="line">
 								<span className="font2">Payer Name</span>
 								<div>
-									<MultiSelectComboBox id="payerNmBtn" name="payerNmBtn" label={this.state.payerNmBtnLabel} selectedData={this.state.payerNmBtnData} dataProvider={this.state.payerNmBtn_dataProvider} onChange={this.handleChangeCombo} selectAll={this.state.payerNmBtn_dataProvider.length} width={'175px'} />
+									<MultiSelectComboBox id="payerNmBtn" name="payerNmBtn" label={this.state.payerNmBtnLabel} selectedData={this.state.payerNmBtnData} dataProvider={this.state.payerNmBtn_dataProvider} onChange={this.handleChangeCombo} selectAll={this.state.payerNmBtn_dataProvider.length} width={'182px'} margin='0px'/>
 								</div>
 							</div>
 							<div className="line">
 								<span className="font2">Patient Last Name</span>
 								<div>
-									<TextField variant="outlined" value={this.state.patLName} error={this.state.patLNameError} onChange={e => this.setState({ patLName: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px' } } }} />
+									<TextField variant="outlined" value={this.state.patLName} error={this.state.patLNameError} onChange={e => this.setState({ patLName: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width:'182px', marginLeft:'5px'}}}} />
 								</div>
 							</div>
 							<div className="line">
 								<span className="font2">Status</span>
 								<div>
-									<MultiSelectComboBox id="statusBtn" name="statusBtn" label={this.state.statusBtnLabel} selectedData={this.state.statusBtnData} dataProvider={this.state.statusBtn_dataProvider} onChange={this.handleChangeCombo} width={'175px'} />
+									<MultiSelectComboBox id="statusBtn" name="statusBtn" label={this.state.statusBtnLabel} selectedData={this.state.statusBtnData} dataProvider={this.state.statusBtn_dataProvider} onChange={this.handleChangeCombo} width={'182px'} margin='0px'/>
 								</div>
 							</div>
 						</div>

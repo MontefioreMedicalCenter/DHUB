@@ -170,7 +170,7 @@ class MultiSelectComboBox extends React.Component {
 		)
 	}
 	render() {
-		return <AdvanceCustomMenu open={this.state.openMenu} onClick={() => this.setState({ openMenu: true })} onClose={() => this.setState({ openMenu: false })} bodyComponent={this.renderBodyComponent} label={' '} selectedData={this.props.label} width={this.props.width} />
+		return <AdvanceCustomMenu open={this.state.openMenu} onClick={() => this.setState({ openMenu: true })} onClose={() => this.setState({ openMenu: false })} bodyComponent={this.renderBodyComponent} label={' '} selectedData={this.props.label} width={this.props.width} margin={this.props.margin} />
 	}
 }
 

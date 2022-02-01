@@ -25,6 +25,7 @@
     grid-column-gap: 50px;
     column-gap: 200px;
     padding: 5px;
+    width: fit-content;
 }
 
 .font{
@@ -33,9 +34,16 @@
 }
 
 .font2{
-        font-size: 15px;
-        font-family: emoji;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    white-space: pre;
+    font-size: 15px;
+    font-family: emoji;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
