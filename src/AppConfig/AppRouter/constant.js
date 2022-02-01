@@ -13,6 +13,8 @@ import Login from "../../org/ehit/edi/hub/user/view/components/Login"
 import PortalCanvas from "../../org/ehit/edi/hub/user/view/components/PortalCanvas"
 import RemitsTracker from "../../org/ehit/edi/hub/modules/remits/view/components/RemitsTracker"
 import MonthlyRemitRpt from "../../org/ehit/edi/hub/modules/remits/view/components/MonthlyRemitRpt"
+import BankEFTTracker from "../../org/ehit/edi/hub/modules/BankEFT/view/components/BankEFTTracker"
+import BankEFTSearch from "../../org/ehit/edi/hub/modules/BankEFT/view/components/BankEFTSearch"
 
 const ROUTES = [
 	{ name: 'login', url: '/', private: false, component: Login, exact: true },
@@ -77,6 +79,23 @@ export const remitsTabList = [
 		url: '/main/remittance/remitsmonthlyreport',
 		private: true,
 		component: MonthlyRemitRpt,
+		exact: true
+	}
+]
+
+export const bankEftTabList = [
+	{
+		name: 'TrackBankEFT',
+		url: '/main/bankEFT',
+		private: true,
+		component: BankEFTTracker,
+		exact: true
+	},
+	{
+		name: 'EFTQuickSearch',
+		url: '/main/bankEFT/bankEFTSearch',
+		private: true,
+		component: BankEFTSearch,
 		exact: true
 	}
 ]
