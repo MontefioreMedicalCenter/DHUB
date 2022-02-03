@@ -85,6 +85,9 @@ export class LoginService extends ServiceProxyBase {
 		// this.loginModel.fromJson({ user: event.result })
 		localStorage.setItem('user-id', event.result.userId)
 		localStorage.setItem('token', event.result.restApiKey)
+		localStorage.setItem('login-time', new Date())
+		localStorage.setItem('loginModel', JSON.stringify(event.result))
+		
 		var serv: ArrayCollection = ArrayCollection.from(this.loginModel.user.ediUserRoleMaps)
 		var servSelected: ArrayCollection = new ArrayCollection()
 		if (serv.length > 1) {

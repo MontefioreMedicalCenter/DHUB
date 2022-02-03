@@ -18,8 +18,8 @@ const PortalCanvas = () => {
     const loginModel = useSelector(state => state.loginState.loginModel)
     const dayString = `${moment()}`
     const alertData = useSelector(state => state.homeState.alertPopup)
-    const dateString = `${moment().format('MMM D, YYYY')}`
-    const timeString = `${moment().format('HH:mm:ss')}`
+	const dateString = `${moment(localStorage.getItem('login-time')).format('MM/DD/YYYY')}`
+	const timeString = `${moment(localStorage.getItem('login-time')).format('HH:mm:ss')}`
     const [tabValue, handleTabChange] = useState('/main/claims')
 
     var mediator = useRef(null)
