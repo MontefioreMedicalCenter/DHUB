@@ -109,7 +109,7 @@ const PortalCanvas = () => {
                     margin: '5px',
                     padding: '0px 10px'
                 }}>
-                Version 2.0, Content © 2020, MIT .All rights reserved.
+                Version 2.0, Content © 2022, MIT .All rights reserved.
             </p>
             <AlertDialog {...alertData} onClose={() => dispatch(removeMessage())} />
         </div>
