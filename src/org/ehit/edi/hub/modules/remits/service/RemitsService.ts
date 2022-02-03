@@ -45,7 +45,7 @@ export class RemitsService extends ServiceProxyBase {
 	}
 
 	public findRemitsProcesses(startDate: Date = null, endDate: Date = null): void {
-		if (this.remitsModel.remitHeader == null) {
+		if (this.remitsModel.remitHeader === null) {
 			this.findRemitHeader()
 		} else {
 			var now: Date = new Date()
@@ -120,8 +120,9 @@ export class RemitsService extends ServiceProxyBase {
 	 * @param token
 	 */
 	protected failureFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
-		this.remitsModel.errMsg = msg.faultString
+		var msg: ErrorMessage = <ErrorMessage>event
+		// this.remitsModel.errMsg = msg.error.message
+		toast.error(msg.error.message)
 	}
 
 	protected x12SplitsuccessResultEvent(event: ResultEvent, token: Object = null): void {
