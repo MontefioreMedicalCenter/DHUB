@@ -9,6 +9,6 @@ export default class EdiDateRangeCombo extends DateComboBox {
 	}
 	
 	getSearchRangeEnd = () => {
-		return this.grid.props.parentDocument ? this.grid.props.parentDocument.mediator.searchByDateRange(this.getDateRange().startDate, this.getDateRange().startDate, this.getDateRange().endDate) : super.setSearchRangeEnd
+		return this.grid.props.parentDocument ? this.grid.props.parentDocument.mediator.searchByDateRange(this.getDateRange().startDate, this.getDateRange().endDate) : super.setSearchRangeEnd
 	}
 }
