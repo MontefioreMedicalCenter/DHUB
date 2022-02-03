@@ -42,7 +42,7 @@ export const PRIVATE_ROUTES = [
 		private: true,
 		component: BankEFT,
 		exact: false
-	},
+	}/*,
 	{
 		name: 'Interface',
 		url: '/main/interface',
@@ -56,7 +56,7 @@ export const PRIVATE_ROUTES = [
 		private: true,
 		component: Admin,
 		exact: false
-	}
+	}*/
 ]
 
 export const remitsTabList = [
