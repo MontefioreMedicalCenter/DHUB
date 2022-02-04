@@ -4,26 +4,23 @@ import { ClaimsEvent } from '../model/events/ClaimsEvent.ts'
 import { ClaimsService } from '../service/ClaimsService.ts'
 import Claims from './components/Claims'
 import { FlexDataGridColumn, ClassFactory, UIUtils, Timer, FlexDataGridEvent } from '../../../../../../../flexicious'
-import minus_black from '../../../../../../../assets/images/minus_black.png'
+import tickIcon from '../../../../../../../assets/images/tick.png'
+import waitIcon from '../../../../../../../assets/images/clock.png'
+import naIcon from '../../../../../../../assets/images/minus_black.png'
 import { toast } from 'react-toastify'
 import { EdiFileBase } from '../../../main/model/EdiFileBase.ts'
 import { ProcessInstance } from '../model/vo/ProcessInstance.ts'
 import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
 import { DateRangeEvent } from '../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
+import ArrayCollection from '../../../../../../../vo/ArrayCollection'
+import { FileEditorService } from '../../../main/service/FileEditorService.ts'
 
 export class ClaimsMediator extends Mediator {
-	/*[Inject]*/
 	public view: Claims
-
-	/*[Inject]*/
 	public claimsModel: ClaimsModel = ClaimsModel.getInstance()
-
-	public claimsService: ClaimsService = ClaimsService.getInstance();
-
-	// private log: ILogger = this.Log.getLogger('ClaimsMediator')
-
+	public claimsService: ClaimsService = ClaimsService.getInstance()
+	public fileEditorService: FileEditorService = FileEditorService.getInstance()
 	private claimsTimer
-
 	private dateRange: DateRangeEvent
 
 	public onRegister(view): ClaimsMediator {
@@ -36,8 +33,8 @@ export class ClaimsMediator extends Mediator {
 		this.mapListener(this.view.grid, FlexDataGridEvent.ICON_CLICK, this.viewFile, FlexDataGridEvent)
 		this.claimsTimer = new Timer(600000)
 		// this.mapListener(this.claimsTimer, TimerEvent.TIMER, this.refreshClaims)
-
-		if (this.view.state.tabValue === "/main/claims") { /** Directly called service call's from Claims Command */
+		if (this.view.state.tabValue === '/main/claims') {
+			/** Directly called service call's from Claims Command */
 			this.claimsService.findClaimHeader()
 		} else {
 			// claimsService.findClaimProcesses(event.startDate, event.endDate)
@@ -45,55 +42,40 @@ export class ClaimsMediator extends Mediator {
 		return this
 	}
 
-	/*[Bindable]*/
-	/*[Embed('org/ehit/edi/hub/assets/img/tick.png')]*/
-	private static tickIcon: Class
-	/*[Bindable]*/
-	/*[Embed('org/ehit/edi/hub/assets/img/clock.png')]*/
-	private static waitIcon: Class
-	/*[Bindable]*/
-	/*[Embed('org/ehit/edi/hub/assets/img/minus_black.png')]*/
-	private static naIcon = minus_black
-
 	public dynamicIconFunction(cell: IFlexDataGridCell, state: string = ''): any {
 		var iconField: string = null
-		var img = ClaimsMediator.naIcon
-		if (cell.getRowInfo().getIsDataRow()) {	
-			// Need processInstanceSteps data to add this
-
-			// for (var x: number = 0; x < cell.rowInfo.getData().processInstanceSteps.length; x++) {
-			// 	if (cell.rowInfo.getData().processInstanceSteps.getItemAt(x).id.stepNum == cell.column.dataField) {
-			// 		iconField = <String>cell.rowInfo.getData().processInstanceSteps.getItemAt(x).stepStatus
-
-			// 		img = iconField == 'Completed' ? ClaimsMediator.tickIcon : iconField == 'n/a' ? ClaimsMediator.naIcon : ClaimsMediator.waitIcon
-			// 		var arr: ArrayCollection = new ArrayCollection()
-			// 		return img
-			// 	}
-			// }
-			// return img
+		var img = naIcon
+		if (cell.getRowInfo().getIsDataRow()) {
+			for (var x: number = 0; x < cell.rowInfo.getData().processInstanceSteps.length; x++) {
+				if (cell.getRowInfo().getData().processInstanceSteps[x].id.stepNum === cell.getColumn().getDataField()) {
+					iconField = String(cell.getRowInfo().getData().processInstanceSteps[x].stepStatus)
+					img = iconField === 'Completed' ? tickIcon : iconField === 'n/a' ? naIcon : waitIcon
+					var arr = new ArrayCollection()
+					return img
+				}
+			}
+			return img
 		}
 		return null
 	}
 
-	public static dataGridFormatIcon(item: Object, column: Object): string {
+	dataGridFormatIcon = (item, column) => {
 		var status: string
-
 		for (var x: number = 0; x < item.processInstanceSteps.length; x++) {
-			if (item.processInstanceSteps.getItemAt(x).id.stepNum == column.dataField) {
-				status = <String>item.processInstanceSteps.getItemAt(x).stepStatus
-				return status == 'Completed' ? 'Y' : status == 'n/a' ? 'N/A' : 'N'
+			if (item.processInstanceSteps[x].id.stepNum === column.getDataField()) {
+				status = String(item.processInstanceSteps[x].id.stepNum)
+				return status === 'Completed' ? 'Y' : status === 'n/a' ? 'N/A' : 'N'
 			}
 		}
 
-		return status
 	}
 
 	private addClaimHeader(event: ClaimsEvent): void {
 		for (var x: number = 0; x < this.claimsModel.claimHeader.length; x++) {
-			var col:FlexDataGridColumn=new FlexDataGridColumn();
+			var col: FlexDataGridColumn = new FlexDataGridColumn()
 			col.setHeaderText(this.claimsModel.claimHeader[x][1])
 			col.dataField = this.claimsModel.claimHeader[x][0]
-			col.labelFunction = ClaimsMediator.dataGridFormatIcon
+			col.setLabelFunction(this.dataGridFormatIcon)
 			col.hideText = true
 			col.enableIcon = true
 			col.iconHandCursor = true
@@ -131,12 +113,12 @@ export class ClaimsMediator extends Mediator {
 	private searchByDateRange(choosenStartDate, choosenEndDate) {
 		var startDate: Date = null
 		var endDate: Date = null
-		if(choosenStartDate != null && choosenEndDate != null){
+		if (choosenStartDate != null && choosenEndDate != null) {
 			startDate = choosenStartDate
 			endDate = choosenEndDate
 		}
 		// this.dispatch(new ClaimsEvent(ClaimsEvent.GET_CLAIMS, startDate, endDate))
-		this.claimsService.findClaimProcesses(startDate, endDate);//need to call this service directly because we dont have EdiHubContext
+		this.claimsService.findClaimProcesses(startDate, endDate) //need to call this service directly because we dont have EdiHubContext
 	}
 
 	/*override*/ public onRemove(): void {
@@ -161,24 +143,32 @@ export class ClaimsMediator extends Mediator {
 					transaction = instance.transactionType
 					display = true
 				}
-				toast.warning("Need processInstanceSteps data")
-				// Need processInstanceSteps data to add this
-				// for (var x: number = 0; x < instance.processInstanceSteps.length; x++) {
-				// 	if (instance.processInstanceSteps.getItemAt(x).id.stepNum == event.cell.column.dataField) {
-				// 		fileId = instance.processInstanceSteps.getItemAt(x).fileId
-				// 		transaction = event.cell.column.dataField
-				// 		if (instance.processInstanceSteps.getItemAt(x).stepStatus == 'Completed') display = true
-				// 	}
-				// }
+				for (var x: number = 0; x < instance.processInstanceSteps.length; x++) {
+					if (instance.processInstanceSteps.getItemAt(x).id.stepNum === event.cell.getColumn().dataField) {
+						fileId = instance.processInstanceSteps.getItemAt(x).fileId
+						transaction = event.cell.getColumn().getDataField()
+						if (instance.processInstanceSteps.getItemAt(x).stepStatus === 'Completed') display = true
+					}
+				}
 			}
 
 			if (display && fileId > 0) {
 				file.fileId = fileId
 				file.removeCRLF = true
-				this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
-			} else if (display) toast.error('Error opening file!! File not found')
+				// this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
+				this.execute(file) //as we don't have EdiHubContext we are directly calling FileEditorCommand, execute function here
+			} else if (display) {
+				toast.error('Error opening file!! File not found')
+			}
 		} catch (e) {
 			toast.error('something bad happened')
 		}
+	}
+
+	private execute(file): void {
+		this.view.setState({ fileEditorWindow: true })
+		if (file.reportOnly == true) toast.warning('Need to Implement true')
+		// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+		else this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 	}
 }
