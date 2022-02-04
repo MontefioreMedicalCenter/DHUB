@@ -36,7 +36,7 @@ class Claims extends EventDispatcher {
 
 	dateForm = (item, col) => {
 		const dataField = col.dataField.split('.')
-		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY K:NN A') : null
+		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY HH:MM A') : null
 	}
 
 	getRowTextColor = cell => {

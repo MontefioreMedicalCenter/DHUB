@@ -134,6 +134,8 @@
 .flexiciousGrid .disclosureIcon {
   position: absolute;
   cursor: pointer;
+  left: -5px !important;
+  top: 0 !important;
 }
 .flexiciousGrid .columnIcon {
   position: absolute;
