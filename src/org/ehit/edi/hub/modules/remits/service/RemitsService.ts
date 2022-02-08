@@ -3,7 +3,10 @@ import { toast } from 'react-toastify'
 import ServiceProxyBase from '../../../../../../../service/cfc/ServiceProxyBase'
 import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEventDispatcher'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
+import RemitsEvent from '../model/events/RemitsEvent.ts'
 import RemitsModel from '../model/RemitsModel.ts'
+import qs from 'qs' 
+import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
 
 export class RemitsService extends ServiceProxyBase {
 	/**
@@ -150,14 +153,15 @@ export class RemitsService extends ServiceProxyBase {
 		this.dispatch(remitsEvent)
 	}
 
-	public getAllRemits(): void {
-		var rpcCall: AsyncToken = this.service.getAllRemits()
-		rpcCall.addResponder(new AsyncResponder(this.rptSuccessResultEvent, this.failureFaultEvent))
+	public getAllRemits(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getAllRemits()
+		// rpcCall.addResponder(new AsyncResponder(this.rptSuccessResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/getAllRemits', null, null, this.rptSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	protected rptSuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var remitsEvent: RemitsEvent = new RemitsEvent(RemitsEvent.REMIT_RPT_PP)
-		remitsEvent.rrptdata = <ArrayCollection>event.result
+		remitsEvent.rrptdata = ArrayCollection.from(event.result)
 		this.dispatch(remitsEvent)
 	}
 
@@ -167,33 +171,39 @@ export class RemitsService extends ServiceProxyBase {
 	}
 	protected rptMonSuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var remitsEvent: RemitsEvent = new RemitsEvent(RemitsEvent.RPT_MONTH_PP)
-		remitsEvent.rptmondata = <ArrayCollection>event.result
+		remitsEvent.rptmondata = ArrayCollection.from(event.result)
 		this.dispatch(remitsEvent)
 	}
 
-	public getRptMonth(): void {
-		var rpcCall: AsyncToken = this.service.getRptMonth()
-		rpcCall.addResponder(new AsyncResponder(this.rptMonSuccessResultEvent, this.failureFaultEvent))
+	public getRptMonth(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getRptMonth()
+		// rpcCall.addResponder(new AsyncResponder(this.rptMonSuccessResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/getRptMonth', null, null, this.rptMonSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 	//getRptPayers
-	public getRptPayers(): void {
-		var rpcCall: AsyncToken = this.service.getRptPayers()
-		rpcCall.addResponder(new AsyncResponder(this.rptPayerSuccessResultEvent, this.failureFaultEvent))
+	public getRptPayers(): AxiosPromise<any> {
+		// var rpcCall: AsyncToken = this.service.getRptPayers()
+		// rpcCall.addResponder(new AsyncResponder(this.rptPayerSuccessResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/getRptPayers', null, null, this.rptPayerSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 	protected rptPayerSuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var remitsEvent: RemitsEvent = new RemitsEvent(RemitsEvent.RPT_PAYER_PP)
-		remitsEvent.rptPayers = <ArrayCollection>event.result
+		remitsEvent.rptPayers = ArrayCollection.from(event.result)
 		this.dispatch(remitsEvent)
 	}
 
-	public getRptHeader(): void {
-		var rpcCall: AsyncToken = this.service.getRemitReportMaps('Monthly')
-		rpcCall.addResponder(new AsyncResponder(this.rptMapSuccessResultEvent, this.failureFaultEvent))
+	public getRptHeader(): AxiosPromise<any> {
+		var formData = qs.stringify({
+			pollControlId: 'Monthly'
+		})
+		// var rpcCall: AsyncToken = this.service.getRemitReportMaps('Monthly')
+		// rpcCall.addResponder(new AsyncResponder(this.rptMapSuccessResultEvent, this.failureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/getRemitReportMaps', formData, null, this.rptMapSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	protected rptMapSuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var remitsEvent: RemitsEvent = new RemitsEvent(RemitsEvent.RPT_HEADER_PP)
-		remitsEvent.rrptdata = <ArrayCollection>event.result
+		remitsEvent.rrptdata = ArrayCollection.from(event.result)
 		this.dispatch(remitsEvent)
 	}
 }

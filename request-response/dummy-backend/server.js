@@ -40,6 +40,10 @@ const getSystemId = require('./response/getSystemId')
 const getStatus = require('./response/getStatus')
 const remitDetailSearch = require('./response/remitDetailSearch')
 const remitCoreSearch = require('./response/remitCoreSearch')
+const getAllRemits = require('./response/getAllRemits')
+const getRemitReportMaps = require('./response/getRemitReportMaps')
+const getRptMonth = require('./response/getRptMonth')
+const getRptPayers = require('./response/getRptPayers')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -203,6 +207,21 @@ app.post('/DHub/api/remitSearchsvc/remitCoreSearch', (req,res) => {
 	sendResponse(res, 200, remitCoreSearch)
 })
 
+app.post('/DHub/api/remitssvc/getAllRemits', (req,res) => {
+	sendResponse(res, 200, getAllRemits)
+})
+
+app.post('/DHub/api/remitssvc/getRemitReportMaps', (req,res) => {
+	sendResponse(res, 200, getRemitReportMaps)
+})
+
+app.post('/DHub/api/remitssvc/getRptMonth', (req,res) => {
+	sendResponse(res, 200, getRptMonth)
+})
+
+app.post('/DHub/api/remitssvc/getRptPayers', (req,res) => {
+	sendResponse(res, 200, getRptPayers)
+})
 app.use(require('express').static(path.join(__dirname, 'build')))
 
 app.get('/', function (req, res) {
