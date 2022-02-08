@@ -8,6 +8,7 @@ import RemitsModel from '../model/RemitsModel.ts'
 import qs from 'qs' 
 import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
 
+
 export class RemitsService extends ServiceProxyBase {
 	/**
 	 * Name of the Remote Service Destination
@@ -37,8 +38,6 @@ export class RemitsService extends ServiceProxyBase {
 	private _editor: boolean = false
 
 	public findRemitHeader(): AxiosPromise<any> {
-		// var rpcCall: AsyncToken = this.service.findRemitHeader()
-		// rpcCall.addResponder(new AsyncResponder(this.headerResultEvent, this.failureFaultEvent))
 		return this.callServiceMethod('post', 'DHub/api/remitssvc/findRemitHeader', null, null, this.headerResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
@@ -47,7 +46,7 @@ export class RemitsService extends ServiceProxyBase {
 		this.findRemitsProcesses()
 	}
 
-	public findRemitsProcesses(startDate: Date = null, endDate: Date = null): void {
+	public findRemitsProcesses(startDate: Date = null, endDate: Date = null):  AxiosPromise<any> {
 		if (this.remitsModel.remitHeader === null) {
 			this.findRemitHeader()
 		} else {
@@ -63,9 +62,14 @@ export class RemitsService extends ServiceProxyBase {
 			this.searchStartDt = startDate
 			this.searchEndDt = endDate
 
-			toast.warning("Need findRemitsProcesses service call")
-			// var rpcCall: AsyncToken = this.service.findRemitsProcesses(startDate, endDate)
-			// rpcCall.addResponder(new AsyncResponder(this.successResultEvent, this.failureFaultEvent))
+		var formData = qs.stringify({
+			startDate: startDate,
+			endDate: endDate
+		})
+
+		
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/findRemitsProcesses', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+			
 		}
 	}
 

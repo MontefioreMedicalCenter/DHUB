@@ -110,15 +110,16 @@ export default class RemitsTrackerMediator extends Mediator {
 	}
 
 	private addRemits(event: RemitsEvent): void {
-		if (!this.remitsTimer.running) {
-			this.remitsTimer.start()
-		}
+		// if (!this.remitsTimer.running) {
+		// 	this.remitsTimer.start()
+		// }
 		if (this.remitsModel.errMsg == null) {
-			this.view.errTxt.text = ''
+			// this.view.errTxt.text = ''
 			this.view.grid.setDataProvider(this.remitsModel.remits)
 			// this.view.grid.dataProvider = this.remitsModel.remits
 			this.view.grid.refreshCells()
-		} else this.view.errTxt.text = this.remitsModel.errMsg
+		} 
+		// else this.view.errTxt.text = this.remitsModel.errMsg
 	}
 
 	public onRemove(): void {

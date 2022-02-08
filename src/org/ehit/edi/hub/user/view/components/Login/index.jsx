@@ -23,8 +23,8 @@ class Login extends EventDispatcher {
 				username: false,
 				password: false
 			},
-			username: 'flexicious',
-			password: 'support',
+			username: '',
+			password: '',
 			serviceArea: [],
 			selectedIndex: 1,
 			checkBox: true,
