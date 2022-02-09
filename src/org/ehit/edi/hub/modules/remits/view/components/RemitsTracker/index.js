@@ -36,8 +36,8 @@ class RemitsTracker extends EventDispatcher {
 	render() {
 		return (
 			<Paper className="page_style_remits">
-				{this.state.tabValue === '/main/remittance/quicksearch' && <RemitQuickSearch /> }
-				<div style={{height:this.state.tabValue === '/main/remittance/quicksearch'?'calc(100vh - 360px)':'calc(100vh - 135px)',width:'100%', marginTop:'2px'}}>
+				{/* {this.state.tabValue === '/main/remittance/quicksearch' && <RemitQuickSearch /> } */}
+				<div style={{height: 'calc(100vh - 135px)',width:'100%', marginTop:'2px'}}>
 					<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy="true" enableExport="true" enablePrint="true" styleName="gridStyle" /*toolbarExcelHandlerFunction="onToolbarExport"*/ toolbarExcelHandlerFunction={this.onToolbarExport} pagerRenderer={MontefioreUtils.pagerFactory} enableEagerDraw="false" showSpinnerOnFilterPageSort="true" initialSortField="logDatetime" initialSortAscending="false" parentDocument={this} >
 						<ReactDataGridColumnLevel rowHeight="21" enableFilters="true" enablePaging="true" pageSize="500" /*rowTextColorFunction="getRowTextColor"*/>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />

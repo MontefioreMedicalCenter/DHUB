@@ -15,6 +15,7 @@ import RemitsTracker from "../../org/ehit/edi/hub/modules/remits/view/components
 import MonthlyRemitRpt from "../../org/ehit/edi/hub/modules/remits/view/components/MonthlyRemitRpt"
 import BankEFTTracker from "../../org/ehit/edi/hub/modules/BankEFT/view/components/BankEFTTracker"
 import BankEFTSearch from "../../org/ehit/edi/hub/modules/BankEFT/view/components/BankEFTSearch"
+import RemitQuickSearch from "../../org/ehit/edi/hub/modules/remits/view/components/RemitQuickSearch"
 
 const ROUTES = [
 	{ name: 'login', url: '/', private: false, component: Login, exact: true },
@@ -71,7 +72,7 @@ export const remitsTabList = [
 		name: 'QuickSearch',
 		url: '/main/remittance/quicksearch',
 		private: true,
-		component: RemitsTracker,
+		component: RemitQuickSearch,
 		exact: true
 	},
 	{

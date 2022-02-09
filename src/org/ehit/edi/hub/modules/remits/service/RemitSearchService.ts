@@ -125,8 +125,8 @@ export class RemitSearchService extends ServiceProxyBase {
 	 * @param token
 	 */
 	protected failureFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
-		toast.error(msg.faultString)
+		var msg: ErrorMessage = <ErrorMessage>event
+		toast.error(msg.error.message)
 	}
 }
 

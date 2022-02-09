@@ -4,6 +4,7 @@ import { RemitQuickSearchEvent } from '../model/events/RemitQuickSearchEvent.ts'
 import { RemitSearchService } from '../service/RemitSearchService.ts'
 import RemitQuickSearch from './components/RemitQuickSearch'
 
+
 export class RemitsSearchMediator extends Mediator {
 	public view: RemitQuickSearch
 
@@ -65,14 +66,17 @@ export class RemitsSearchMediator extends Mediator {
 		!this.view.state.patLName ? this.view.setState({ patLNameError: true }) : this.view.setState({ patLNameError: false })
 		!this.view.state.chkNo ? this.view.setState({ chkNoError: true }) : this.view.setState({ chkNoError: false })
 		!this.view.state.claimNo ? this.view.setState({ claimNoError: true }) : this.view.setState({ claimNoError: false })
-		if (!this.view.state.patId || !this.view.state.payerId || !this.view.state.patFName || !this.view.state.patLName || !this.view.state.chkNo || !this.view.state.claimNo) {
-			toast.error('Please fill out one of these fields: Check/EFT Trace Number, Payer ID, Payer Name, Member ID, Patient First Name, Patient Last Name, PCN #')
-		}else{
-			if(this.view.state.patId.length > 0 || this.view.state.patFName.length > 0 || this.view.state.patLName.length > 0 || this.view.state.claimNo.length > 0 || this.view.state.statusBtnData.toString().indexOf('0') < 0){
+		if (this.view.state.patId || this.view.state.payerId || this.view.state.patFName || this.view.state.patLName ||this.view.state.chkNo || this.view.state.claimNo) {
+			if(this.view.state.patId || this.view.state.patFName || this.view.state.patLName || this.view.state.claimNo /*|| this.view.state.statusBtnData.toString().indexOf('0') < 0*/){
 				this.remitSearchService.remitDetailSearch(this.view.state.chkNo, this.view.state.payerId, this.view.state.payerNmBtnLabel, this.view.state.patId, this.view.state.patFName, this.view.state.patLName, this.view.state.claimNo, this.view.state.systemIdBtnLabel, this.view.state.statusBtnData, this.view.state.startDate, this.view.state.endDate, this.view.state.radioValue )
 			}else{
 				this.remitSearchService.remitCoreSearch(this.view.state.chkNo, this.view.state.payerId, this.view.state.payerNmBtnLabel, this.view.state.systemIdBtnLabel, this.view.state.statusBtnLabel, this.view.state.startDate, this.view.state.endDate, this.view.state.radioValue )
 			}
+		}else{
+
+			toast.error('Please fill out one of these fields: Check/EFT Trace Number, Payer ID, Payer Name, Member ID, Patient First Name, Patient Last Name, PCN #')
+
+		
 		}
 	}
 
@@ -95,7 +99,7 @@ export class RemitsSearchMediator extends Mediator {
 	}
 
 	private remitCoreSearchResult(event: RemitQuickSearchEvent): void {
-		toast.warning("Need to Implement RemitCoreTracking Page")
+	//	toast.warning("Need to Implement RemitCoreTracking Page")
 		// var remitCoreTrck: RemitCoreTracking
 		// if (this.view.getChildByName('remitDetail') != null) this.view.removeChild(this.view.getChildByName('remitDetail'))
 		// if (this.view.getChildByName('remitCore') == null) {
@@ -107,10 +111,15 @@ export class RemitsSearchMediator extends Mediator {
 
 		// remitCoreTrck = <RemitCoreTracking>this.view.getChildByName('remitCore')
 		// remitCoreTrck.dataProvider = event.searchdata
+	
+		// this.view.grid.dataProvider = this.remitsModel.remits
+		this.view.setState({hideCore: false, hideDetails: true})
+		this.view.remitCoreRef.grid.setDataProvider(event.searchdata)
+		this.view.remitCoreRef.grid.refreshCells()
 	}
 
 	private remitDetailSearchResult(event: RemitQuickSearchEvent): void {
-		toast.warning("Need to Implement RemitDetailTracking Page")
+	//	toast.warning("Need to Implement RemitDetailTracking Page")
 		// var remitDetailTrck: RemitDetailTracking
 
 		// if (this.view.getChildByName('remitCore') != null) this.view.removeChild(this.view.getChildByName('remitCore'))
@@ -123,6 +132,9 @@ export class RemitsSearchMediator extends Mediator {
 
 		// remitDetailTrck = <RemitDetailTracking>this.view.getChildByName('remitDetail')
 		// remitDetailTrck.dataProvider = event.searchdata
+		this.view.setState({hideCore: true, hideDetails: false})
+		this.view.remitDetailRef.grid.setDataProvider(event.searchdata)
+		this.view.remitDetailRef.grid.refreshCells()
 	}
 
 	private remitDetail: FileEditor

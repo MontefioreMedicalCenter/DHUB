@@ -1,6 +1,12 @@
 const fs = require("fs-extra");
-const source = `build`;
-const target = `request-response/dummy-backend/build`; // Please add your build path , where you have to copy this.
+//const source = `build`;
+//const target = `request-response/dummy-backend/build`; // Please add your build path , where you have to copy this.
+
+
+const source = `DHub`;
+const target = `D:/workspace/ProjectLinuxMigration-MF/DHub/WebContent/DHub`; // Please add your build path , where you have to copy this.
+
+
 
 async function copyBuild(src, dest) {
   try {
