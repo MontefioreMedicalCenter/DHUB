@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify'
 import Mediator from '../../../../../../modules/main/view/Mediator.ts'
+import { EdiFileBase } from '../model/EdiFileBase.ts'
 import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import FileContainer from './components/FileContainer'
 
@@ -34,7 +35,9 @@ export class FileContainerMediator extends Mediator {
 		var fileEditor = this.view.props.parentDocument
 		fileEditor.title = event.file.origFileName
 		// this.mediatorMap.createMediator(this.view.fileContentContainer)
-		toast.warning("Working Need to Implement UI ")
+		this.view.setState({
+			fileContentContainerWindow : true,
+		})
 	}
 
 	/*override*/ public onRemove(): void {

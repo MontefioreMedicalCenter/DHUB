@@ -67,7 +67,6 @@ export class ClaimsMediator extends Mediator {
 				return status === 'Completed' ? 'Y' : status === 'n/a' ? 'N/A' : 'N'
 			}
 		}
-
 	}
 
 	private addClaimHeader(event: ClaimsEvent): void {
@@ -166,9 +165,14 @@ export class ClaimsMediator extends Mediator {
 	}
 
 	private execute(file): void {
-		this.view.setState({ fileEditorWindow: true })
-		if (file.reportOnly == true) toast.warning('Need to Implement true')
-		// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
-		else this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+		if (file.reportOnly === true) {
+			toast.warning('Need to Implement file.reportOnly')
+			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+		} else {
+			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+		}
+		this.view.setState({
+			fileEditorWindow: true
+		})
 	}
 }

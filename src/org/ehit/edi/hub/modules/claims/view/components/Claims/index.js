@@ -2,6 +2,7 @@ import { Paper } from '@material-ui/core'
 import moment from 'moment'
 import React from 'react'
 import { DateRange, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 // import { EdiDateComboBox } from '../../../../../../../../../utils/dateFormatCombo/EdiDateComboBox.ts'
@@ -19,7 +20,8 @@ class Claims extends EventDispatcher {
 		super()
 		this.state = {
 			tabValue: '/main/claims',
-			fileEditorWindow: false
+			fileEditorWindow: false,
+			fileContentContainerWindow: false
 		}
 	}
 
@@ -56,7 +58,7 @@ class Claims extends EventDispatcher {
 		return (
 			<Paper className="page-style">
 				<div className="claimsGridStyle">
-					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint="true" enablePreferencePersistence="true" styleName="gridStyle" enableDrillDown="true" preferencePersistenceKey="outlookGroupedData" enableExport="true" enableCopy="true" parentDocument={this}>
+					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint="true" enablePreferencePersistence="true" styleName="gridStyle" enableDrillDown="true" preferencePersistenceKey="outlookGroupedData" enableExport="true" enableCopy="true" parentDocument={this} pagerRenderer={MontefioreUtils.pagerFactory}>
 						<ReactDataGridColumnLevel rowHeight="21" childrenField="processInstanceSteps" enableFilters="true" enablePaging="true" /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" rowTextColorFunction={this.getRowTextColor}>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="senderName" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Sender" />
 							<ReactDataGridColumn dataField="fileName" enableCellClickRowSelect="false" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="File Name" useHandCursor="true" useUnderLine="true" />

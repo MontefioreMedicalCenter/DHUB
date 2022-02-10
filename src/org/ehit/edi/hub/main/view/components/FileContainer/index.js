@@ -1,9 +1,14 @@
 import React from 'react'
 import { FileContainerMediator } from '../../FileContainerMediator.ts'
+import FileContentContainer from '../FileContentContainer'
 
 class FileContainer extends React.Component {
     constructor() {
         super()
+        this.state = {
+            fileContentContainerWindow: false,
+            fileData: null
+        }
         this._file = null
     }
 
@@ -15,10 +20,9 @@ class FileContainer extends React.Component {
     }
 
     setfile(file) {
-
         this._file = file;
-        if (this._file.fileContent != null){
-            // fileContentContainer.setfile(file);
+        if (this._file.fileContent != null) {
+            this.fileContentContainer.setfile(file)
         }
     }
 
@@ -29,7 +33,7 @@ class FileContainer extends React.Component {
     render() {
         return (
             <div>
-                FileContainer
+                <FileContentContainer ref={f => (this.fileContentContainer = f)} />
             </div>
         )
     }
