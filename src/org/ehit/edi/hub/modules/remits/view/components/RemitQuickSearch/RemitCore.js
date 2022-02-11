@@ -6,7 +6,8 @@ import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 class RemitCore extends EventDispatcher {
 	render() {
 		return (
-			<div style={{ height: this.props.hide ? '1px' : 'calc(100vh - 380px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
+			<div style={{ height:'0px'}}>
+			<div style={{ height: 'calc(100vh - 380px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
 				<DataGrid
 					ref={g => (this.grid = g)}
 					enableCopy={true}
@@ -105,6 +106,7 @@ class RemitCore extends EventDispatcher {
 						</ReactDataGridColumnLevel>
 					</ReactDataGridColumnLevel>
 				</DataGrid>
+			</div>
 			</div>
 		)
 	}

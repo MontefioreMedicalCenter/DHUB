@@ -169,9 +169,11 @@ export class RemitsService extends ServiceProxyBase {
 		this.dispatch(remitsEvent)
 	}
 
-	public searchRemitsRpt(payerName: string, remitMonth: string): void {
-		var rpcCall: AsyncToken = this.service.remitMonth(payerName, remitMonth)
-		rpcCall.addResponder(new AsyncResponder(this.rptSuccessResultEvent, this.failureFaultEvent))
+	public searchRemitsRpt(payerName: string, remitMonth: string): AxiosPromise<any> {
+		toast.warning("Need remitMonth Service call")
+		// var rpcCall: AsyncToken = this.service.remitMonth(payerName, remitMonth)
+		// rpcCall.addResponder(new AsyncResponder(this.rptSuccessResultEvent, this.failureFaultEvent))
+		// return this.callServiceMethod()
 	}
 	protected rptMonSuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var remitsEvent: RemitsEvent = new RemitsEvent(RemitsEvent.RPT_MONTH_PP)

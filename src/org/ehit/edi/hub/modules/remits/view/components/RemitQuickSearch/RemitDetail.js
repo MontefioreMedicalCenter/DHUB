@@ -6,6 +6,7 @@ import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 class RemitDetail extends EventDispatcher {
 	render() {
 		return (
+			<div style={{ height:'50px'}}>
 			<div style={{ height: this.props.hide ? '1px' : 'calc(100vh - 380px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
 				<DataGrid ref={g => (this.grid = g)} id="grid" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" fontSize="11" useCompactPreferences={true} alternatingItemColors="[0xFFFFFF ,0xFFFFFF]" horizontalScrollPolicy="auto" horizontalGridLines={true} horizontalGridLineColor="#F2F2F2" horizontalGridLineThickness="1" name="remitDetail" width="100%" height="100%" backgroundColor="white" /*creationComplete="onComplete(event)" toolbarExcelHandlerFunction="onToolbarExport" */ >
 					<ReactDataGridColumnLevel enableFilters={true} enablePaging={true} pageSize="50" color="0x185B29">
@@ -71,6 +72,7 @@ class RemitDetail extends EventDispatcher {
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="nonCovChrg" enableCellClickRowSelect={false} headerText="Non Covered Charges" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="right" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" textAlign="right" />
 					</ReactDataGridColumnLevel>
 				</DataGrid>
+			</div>
 			</div>
 		)
 	}

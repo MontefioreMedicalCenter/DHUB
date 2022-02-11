@@ -82,20 +82,19 @@ export class RemitMonthRptMediator extends Mediator {
 	}
 
 	private popMonth(event: RemitsEvent): void {
-		toast.warning('Need to Implement Combo box')
-		// console.log(event.rptmondata)
 		// this.view.remitMonthComBox && this.view.remitMonthComBox.setDataProvider(event.rptmondata)
+		this.view.setState({remitMonthComBoxDataProvider: event.rptmondata})
 	}
 
 	private popPayer(event: RemitsEvent): void {
-		toast.warning('Need to Implement Combo box 2')
-		// this.view.remitPayerComBox && this.view.remitPayerComBox.setDataProvider(event.rptPayers) 
+		// this.view.remitPayerComBox && this.view.remitPayerComBox.setDataProvider(event.rptPayers)
+		this.view.setState({remitPayerComBoxDataProvider: event.rptPayers})
 	}
 
-	private search(event: MouseEvent): void {
-		var payerName: string = this.view.remitPayerComBox.selectedItem // payerName.text;
+	private search(){
+		var payerName: string = this.view.state.remitPayerComBox // payerName.text;
 		var remitMonth: string = null
-		if (this.view.remitMonthComBox.selectedItem != null) remitMonth = this.view.remitMonthComBox.selectedItem
+		if (this.view.state.remitMonthComBox != null) remitMonth = this.view.state.remitMonthComBox
 		this.service.searchRemitsRpt(payerName, remitMonth)
 	}
 }

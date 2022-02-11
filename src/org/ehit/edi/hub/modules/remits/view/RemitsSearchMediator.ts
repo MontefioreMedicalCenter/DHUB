@@ -114,8 +114,8 @@ export class RemitsSearchMediator extends Mediator {
 	
 		// this.view.grid.dataProvider = this.remitsModel.remits
 		this.view.setState({hideCore: false, hideDetails: true})
-		this.view.remitCoreRef.grid.setDataProvider(event.searchdata)
-		this.view.remitCoreRef.grid.refreshCells()
+		this.view.remitCoreRef && this.view.remitCoreRef.grid.setDataProvider(event.searchdata)
+		this.view.remitCoreRef && this.view.remitCoreRef.grid.refreshCells()
 	}
 
 	private remitDetailSearchResult(event: RemitQuickSearchEvent): void {
@@ -133,8 +133,8 @@ export class RemitsSearchMediator extends Mediator {
 		// remitDetailTrck = <RemitDetailTracking>this.view.getChildByName('remitDetail')
 		// remitDetailTrck.dataProvider = event.searchdata
 		this.view.setState({hideCore: true, hideDetails: false})
-		this.view.remitDetailRef.grid.setDataProvider(event.searchdata)
-		this.view.remitDetailRef.grid.refreshCells()
+		this.view.remitDetailRef && this.view.remitDetailRef.grid.setDataProvider(event.searchdata)
+		this.view.remitDetailRef && this.view.remitDetailRef.grid.refreshCells()
 	}
 
 	private remitDetail: FileEditor
