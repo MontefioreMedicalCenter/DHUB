@@ -87,15 +87,13 @@ export class RemitsSearchMediator extends Mediator {
 			startDate: new Date(),
 			endDate: new Date(),
 			payerId: '',
-			payerNmBtn_dataProvider: [],
 			patId: '',
 			patFName: '',
 			patLName: '',
 			chkNo: '',
 			claimNo: '',
-			systemIdBtn_dataProvider: [],
-			statusBtn_dataProvider: []
 		})
+		this.view.handleDeSelectAll([], '', ['systemIdBtn','statusBtn','payerNmBtn'])
 	}
 
 	private remitCoreSearchResult(event: RemitQuickSearchEvent): void {

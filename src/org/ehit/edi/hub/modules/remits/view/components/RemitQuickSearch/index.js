@@ -75,6 +75,18 @@ class RemitQuickSearch extends EventDispatcher {
 		}
 	}
 
+	handleDeSelectAll = (selectedData, selectedDataString, value) => {
+		if (value.includes('systemIdBtn')) {
+			this.setState({ systemIdBtnLabel: selectedDataString, systemIdBtnSelectedData: selectedData })
+		}
+		if (value.includes('statusBtn')) {
+			this.setState({ statusBtnLabel: selectedDataString, statusBtnData: selectedData })
+		}
+		if (value.includes('payerNmBtn')) {
+			this.setState({ payerNmBtnLabel: selectedDataString, payerNmBtnData: selectedData })
+		}
+	}
+
 	handleOnRadioClick = value => {
 		this.setState({ radioValue: value })
 	}
