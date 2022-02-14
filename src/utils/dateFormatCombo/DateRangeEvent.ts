@@ -1,4 +1,4 @@
-export class DateRangeEvent extends Event {
+	export class DateRangeEvent extends Event {
 	public static SEARCH_BY_DATE_RANGE: string = 'search'
 
 	constructor(type: string, dateRange: DateRange) {

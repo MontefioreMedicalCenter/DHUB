@@ -106,7 +106,7 @@ export default class RemitsTrackerMediator extends Mediator {
 	}
 
 	private removeRemits(event: RemitsEvent): void {
-		if (this.remitsTimer.running) this.remitsTimer.stop()
+		// if (this.remitsTimer.running) this.remitsTimer.stop()
 	}
 
 	private addRemits(event: RemitsEvent): void {
@@ -118,7 +118,9 @@ export default class RemitsTrackerMediator extends Mediator {
 			this.view.grid.setDataProvider(this.remitsModel.remits)
 			// this.view.grid.dataProvider = this.remitsModel.remits
 			this.view.grid.refreshCells()
-		} 
+		} else {
+			toast.error(this.remitsModel.errMsg)
+		}
 		// else this.view.errTxt.text = this.remitsModel.errMsg
 	}
 

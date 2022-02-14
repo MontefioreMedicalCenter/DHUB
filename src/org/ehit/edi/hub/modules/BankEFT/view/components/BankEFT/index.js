@@ -40,7 +40,7 @@ class BankEFT extends EventDispatcher {
                                     path={route.url}
                                     exact={route.exact}
                                     name={route.name}
-                                    render={props => <route.component {...props} />}
+                                    render={props => <route.component {...props} tabValue={this.state.tabValue} />}
                                 />
                             ) : null
                         })}
