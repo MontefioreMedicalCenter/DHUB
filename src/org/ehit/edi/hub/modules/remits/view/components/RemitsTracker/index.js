@@ -7,7 +7,7 @@ import MontefioreUtils from '../../../../../../../../../service/utils/Montefiore
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
 import RemitsTrackerMediator from '../../RemitsTrackerMediator.ts'
-import RemitQuickSearch from '../RemitQuickSearch'
+// import RemitQuickSearch from '../RemitQuickSearch'
 import './remitsTracker.scss'
 
 class RemitsTracker extends EventDispatcher {

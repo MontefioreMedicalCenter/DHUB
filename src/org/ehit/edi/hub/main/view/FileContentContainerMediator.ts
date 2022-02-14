@@ -1,6 +1,7 @@
 import Mediator from "../../../../../../modules/main/view/Mediator.ts"
 import { StringBuffer } from "../../uitl/StringBuffer.ts"
 import FileContentContainer from "./components/FileContentContainer"
+import fileReference from "js-file-download"
 
 export class FileContentContainerMediator extends Mediator {
 	public view: FileContentContainer
@@ -73,6 +74,7 @@ export class FileContentContainerMediator extends Mediator {
 	public downloadFile(event): void {
 		// var fileReference: FileReference = new FileReference()
 		// fileReference.save(this.view.getfile().fileContent, this.view.getfile().origFileName)
+		fileReference(this.view.getfile().fileContent, this.view.getfile().origFileName);
 	}
 
 	public onRemove(): void {
