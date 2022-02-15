@@ -4,6 +4,7 @@ import ServiceProxyBase from '../../../../../../service/cfc/ServiceProxyBase'
 import GlobalEventDispatcher from '../../../../../../service/utils/GlobalEventDispatcher'
 import { EdiFileBase } from '../model/EdiFileBase.ts'
 import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
+import qs from 'qs'
 
 export class FileEditorService extends ServiceProxyBase {
 	dispatch(evt) {
@@ -18,10 +19,10 @@ export class FileEditorService extends ServiceProxyBase {
 	public fileService: RemoteObject
 
 	public getFile(fileId: number, removeCRLF: boolean): AxiosPromise<any> {
-		var formData = {
+		var formData = qs.stringify({
 			fileId: fileId,
 			removeCRLF: removeCRLF
-		}
+		})
 		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/getFile', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 

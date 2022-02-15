@@ -9,7 +9,6 @@ import store from '../../../../../../../../AppConfig/store/configureStore';
 import { showMessage } from '../../../../../../../../AppConfig/store/actions/homeAction';
 // import { EdiFileBase } from '../../../model/EdiFileBase.ts';
 import { FileContentContainerMediator } from '../../FileContentContainerMediator.ts';
-
 const CustomButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText('#9d9c9c'),
     backgroundColor: '#c6c6c6',
@@ -36,6 +35,7 @@ class FileContentContainer extends EventDispatcher {
         var file = fileData
         this.label = file.origFileName;
         this._file = file;
+        this._file.fileContent = new Buffer(this._file.fileContent.toString(), 'base64').toString('ascii')
         // eslint-disable-next-line no-lone-blocks
         {
             this.arr.push({ label: "view", icon: "@Embed(source='../../../assets/img/readme.png')" });
@@ -89,6 +89,8 @@ class FileContentContainer extends EventDispatcher {
             )
         }
         else {
+            // let buff = new Buffer(this._file.fileContent.toString(), 'base64')
+            // this.setState({ediContent: buff.toString('ascii')})
             this.setState({ediContent: this._file.fileContent.toString()})
         }
 
