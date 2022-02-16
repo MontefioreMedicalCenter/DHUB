@@ -1,9 +1,20 @@
 import React from 'react'
-import { EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import FileNameRenderer from '../../../../../../../../../container/views/itemRenderers/FileNameRenderer'
+import RemitCoreRenderer from '../../../../../../../../../container/views/itemRenderers/RemitCoreRenderer'
+import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 
 class RemitCore extends EventDispatcher {
+
+	onClick = (e, data) => {
+		this.props.parentDocument.viewDetail(data)
+	}
+
+	viewFile = (e, data, reportOnly) => {
+		this.props.parentDocument.viewFile(data, reportOnly)
+	}
+
 	render() {
 		return (
 			<div style={{ height:'0px'}}>
@@ -28,37 +39,8 @@ class RemitCore extends EventDispatcher {
 					/*toolbarExcelHandlerFunction="onToolbarExport"*/
 				>
 					<ReactDataGridColumnLevel enableFilters={true} enablePaging={true} enableFooters={true} pageSize="50" color="0x185B29" childrenField="xremitDetailTrackings">
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="50" headerWordWrap={true}>
-							{/* <nestedtreedatagrid:itemRenderer>
-						<fx:Component>
-							<mx:HBox width="100%" horizontalAlign="left" horizontalScrollPolicy="off" backgroundAlpha="0">
-								<mx:Label id="lbl" selectable={true} text="Detail" buttonMode={true} click="parentDocument.viewDetail(data)" styleName="linkMouseOut"
-										  mouseOver="{lbl.styleName='linkMouseOver'}" mouseOut="{lbl.styleName='linkMouseOut'}" textAlign="right" useHandCursor={true} mouseChildren={false}
-										  color="#712464"/>
-							</mx:HBox>
-						</fx:Component>
-					</nestedtreedatagrid:itemRenderer> */}
-						</ReactDataGridColumn>
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File Name" useUnderLine={true} fontWeight="bold">
-							{/* <nestedtreedatagrid:itemRenderer>
-						<fx:Component>
-							<mx:Canvas horizontalScrollPolicy="off">
-								<fx:Script>
-									<![CDATA[
-										import com.flexicious.nestedtreedatagrid.cells.FlexDataGridCell;
-										import com.flexicious.nestedtreedatagrid.interfaces.IFlexDataGridCell;
-									]]>
-								</fx:Script>
-								<s:HGroup>
-									<mx:Image top="5" right="2" id="infoIcon" source="@Embed('/org/ehit/edi/hub/assets/img/report_go.png')" useHandCursor={true} buttonMode={true} mouseChildren={false}
-											  toolTip="Click to view report" click="parentDocument.viewFile(data.xhubTransmission.fileId, true)"/>
-									<mx:Label id="lbl" selectable={true} text="{data.xhubTransmission.xmitFileName}" buttonMode={true}
-											  click="parentDocument.viewFile(data.xhubTransmission.fileId, false)" useHandCursor={true} mouseChildren={false} color="#712464"/>
-								</s:HGroup>
-							</mx:Canvas>
-						</fx:Component>
-					</nestedtreedatagrid:itemRenderer> */}
-						</ReactDataGridColumn>
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="50" headerWordWrap={true} itemRenderer={new ClassFactory(RemitCoreRenderer)} onHandleClick={(e, data) => {this.onClick(e, data)}} />
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File Name" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(FileNameRenderer)} onHandleFileName={(e, data, reportOnly) => {this.viewFile(e, data, reportOnly)}} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xhubTransmission.insertDatetime" enableCellClickRowSelect={false} headerText="File Recvd Date" formatter={ExampleUtils.globalDateFormatter} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xhubTransmission.systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System" headerWordWrap={false} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkTraceNum" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check/EFT Trace Number" headerWordWrap={true} />

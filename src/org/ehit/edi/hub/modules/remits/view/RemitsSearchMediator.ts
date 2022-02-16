@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify'
 import Mediator from '../../../../../../../modules/main/view/Mediator.ts'
+import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
 import { RemitQuickSearchEvent } from '../model/events/RemitQuickSearchEvent.ts'
 import { RemitSearchService } from '../service/RemitSearchService.ts'
 import RemitQuickSearch from './components/RemitQuickSearch'
@@ -14,10 +15,10 @@ export class RemitsSearchMediator extends Mediator {
 		this.view = view
 		// this.mapListener(this.view.searchBtn, MouseEvent.CLICK, this.remitQuickSearch, MouseEvent)//Implemented
 		// this.mapListener(this.view.clearBtn, MouseEvent.CLICK, this.clearSearch, MouseEvent)//Implemented
-		// this.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent) Need to Implement
+		this.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)
 		this.mapListener(this.eventDispatcher, RemitQuickSearchEvent.CORE_SEARCH_RESULT, this.remitCoreSearchResult, RemitQuickSearchEvent)
 		this.mapListener(this.eventDispatcher, RemitQuickSearchEvent.DETAIL_SEARCH_RESULT, this.remitDetailSearchResult, RemitQuickSearchEvent)
-		// this.mapListener(this.view, RemitQuickSearchEvent.REMITS_DETAIL, this.remitDetailX12, RemitQuickSearchEvent)
+		this.mapListener(this.view, RemitQuickSearchEvent.REMITS_DETAIL, this.remitDetailX12, RemitQuickSearchEvent)
 		// this.mapListener(this.eventDispatcher, RemitQuickSearchEvent.REMITS_DETAIL_RESULT, this.remitDetailResult, RemitQuickSearchEvent)
 		// this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)
 		this.mapListener(this.eventDispatcher, RemitQuickSearchEvent.SEARCH_SYSTEMID, this.populateSystemId, RemitQuickSearchEvent)
@@ -138,12 +139,14 @@ export class RemitsSearchMediator extends Mediator {
 	private remitDetail: FileEditor
 
 	public remitDetailX12(event: RemitQuickSearchEvent): void {
-		this.remitDetail = new FileEditor()
-		this.remitDetail.height = this.contextView.height - 200
-		this.remitDetail.width = this.contextView.width - 200
-		PopUpManager.addPopUp(this.remitDetail, this.contextView, true)
-		PopUpManager.centerPopUp(this.remitDetail)
-		this.mediatorMap.createMediator(this.remitDetail)
+		// this.remitDetail = new FileEditor()
+		// this.remitDetail.height = this.contextView.height - 200
+		// this.remitDetail.width = this.contextView.width - 200
+		// PopUpManager.addPopUp(this.remitDetail, this.contextView, true)
+		// PopUpManager.centerPopUp(this.remitDetail)
+		// this.mediatorMap.createMediator(this.remitDetail)
+		// this.remitSearchService.getSingleTranSet(this.view.xmitId, this.view.isaSequenceNum, this.view.gsSequenceNum, this.view.stSequenceNum, this.view.unitSequenceNum)
+		this.view.setState({fileEditorWindow : true})
 		this.remitSearchService.getSingleTranSet(this.view.xmitId, this.view.isaSequenceNum, this.view.gsSequenceNum, this.view.stSequenceNum, this.view.unitSequenceNum)
 	}
 

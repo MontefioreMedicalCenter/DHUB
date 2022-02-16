@@ -2,6 +2,7 @@ import { Button, Paper } from '@material-ui/core'
 import React from 'react'
 import PlayerNameEditor from '../../../../../../../../../container/views/itemRenderers/PlayerNameEditor'
 import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel, ToolbarAction } from '../../../../../../../../../flexicious'
+import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 import ComboBox from '../../../../../../../../../shared/components/ComboBox'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import { RemitMonthRptMediator } from '../../RemitMonthRptMediator.ts'
@@ -88,7 +89,7 @@ class MonthlyRemitRpt extends EventDispatcher {
 					</div>
 				</Paper>
 				<div className="gridStyle">
-					<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" editable={true} cellEditableFunction={this.isCellEditable} enableCopy={true} enableEagerDraw={true} enableExport={true} enableFooters={true} styleName="gridStyle" enableToolbarActions={true} footerVisible={true}>
+					<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" editable={true} cellEditableFunction={this.isCellEditable} enableCopy={true} enableEagerDraw={true} enableExport={true} enableFooters={true} styleName="gridStyle" enableToolbarActions={true} footerVisible={true} pagerRenderer={MontefioreUtils.pagerFactory}>
 						<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="50">
 							<ReactDataGridColumn columnWidthMode="fitToContent" width="120" dataField="id.payerName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="Payer Name" itemEditorApplyOnValueCommit={true} itemEditor={playerNameEditor} footerLabel="Total Amount:" parentDocument={this} />
 							<ReactDataGridColumn columnWidthMode="fitToContent" width="50" dataField="id.remitMonth" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="Month" itemEditorApplyOnValueCommit={true} footerLabel="" />

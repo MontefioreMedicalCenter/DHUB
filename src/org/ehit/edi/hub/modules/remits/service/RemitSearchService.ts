@@ -78,9 +78,10 @@ export class RemitSearchService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/remitSearchsvc/remitDetailSearch', formData, null, this.detailSearchSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public getSingleTranSet(xmitId: number, isaSequenceNum: number, gsSequenceNum: number, stSequenceNum: number, unitSequenceNum: number): void {
-		var rpcCall: AsyncToken = this.x12Service.getSingleTranSetEdiFile(xmitId, isaSequenceNum, gsSequenceNum, stSequenceNum)
-		rpcCall.addResponder(new AsyncResponder(this.tranSetSuccessResultEvent, this.failureFaultEvent))
+	public getSingleTranSet(xmitId: number, isaSequenceNum: number, gsSequenceNum: number, stSequenceNum: number, unitSequenceNum: number): AxiosPromise<any> {
+		toast.warning(" Need getSingleTranSetEdiFile service call")
+		// var rpcCall: AsyncToken = this.x12Service.getSingleTranSetEdiFile(xmitId, isaSequenceNum, gsSequenceNum, stSequenceNum)
+		// rpcCall.addResponder(new AsyncResponder(this.tranSetSuccessResultEvent, this.failureFaultEvent))
 	}
 
 	protected searchSystemSuccessResultEvent(event: ResultEvent, token: Object = null): void {
