@@ -6,6 +6,7 @@ import { BankEFTTrackerMediator } from '../../BankEFTTrackerMediator.ts'
 import { DateRangeEvent } from '../../../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
 import errorIcon from '../../../../../../../../../assets/images/dialog_warning.png'
 import BankEFTFilerenderer from '../../../../../../../../../container/views/itemRenderers/BankEFTFilerenderer'
+import BankEFTStatusRenderer from '../../../../../../../../../container/views/itemRenderers/BankEFTStatusRenderer'
 
 class BankEFTTracker extends EventDispatcher {
 	constructor() {
@@ -75,8 +76,8 @@ class BankEFTTracker extends EventDispatcher {
 	getStatus(status) {
 		var pollStatus = 'Completed'
 
-		var statusArr = status.split(';')
-		for (var n = 0; n < statusArr.length; n++) {
+		var statusArr = status && status.split(';')
+		for (var n = 0; n < statusArr && statusArr.length; n++) {
 			var stepstatus = statusArr[n].split('=')
 
 			if (stepstatus[1] === 'Pending') {
@@ -128,14 +129,7 @@ class BankEFTTracker extends EventDispatcher {
 							</nestedtreedatagrid:itemRenderer> */}
 						</ReactDataGridColumn>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status">
-							{/* <nestedtreedatagrid:itemRenderer>
-								<fx:Component>
-									<mx:HBox horizontalAlign="center" width="100%">
-										<mx:Label selectable={true} text="{parentDocument.getStatus(data.status)}" buttonMode={true} useHandCursor={true} mouseChildren={false}/>
-									</mx:HBox>
-								</fx:Component>
-							</nestedtreedatagrid:itemRenderer> */}
+						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(BankEFTStatusRenderer)} parentDocument={this}>
 						</ReactDataGridColumn>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect={false} headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
 					</ReactDataGridColumnLevel>
