@@ -7,10 +7,16 @@ import { DateRangeEvent } from '../../../../../../../../../utils/dateFormatCombo
 import errorIcon from '../../../../../../../../../assets/images/dialog_warning.png'
 import BankEFTFilerenderer from '../../../../../../../../../container/views/itemRenderers/BankEFTFilerenderer'
 import BankEFTStatusRenderer from '../../../../../../../../../container/views/itemRenderers/BankEFTStatusRenderer'
+import { EdiFileBase } from '../../../../../main/model/EdiFileBase.ts' 
+import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
+import FileEditor from '../../../../../main/view/components/FileEditor'
 
 class BankEFTTracker extends EventDispatcher {
 	constructor() {
 		super()
+		this.state= {
+			fileEditorWindow: false
+		}
 		this._initialIndex = -1
 	}
 
@@ -65,15 +71,16 @@ class BankEFTTracker extends EventDispatcher {
 		dispatchEvent(new DateRangeEvent(DateRangeEvent.SEARCH_BY_DATE_RANGE, dateRange))
 	}
 
-	viewFile(fileId, reportOnly) {
-		// var file=new EdiFileBase();
-		// file.fileId=fileId;
-		// file.transType='EFT'
-		// file.reportOnly=reportOnly
-		// dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file));
+	viewFile = (fileId, reportOnly) => {
+		var file = new EdiFileBase()
+		file.fileId = fileId
+		file.transType = 'EFT'
+		file.reportOnly = reportOnly
+		this.mediator.viewFile1(file)
+		// this.dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
 	}
 
-	getStatus(status) {
+	getStatus = (status) => {
 		var pollStatus = 'Completed'
 
 		var statusArr = status && status.split(';')
@@ -114,7 +121,7 @@ class BankEFTTracker extends EventDispatcher {
 				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" /*toolbarExcelHandlerFunction="onToolbarExport"*/ enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false}>
 					<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" /*rowTextColorFunction="getRowTextColor"*/>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)}>
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile}>
 							{/* <nestedtreedatagrid:itemRenderer>
 								<fx:Component>
 									<mx:Canvas horizontalScrollPolicy="off">
@@ -134,6 +141,18 @@ class BankEFTTracker extends EventDispatcher {
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect={false} headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
 					</ReactDataGridColumnLevel>
 				</DataGrid>
+				<AdvanceDialog
+						open={this.state.fileEditorWindow}
+						handleClose={() => this.setState({ fileEditorWindow: false })}
+						bodyRenderer={
+							<FileEditor
+								ref={g => (this.fileEditor = g)}
+								closePopup={() => {
+									return this.setState({ fileEditorWindow: false })
+								}}
+							/>
+						}
+					/>
 			</div>
 		)
 	}

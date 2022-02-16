@@ -4,10 +4,11 @@ import FileImg from '../../../assets/images/report_go.png'
 class BankEFTFilerenderer  extends React.Component {
 
     render(){
+        const data = this.props.row.getData()
         return (
             <div style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', columnGap: '5px'}}>
-                <img src={FileImg} alt="file"/>
-                <span>{this.props.row.getData().filename}</span>
+                <img src={FileImg} alt="file" onClick={() => this.props.column.viewFile(data.id.fileId, true)}/>
+                <span style={{textDecoration: 'underline', color: '#712464'}} onClick={() => this.props.column.viewFile(data.id.fileId, false)}>{data.filename}</span>
             </div>
         )
     }

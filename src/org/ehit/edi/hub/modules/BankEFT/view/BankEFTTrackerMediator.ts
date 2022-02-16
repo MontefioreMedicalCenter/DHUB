@@ -2,13 +2,16 @@ import Mediator from '../../../../../../../modules/main/view/Mediator.ts'
 import { BankEFTModel } from '../../BankEFT/model/BankEFTModel.ts'
 import { BankEFTEvent } from '../model/events/BankEFTEvent.ts'
 import { BankEFTService } from '../service/BankEFTService.ts'
-import {FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
+import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
 import { FlexDataGridColumn, FlexDataGridEvent } from '../../../../../../../flexicious'
 import { toast } from 'react-toastify'
+import { DateRangeEvent } from '../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
+import {FileEditorService} from '../../../main/service/FileEditorService.ts'
 export class BankEFTTrackerMediator extends Mediator {
 	public view: BankEFTTracker
 	public bankEFTModel: BankEFTModel = BankEFTModel.getInstance()
 	public bankEFTService: BankEFTService = BankEFTService.getInstance()
+	public fileEditorService: FileEditorService = FileEditorService.getInstance()
 
 	private remitsTimer: Timer
 	private _editor: boolean
@@ -27,7 +30,7 @@ export class BankEFTTrackerMediator extends Mediator {
 		// if (this.view.props.tabValue === '/main/bankEFT') this.dispatch(new BankEFTEvent(BankEFTEvent.GET_BANKEFT_HEADER))
 		if (this.view.props.tabValue === '/main/bankEFT') this.bankEFTService.findbankEFTHeader()
 
-		return this;	
+		return this
 	}
 	private static tickIcon: Class
 	private static waitIcon: Class
@@ -99,11 +102,11 @@ export class BankEFTTrackerMediator extends Mediator {
 		// }
 		if (this.bankEFTModel.errMsg == null) {
 			// this.view.errTxt.text = ''
-			this.view.grid.setDataProvider( this.bankEFTModel.bankEFT)
+			this.view.grid.setDataProvider(this.bankEFTModel.bankEFT)
 			this.view.grid.refreshCells()
 		} else {
 			toast.error(this.bankEFTModel.errMsg)
-			// this.view.errTxt.text = 	
+			// this.view.errTxt.text =
 		}
 	}
 
@@ -142,7 +145,30 @@ export class BankEFTTrackerMediator extends Mediator {
 		}
 	}
 
-	private viewFile1(event: FileEditorEvent): void {
-		this.dispatch(event)
+	private viewFile1(event): void {
+		var file: EdiFileBase = event
+		// var fileEditor:FileEditor=new FileEditor();
+		// fileEditor.height=contextView.height-40;
+		// fileEditor.width=contextView.width-40;
+		// PopUpManager.addPopUp(fileEditor, contextView, true);
+		// PopUpManager.centerPopUp(fileEditor);
+		// fileEditor.container.setfile(file);
+		// mediatorMap.createMediator(fileEditor);
+		// if (file.reportOnly == true)
+		// 	fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+		// else
+		// 	service.getFile(file.fileId, file.removeCRLF);
+
+		if (file.reportOnly === true) {
+			toast.warning('Need to Implement file.reportOnly')
+			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+		} else {
+			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+		}
+		this.view.setState({
+			fileEditorWindow: true
+		})
+
+		// this.dispatch(event)
 	}
 }
