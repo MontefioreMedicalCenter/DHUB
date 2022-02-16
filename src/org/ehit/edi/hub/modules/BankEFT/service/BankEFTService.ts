@@ -36,8 +36,8 @@ export class BankEFTService extends ServiceProxyBase {
 		this.findBankEFTProcesses()
 	}
 
-	public findBankEFTProcesses(startDate: Date = null, endDate: Date = null): void {
-		if (this.bankEFTModel.bankEFTHeader == null) {
+	public findBankEFTProcesses(startDate: Date = null, endDate: Date = null): AxiosPromise<any> {
+		if (this.bankEFTModel.bankEFTHeader === null) {
 			this.findbankEFTHeader()
 		} else {
 			var now: Date = new Date()

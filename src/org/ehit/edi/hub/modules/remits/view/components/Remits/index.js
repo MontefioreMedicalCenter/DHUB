@@ -21,6 +21,10 @@ class Remits extends EventDispatcher {
         this.mediator = new RemitsMediator().onRegister(this)
     }
 
+    componentWillUnmount(){
+        this.mediator.onUnRegister()
+    }
+
     handleTabChange = (e, value) => {
         this.setState({ tabValue: value })
         // this.mediator.refreshTab(value)

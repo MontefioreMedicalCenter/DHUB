@@ -62,7 +62,7 @@ export class BankEFTTrackerMediator extends Mediator {
 	private addBankEFTHeader(event: BankEFTEvent): void {
 		for (var x: number = 0; x < this.bankEFTModel.bankEFTHeader.length; x++) {
 			var col: FlexDataGridColumn = new FlexDataGridColumn()
-			col.headerText = this.bankEFTModel.bankEFTHeader[x][1]
+			col.setHeaderText(this.bankEFTModel.bankEFTHeader[x][1])
 			col.dataField = this.bankEFTModel.bankEFTHeader[x][0]
 			col.hideText = true
 			col.enableIcon = true
@@ -72,24 +72,27 @@ export class BankEFTTrackerMediator extends Mediator {
 			col.setStyle('iconLeft', 15)
 			col.enableCellClickRowSelect = false
 			col.iconFunction = this.dynamicIconFunction
-			if (col.headerText != 'Recvd') this.view.grid.addColumn(col)
+			if (col.getHeaderText() !== 'Recvd'){
+				this.view.grid.addColumn(col)
+			}
 		}
-		this.view.grid.reDraw()
+		this.view.grid && this.view.grid.reDraw()
 	}
 
 	private refreshBankEFT(event: Event): void {
 		this.searchByDateRange(this.dateRange)
 	}
 
-	private searchByDateRange(event: DateRangeEvent): void {
-		this.dateRange = event
+	private searchByDateRange(choosenStartDate, choosenEndDate){
+
 		var startDate: Date = null
 		var endDate: Date = null
-		if (this.dateRange != null) {
-			startDate = event.dateRange.startDate
-			endDate = event.dateRange.endDate
+		if (choosenStartDate != null && choosenEndDate != null) {
+			startDate = choosenStartDate
+			endDate = choosenEndDate
 		}
-		this.dispatch(new BankEFTEvent(BankEFTEvent.GET_BANKEFT, startDate, endDate))
+		// this.dispatch(new BankEFTEvent(BankEFTEvent.GET_BANKEFT, startDate, endDate))
+		this.bankEFTService.findBankEFTProcesses(startDate, endDate);//did service call directly
 	}
 
 	private removeBankEFT(event: BankEFTEvent): void {

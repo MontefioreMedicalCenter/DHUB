@@ -14,7 +14,7 @@ export class RemitsMediator extends Mediator {
 		this.view = view
 		// this.mapListener(this.view.viewStack, Event.CHANGE, this.refreshTab, Event)
 		// if (this.view.initialIndex == 0) {this.dispatch(new RemitsEvent(RemitsEvent.GET_REMIT_HEADER))}
-		if(this.view.state.tabValue === '/main/remittance'){
+		if(this.view.props.history.location.pathname === '/main/remittance'){
 			this.remitsService.findRemitHeader();
 		}
 		return this
@@ -22,14 +22,14 @@ export class RemitsMediator extends Mediator {
 
 	private refreshTab(value) {
 		if (value === '/main/remittance') {
-			toast.error('remittance')
+			// toast.error('remittance')
 			// if (!this.mediatorMap.hasMediatorForView(this.view.remitsTracker)) {
 			// 	this.mediatorMap.createMediator(this.view.remitsTracker)
 			// } else this.dispatch(new RemitsEvent(RemitsEvent.GET_REMITS))
 			// this.remitsService.findRemitsProcesses()
 		}
 		if (value === '/main/remittance/quicksearch') {
-			toast.error('quicksearch')
+			// toast.error('quicksearch')
 			// if (!this.mediatorMap.hasMediatorForView(this.view.remitQuickSearch)) {
 			// 	this.mediatorMap.createMediator(this.view.remitQuickSearch)
 			// }
