@@ -1,7 +1,6 @@
 import React from 'react'
 import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
-import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 import { BankEFTTrackerMediator } from '../../BankEFTTrackerMediator.ts'
 import { DateRangeEvent } from '../../../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
 import errorIcon from '../../../../../../../../../assets/images/dialog_warning.png'
@@ -10,6 +9,7 @@ import BankEFTStatusRenderer from '../../../../../../../../../container/views/it
 import { EdiFileBase } from '../../../../../main/model/EdiFileBase.ts' 
 import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
 import FileEditor from '../../../../../main/view/components/FileEditor'
+import moment from 'moment'
 
 class BankEFTTracker extends EventDispatcher {
 	constructor() {
@@ -115,6 +115,10 @@ class BankEFTTracker extends EventDispatcher {
 		return null
 	}
 
+	globalDateFormatter = item => {
+		if (item.logDatetime != null) return moment(new Date(item.logDatetime)).format('MM/DD/YYYY h:mm a')
+	}
+
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 35px)', width: '100%' }}>
@@ -138,7 +142,7 @@ class BankEFTTracker extends EventDispatcher {
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(BankEFTStatusRenderer)} parentDocument={this}>
 						</ReactDataGridColumn>
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" formatter={ExampleUtils.globalDateFormatter} enableCellClickRowSelect={false} headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} /*formatter={ExampleUtils.globalDateFormatter}*/ enableCellClickRowSelect={false} headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
 					</ReactDataGridColumnLevel>
 				</DataGrid>
 				<AdvanceDialog
