@@ -1,6 +1,7 @@
 import React from 'react'
 import { FileContainerMediator } from '../../FileContainerMediator.ts'
 import FileContentContainer from '../FileContentContainer'
+import ReportContainer from '../ReportContainer'
 
 class FileContainer extends React.Component {
     constructor() {
@@ -16,7 +17,7 @@ class FileContainer extends React.Component {
         this.mediator = new FileContainerMediator().onRegister(this)
     }
     componentWillUnmount() {
-        this.mediator.onUnRegister()
+        this.mediator && this.mediator.onUnRegister()
     }
 
     setfile(file) {
@@ -33,7 +34,8 @@ class FileContainer extends React.Component {
     render() {
         return (
             <div>
-                <FileContentContainer ref={f => (this.fileContentContainer = f)} />
+                {(this.props.parentDocument.props.parentDoc.state.fileEditorWindow || this.props.parentDocument.props.parentDoc.state.fileEditorWindow) && <FileContentContainer ref={f => (this.fileContentContainer = f)} />}
+                {this.props.parentDocument.props.parentDoc.state.fileEditoriconWindow && <ReportContainer ref={f => (this.reportContainer = f)} reportContainer={this} fileData={this.props.fileData} />} 
             </div>
         )
     }

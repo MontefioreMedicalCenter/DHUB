@@ -66,7 +66,7 @@ class MonthlyRemitRpt extends EventDispatcher {
 					<div className="searchField">
 						<div className="selectionField">
 							<div className="line">
-								<span className="font">Player Name</span>
+								<span className="font">Payer Name</span>
 								<div>
 									<ComboBox name="remitPayerComBox" labelKey="remitPayerComBox" valueKey="remitPayerComBox" value={this.state.remitPayerComBox} dataProvider={this.state.remitPayerComBoxDataProvider} onChange={this.handleOnChange} comboBoxStyle={{ height: '35px', width: '300px' }} />
 								</div>

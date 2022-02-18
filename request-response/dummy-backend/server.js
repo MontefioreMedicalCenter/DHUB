@@ -46,6 +46,8 @@ const getRptMonth = require('./response/getRptMonth')
 const getRptPayers = require('./response/getRptPayers')
 const findBankEFTProcesses = require('./response/findBankEFTProcesses')
 const findBankEFTHeader = require('./response/findBankEFTHeader')
+const remitMonth = require('./response/remitMonth')
+const runEdiRemitEFTReport = require('./response/runEdiRemitEFTReport')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -232,6 +234,14 @@ app.post('/DHub/api/bankEFTsvc/findBankEFTProcesses', (req, res) => {
 
 app.post('/DHub/api/bankEFTsvc/findBankEFTHeader', (req, res) => {
 	sendResponse(res, 200, findBankEFTHeader)
+})
+
+app.post('/DHub/api/remitssvc/remitMonth', (req, res) => {
+	sendResponse(res, 200, remitMonth)
+})
+
+app.post('/DHub/api/bankEFTsvc/runEdiRemitEFTReport', (req, res) => {
+	sendResponse(res, 200, runEdiRemitEFTReport)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

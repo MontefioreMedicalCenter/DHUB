@@ -6,6 +6,7 @@ import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 import { BankEFTReportEvent } from '../model/events/BankEFTReportEvent.ts'
 import { BankEFTModel } from '../model/BankEFTModel.ts'
 import { toast } from 'react-toastify'
+import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
 
 export class BankEFTService extends ServiceProxyBase {
 	public static REMOTE_DESTINATION: string = 'BankEFTService'
@@ -62,16 +63,24 @@ export class BankEFTService extends ServiceProxyBase {
 		}
 	}
 
-	public runBankEFTReport(instanceId: number, checkNo: string, trnNo: string, payer: string, startDate: Date, endDate: Date, dataSearch: number): void {
-		//var rpcCall:AsyncToken=service.runEdiEFTReport(ediFile);
-		var rpcCall: AsyncToken = this.service.runEdiRemitEFTReport(instanceId, checkNo, trnNo, payer, startDate, endDate, dataSearch)
-
-		rpcCall.addResponder(new AsyncResponder(this.eftReportsuccessResultEvent, this.eftReportfailureResultEvent))
+	public runBankEFTReport(instanceId: number, checkNo: string, trnNo: string, payer: string, startDate: Date, endDate: Date, dataSearch: number): AxiosPromise<any> {
+		//var rpcCall:AsyncToken=service.runEdiEFTReport(ediFile);commented in Flex
+		// var rpcCall: AsyncToken = this.service.runEdiRemitEFTReport(instanceId, checkNo, trnNo, payer, startDate, endDate, dataSearch)
+		// rpcCall.addResponder(new AsyncResponder(this.eftReportsuccessResultEvent, this.eftReportfailureResultEvent))
+		var formData = qs.stringify({
+			instanceId: stringifyCircularObjectWithModifiedKeys(instanceId),
+			checkTraceNum: checkNo,
+			trnNo: trnNo,
+			payer: payer,
+			startDate: startDate,
+			endDate: endDate,
+			dateSearch: dataSearch
+		})
+		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/runEdiRemitEFTReport', formData, null,  this.eftReportsuccessResultEvent.bind(this), this.eftReportfailureResultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	protected eftReportsuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var bankEFTReportEvent: BankEFTReportEvent
-
 		bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.BANKEFT_REPORT, event.result)
 		this.dispatch(bankEFTReportEvent)
 	}

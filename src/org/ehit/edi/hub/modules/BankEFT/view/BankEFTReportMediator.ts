@@ -1,6 +1,8 @@
 import Mediator from '../../../../../../../modules/main/view/Mediator.ts'
-import { BankEFTModel } from '../model/BankEFTModel'
-import { BankEFTService } from '../service/BankEFTService'
+import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
+import { BankEFTModel } from '../model/BankEFTModel.ts'
+import { BankEFTService } from '../service/BankEFTService.ts'
+import BankEFTReport from './components/BankEFTReport'
 
 export class BankEFTReportMediator extends Mediator {
 	public view: BankEFTReport
@@ -8,21 +10,21 @@ export class BankEFTReportMediator extends Mediator {
 	public bankEFTModel: BankEFTModel = BankEFTModel.getInstance()
 
 	public bankEFTService: BankEFTService = BankEFTService.getInstance()
-	private remitsTimer: Timer
-	private _editor: boolean
-	private dateRange: DateRangeEvent
+	// private remitsTimer: Timer
+	// private _editor: boolean
+	// private dateRange: DateRangeEvent
 
 	public onRegister(view): BankEFTReportMediator {
 		this.view = view
-		this.eventMap.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.openFile, FileEditorEvent)
+		// this.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.openFile, FileEditorEvent)//Need to call directly the open File
 		return this
 	}
 
-	private static tickIcon: Class
+	// private static tickIcon: Class
 
-	private static waitIcon: Class
+	// private static waitIcon: Class
 
-	private static naIcon: Class
+	// private static naIcon: Class
 
 	public onRemove(): void {
 		this.remitsTimer = null

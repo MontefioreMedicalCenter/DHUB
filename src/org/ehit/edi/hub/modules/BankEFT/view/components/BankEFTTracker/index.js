@@ -11,12 +11,15 @@ import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceD
 import FileEditor from '../../../../../main/view/components/FileEditor'
 import moment from 'moment'
 import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
+// import ReportContainer from '../../../../../main/view/components/ReportContainer'
 
 class BankEFTTracker extends EventDispatcher {
 	constructor() {
 		super()
 		this.state= {
-			fileEditorWindow: false
+			fileEditorWindow: false,
+			fileEditoriconWindow: false,
+			fileData: null
 		}
 		this._initialIndex = -1
 	}
@@ -147,17 +150,33 @@ class BankEFTTracker extends EventDispatcher {
 					</ReactDataGridColumnLevel>
 				</DataGrid>
 				<AdvanceDialog
+					open={this.state.fileEditoriconWindow}
+					handleClose={() => this.setState({ fileEditoriconWindow: false})}
+					bodyRenderer={
+							<FileEditor
+								ref={g => (this.fileEditor = g)}
+								parentDoc={this}
+								fileData={this.state.fileData}
+								closePopup={() => {
+								return this.setState({ fileEditoriconWindow: false })
+							}}
+						/>
+					}
+				/>
+				<AdvanceDialog
 						open={this.state.fileEditorWindow}
 						handleClose={() => this.setState({ fileEditorWindow: false })}
 						bodyRenderer={
 							<FileEditor
 								ref={g => (this.fileEditor = g)}
+								parentDoc={this}
+								tabName="BankEFTTracker"
 								closePopup={() => {
-									return this.setState({ fileEditorWindow: false })
-								}}
-							/>
-						}
-					/>
+								return this.setState({ fileEditorWindow: false })
+							}}
+						/>
+					}
+				/>
 			</div>
 		)
 	}

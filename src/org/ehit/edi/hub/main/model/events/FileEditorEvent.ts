@@ -21,7 +21,7 @@ export class FileEditorEvent extends BaseEvent {
 		return this._file
 	}
 
-	/*override*/ public clone(): Event {
+	public clone(): Event {
 		return new FileEditorEvent(this.type, this._file, this.bubbles, this.cancelable)
 	}
 }

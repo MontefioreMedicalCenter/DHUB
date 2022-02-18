@@ -11,16 +11,17 @@ export class FileContainerMediator extends Mediator {
 	/*override*/ public onRegister(view): FileContainerMediator {
 		this.view = view
 		this.mapListener(this.eventDispatcher, FileEditorEvent.FILE_CONTENT, this.addFileContent, FileEditorEvent)
-		// this.mapListener(this.view.fileContentContainer, 'contentToReports', this.runReport)//need to implement
+		// this.mapListener(this.view.fileContentContainer, 'contentToReports', this.runReport)//passed File through props
 		// this.mapListener(this.view.fileContentContainer, 'contentToX12Split', this.splitRemitsByBillingSystems)//need to implement
 		return this
 	}
 
-	private runReport(event: Event): void {
-		if (!this.mediatorMap.hasMediatorForView(this.view.reportContainer)) {
-			this.view.reportContainer.setfile(this.view.getfile())
-			this.mediatorMap.createMediator(this.view.reportContainer)
-		}
+	private runReport(event: FileEditorEvent): void {
+		// reportContainer called directly
+		// if (!this.mediatorMap.hasMediatorForView(this.view.reportContainer)) {
+		// 	this.view.reportContainer.setfile(this.view.getfile())
+		// 	this.mediatorMap.createMediator(this.view.reportContainer)
+		// }
 	}
 
 	private splitRemitsByBillingSystems(event: Event): void {
@@ -31,16 +32,16 @@ export class FileContainerMediator extends Mediator {
 	}
 
 	private addFileContent(event: FileEditorEvent): void {
-		this.view.setfile(event.file)
-		var fileEditor = this.view.props.parentDocument
-		fileEditor.title = event.file.origFileName
+		this .view. fileContentContainer && this.view.setfile(event.file)
+		// var fileEditor = this.view.props.parentDocument
+		// fileEditor.title = event.file.origFileName
 		// this.mediatorMap.createMediator(this.view.fileContentContainer)
 		this.view.setState({
 			fileContentContainerWindow : true,
 		})
 	}
 
-	/*override*/ public onRemove(): void {
+	public onRemove(): void {
 		this.eventMap.unmapListeners()
 		if (this.mediatorMap.hasMediatorForView(this.view.fileContentContainer)) {
 			this.mediatorMap.removeMediatorByView(this.view.fileContentContainer)

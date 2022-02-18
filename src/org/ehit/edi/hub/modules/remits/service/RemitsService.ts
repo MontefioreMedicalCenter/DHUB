@@ -170,10 +170,14 @@ export class RemitsService extends ServiceProxyBase {
 	}
 
 	public searchRemitsRpt(payerName: string, remitMonth: string): AxiosPromise<any> {
-		toast.warning("Need remitMonth Service call")
+		// toast.warning("Need remitMonth Service call")
 		// var rpcCall: AsyncToken = this.service.remitMonth(payerName, remitMonth)
 		// rpcCall.addResponder(new AsyncResponder(this.rptSuccessResultEvent, this.failureFaultEvent))
-		// return this.callServiceMethod()
+		var formData = qs.stringify({
+			pn: payerName,
+			rm: remitMonth
+		})
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/remitMonth', formData, null, this.rptSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 	protected rptMonSuccessResultEvent(event: ResultEvent, token: Object = null): void {
 		var remitsEvent: RemitsEvent = new RemitsEvent(RemitsEvent.RPT_MONTH_PP)

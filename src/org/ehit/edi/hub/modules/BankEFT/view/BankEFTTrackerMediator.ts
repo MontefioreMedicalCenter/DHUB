@@ -7,6 +7,7 @@ import { FlexDataGridColumn, FlexDataGridEvent } from '../../../../../../../flex
 import { toast } from 'react-toastify'
 import { DateRangeEvent } from '../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
 import {FileEditorService} from '../../../main/service/FileEditorService.ts'
+import { EdiFileBase } from '../../../main/model/EdiFileBase.ts'
 export class BankEFTTrackerMediator extends Mediator {
 	public view: BankEFTTracker
 	public bankEFTModel: BankEFTModel = BankEFTModel.getInstance()
@@ -161,16 +162,19 @@ export class BankEFTTrackerMediator extends Mediator {
 		// 	fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
 		// else
 		// 	service.getFile(file.fileId, file.removeCRLF);
-
 		if (file.reportOnly === true) {
-			toast.warning('Need to Implement file.reportOnly')
+			// toast.warning('Need to Implement file.reportOnly')
 			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+			this.view.setState({ 
+				fileEditoriconWindow: true,
+				fileData: file
+			})
 		} else {
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+			this.view.setState({
+				fileEditorWindow: true
+			})
 		}
-		this.view.setState({
-			fileEditorWindow: true
-		})
 
 		// this.dispatch(event)
 	}

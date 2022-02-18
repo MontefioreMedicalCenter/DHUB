@@ -19,7 +19,7 @@ class FileEditor extends React.Component {
     render() {
         return (
             <div>
-                <FileContainer ref={g => this.fileContainer = g} id="container" parentDocument={this} />
+                <FileContainer ref={g => this.fileContainer = g} id="container" parentDocument={this} fileData={this.props.fileData}/>
             </div>
         )
     }

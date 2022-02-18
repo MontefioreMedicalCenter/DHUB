@@ -86,6 +86,7 @@ class Claims extends EventDispatcher {
 						bodyRenderer={
 							<FileEditor
 								ref={g => (this.fileEditor = g)}
+								parentDoc={this}
 								closePopup={() => {
 									return this.setState({ fileEditorWindow: false })
 								}}
