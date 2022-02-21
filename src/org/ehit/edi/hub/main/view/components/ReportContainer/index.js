@@ -1,6 +1,8 @@
 import React from "react";
 import BankEFTReport from "../../../../modules/BankEFT/view/components/BankEFTReport";
 import { ReportContainerMediator } from "../../ReportContainerMediator.ts";
+import AckReportContainer from "../AckReportContainer";
+import RemitSupReport from "../RemitSupReport";
 
 class ReportContainer extends React.Component {
     constructor(){
@@ -42,6 +44,8 @@ class ReportContainer extends React.Component {
         return (
             <div className='pop-up_size'>
                 {this.props.fileData.transType === 'EFT' && <BankEFTReport ref={f => (this.reportContainer = f)} />}
+                {(this.props.fileData.transType === '999' || this.props.fileData.transType.indexOf('277') >= 0) && <AckReportContainer ref={f => (this.ackReport = f)}/>}
+                {this.props.fileData.transType === '835S' && <RemitSupReport ref={f => (this.supplementReport = f)}/>}
             </div>
         )
     }

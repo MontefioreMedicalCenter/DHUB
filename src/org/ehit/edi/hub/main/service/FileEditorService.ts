@@ -5,6 +5,8 @@ import GlobalEventDispatcher from '../../../../../../service/utils/GlobalEventDi
 import { EdiFileBase } from '../model/EdiFileBase.ts'
 import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import qs from 'qs'
+import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../shared/utils'
+import { ReportEvent } from '../model/events/ReportEvent.ts'
 
 export class FileEditorService extends ServiceProxyBase {
 	dispatch(evt) {
@@ -26,9 +28,13 @@ export class FileEditorService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/getFile', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public explainPayload(fileId: number): void {
-		var rpcCall: AsyncToken = this.fileService.explainPayload(fileId)
-		rpcCall.addResponder(new AsyncResponder(this.explainSuccessResultEvent, this.explainFailureFaultEvent))
+	public explainPayload(fileId: number): AxiosPromise<any> {
+		var formData = qs.stringify({
+			fileId: stringifyCircularObjectWithModifiedKeys(fileId)
+		})
+		// var rpcCall: AsyncToken = this.fileService.explainPayload(fileId)
+		// rpcCall.addResponder(new AsyncResponder(this.explainSuccessResultEvent, this.explainFailureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/explainPayload', formData, null, this.explainSuccessResultEvent.bind(this), this.explainFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public runReport(ediFile: EdiFileBase): void {
@@ -74,7 +80,7 @@ export class FileEditorService extends ServiceProxyBase {
 	}
 
 	protected explainFailureFaultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
+		var msg = event.message
 		this.dispatch(new ReportEvent(ReportEvent.EXPLAIN_ERROR, null, msg.faultString))
 	}
 }

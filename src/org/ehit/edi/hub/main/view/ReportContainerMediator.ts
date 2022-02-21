@@ -1,3 +1,4 @@
+import { toast } from "react-toastify"
 import Mediator from "../../../../../../modules/main/view/Mediator.ts"
 import ArrayCollection from "../../../../../../vo/ArrayCollection"
 import { BankEFTReportEvent } from "../../modules/BankEFT/model/events/BankEFTReportEvent.ts"
@@ -5,6 +6,7 @@ import { BankEFTService } from "../../modules/BankEFT/service/BankEFTService.ts"
 import RemitsEvent from "../../modules/remits/model/events/RemitsEvent.ts"
 import { RemitsReportEvent } from "../../modules/remits/model/events/RemitsReportEvent.ts"
 import RemitsModel from "../../modules/remits/model/RemitsModel.ts"
+import { RemitSupRpt } from "../../modules/remits/model/vo/RemitSupRpt.ts"
 import { RemitsService } from "../../modules/remits/service/RemitsService.ts"
 import LoginModel from "../../user/model/LoginModel"
 import { FileEditorEvent } from "../model/events/FileEditorEvent.ts"
@@ -22,7 +24,7 @@ export class ReportContainerMediator extends Mediator {
 
 	private balanceReport: RemitsBalanceReport
 
-	private bankEFTReport: BankEFTReport
+	private bankEFTReport: BankEFTReport //ref as reportContainer
 
 	private ackReport: AckReportContainer
 
@@ -39,23 +41,30 @@ export class ReportContainerMediator extends Mediator {
 		this.mapListener(this.eventDispatcher, BankEFTReportEvent.BANKEFT_REPORT, this.setBankEFTReport, BankEFTReportEvent)
 		// this.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)  //Need to Implement
 		this.mapListener(this.eventDispatcher, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)
+
+
 		if (this.view.props.fileData.transType != null && (this.view.props.fileData.transType === '999' || this.view.props.fileData.transType.indexOf('277') >= 0)) {
-			this.service.explainPayload(this.view.getfile().fileId)
+
+			// this.service.explainPayload(this.view.getfile().fileId)
+			this.service.explainPayload(this.view.props.fileData.fileId)
+
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === '835') {
-			this.balanceReport = new RemitsBalanceReport()
-			this.view.reportsContainer.addChild(this.balanceReport)
-			this.remitService.runRemitsReport(this.view.getfile(), true)
+
+			// this.balanceReport = new RemitsBalanceReport() //Need screenshot of this
+			// this.view.reportsContainer.addChild(this.balanceReport)
+			// this.remitService.runRemitsReport(this.view.getfile(), true)
+
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === 'EFT') {
+
 			// this.bankEFTReport = new BankEFTReport()
 			// this.bankEFTReport.id = 'grid'
-			// this.view.reportsContainer.addChild(this.bankEFTReport)//through props added component directly
-			// this.bankEFTService.runBankEFTReport(this.view.getfile().fileId, null, null, null, null, null, 0)
+			// this.view.reportsContainer.addChild(this.bankEFTReport) //through props added component directly
 			this.bankEFTService.runBankEFTReport(this.view.props.fileData.fileId, null, null, null, null, null, 0)
 
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === '835S') {
-			var supplementReport: RemitSupReport = new RemitSupReport()
-			var content: string = <String>this.view.getfile().fileContent.toString()
-			//	if (content != null && content.length > 0 && content.substring(0, 3) == "JP9")
+			// var supplementReport: RemitSupReport = new RemitSupReport() 
+			var content = this.view.props.fileData.fileContent.toString()
+			//	if (content != null && content.length > 0 && content.substring(0, 3) == "JP9") commented in Flex
 			{
 				var rpt_arr: any[] = content.split('~')
 				var supRpt: ArrayCollection = new ArrayCollection()
@@ -99,8 +108,8 @@ export class ReportContainerMediator extends Mediator {
 					remitSupRpt.provNpi = rpt_row_arr[32]
 					supRpt.addItem(remitSupRpt)
 				}
-				this.view.reportsContainer.addChild(supplementReport)
-				supplementReport.grid.dataProvider = supRpt
+				// this.view.reportsContainer.addChild(supplementReport) // through props added component directly
+				this.view.supplementReport.grid.setDataProvider(supRpt) //dataProvider = supRpt
 			}
 			/*else
 			{
@@ -108,13 +117,14 @@ export class ReportContainerMediator extends Mediator {
 
 
 			}*/
-		} else if (this.view.getfile().fileContent != null && this.view.getfile().reportOnly == true) this.service.runReport(this.view.getfile())
 
+		} else if (this.view.getfile().fileContent !== null && this.view.getfile().reportOnly === true) this.service.runReport(this.view.getfile())
 		return this
+
 	}
 
 	private addRemitHeader(): void {
-		var colGroups: any[] = this.balanceReport.remitsReport.grid.groupedColumns
+		var colGroups: any[] = this.balanceReport.remitsReport.grid.groupedColumns//need to Implrement RemitsBalanceReport page
 
 		for (var x: number = 0; x < this.remitsModel.remitHeader.length; x++) {
 			if (this.remitsModel.remitHeader[x][1] != 'Recvd') {
@@ -240,7 +250,7 @@ export class ReportContainerMediator extends Mediator {
 
 	protected setReport(event: RemitsReportEvent): void {
 		this.addRemitHeader()
-		this.eventMap.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)
+		this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)
 		if (this.balanceReport == null) {
 			this.balanceReport = new RemitsBalanceReport()
 			this.view.reportsContainer.addChild(this.balanceReport)
@@ -303,9 +313,9 @@ export class ReportContainerMediator extends Mediator {
 	}
 
 	protected setExplain(event: ReportEvent): void {
-		this.ackReport = new AckReportContainer()
-		this.view.reportsContainer.addChild(this.ackReport)
-		this.ackReport.ackContent.text = event.reportdata.toString()
+		// this.ackReport = new AckReportContainer()
+		// this.view.reportsContainer.addChild(this.ackReport) //through props added component directly
+		this.view.ackReport.setState({ackContent: event.reportdata.toString()})
 	}
 
 	protected displayReport(event: ReportEvent): void {
@@ -322,9 +332,10 @@ export class ReportContainerMediator extends Mediator {
 	}
 
 	protected setExplainError(event: ReportEvent): void {
-		this.ackReport = new AckReportContainer()
-		this.view.reportsContainer.addChild(this.ackReport)
-		this.ackReport.ackContent.text = event.errMsg
+		// this.ackReport = new AckReportContainer()
+		// this.view.reportsContainer.addChild(this.ackReport)
+		// this.ackReport.ackContent.text = event.errMsg
+		toast.error(event.errMsg)
 	}
 
 	public downloadExplainFile(): void {
@@ -332,7 +343,7 @@ export class ReportContainerMediator extends Mediator {
 		fileReference.save(this.ackReport.ackContent.text, this.view.getfile().origFileName + '.explain')
 	}
 
-	/*override*/ public onRemove(): void {
+	public onRemove(): void {
 		this.eventMap.unmapListeners()
 
 		super.onRemove()

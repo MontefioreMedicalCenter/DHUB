@@ -163,7 +163,6 @@ export class BankEFTTrackerMediator extends Mediator {
 		// else
 		// 	service.getFile(file.fileId, file.removeCRLF);
 		if (file.reportOnly === true) {
-			// toast.warning('Need to Implement file.reportOnly')
 			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
 			this.view.setState({ 
 				fileEditoriconWindow: true,
