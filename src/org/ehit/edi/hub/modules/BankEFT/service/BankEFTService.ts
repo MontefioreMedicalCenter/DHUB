@@ -52,8 +52,12 @@ export class BankEFTService extends ServiceProxyBase {
 			this.searchStartDt = startDate
 			this.searchEndDt = endDate
 
+			// var formData = qs.stringify({
+			// 	startDate: startDate,
+			// 	endDate: endDate
+			// })
 			var formData = qs.stringify({
-				startDate: startDate,
+				startDate: new Date('02/10/2021'),
 				endDate: endDate
 			})
 			// var rpcCall: AsyncToken = this.service.findBankEFTProcesses(startDate, endDate)

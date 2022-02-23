@@ -1,0 +1,51 @@
+
+.bankSearchHeader{
+    // background: linear-gradient(to left, white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white, rgb(192, 206, 198), white);
+    height: calc(100% - 5px);
+    margin-top: 5px;
+    overflow: auto;
+}
+
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 5px;
+}
+
+.line{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    column-gap: 15px;
+}
+
+.column-divider{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    grid-column-gap: 50px;
+    column-gap: 200px;
+    padding: 5px;
+    width: fit-content;
+}
+
+.font{
+    font-size: 15px;
+    font-family: emoji;
+}
+
+.font2{
+    white-space: pre;
+    font-size: 15px;
+    font-family: emoji;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
