@@ -246,7 +246,7 @@ export class ReportContainerMediator extends Mediator {
 
 	protected setReport(event: RemitsReportEvent): void {
 		this.addRemitHeader()
-		this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)
+		// this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)//Need to Implement
 
 		// if (this.balanceReport == null) {
 		// 	this.balanceReport = new RemitsBalanceReport()
