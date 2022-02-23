@@ -1,18 +1,20 @@
-import { toast } from "react-toastify"
-import Mediator from "../../../../../../modules/main/view/Mediator.ts"
-import ArrayCollection from "../../../../../../vo/ArrayCollection"
-import { BankEFTReportEvent } from "../../modules/BankEFT/model/events/BankEFTReportEvent.ts"
-import { BankEFTService } from "../../modules/BankEFT/service/BankEFTService.ts"
-import RemitsEvent from "../../modules/remits/model/events/RemitsEvent.ts"
-import { RemitsReportEvent } from "../../modules/remits/model/events/RemitsReportEvent.ts"
-import RemitsModel from "../../modules/remits/model/RemitsModel.ts"
-import { RemitSupRpt } from "../../modules/remits/model/vo/RemitSupRpt.ts"
-import { RemitsService } from "../../modules/remits/service/RemitsService.ts"
-import LoginModel from "../../user/model/LoginModel"
-import { FileEditorEvent } from "../model/events/FileEditorEvent.ts"
-import { ReportEvent } from "../model/events/ReportEvent.ts"
-import { FileEditorService } from "../service/FileEditorService.ts"
-import ReportContainer from "./components/ReportContainer"
+import { toast } from 'react-toastify'
+import Mediator from '../../../../../../modules/main/view/Mediator.ts'
+import ArrayCollection from '../../../../../../vo/ArrayCollection'
+import { BankEFTReportEvent } from '../../modules/BankEFT/model/events/BankEFTReportEvent.ts'
+import { BankEFTService } from '../../modules/BankEFT/service/BankEFTService.ts'
+import RemitsEvent from '../../modules/remits/model/events/RemitsEvent.ts'
+import { RemitsReportEvent } from '../../modules/remits/model/events/RemitsReportEvent.ts'
+import RemitsModel from '../../modules/remits/model/RemitsModel.ts'
+import { RemitSupRpt } from '../../modules/remits/model/vo/RemitSupRpt.ts'
+import { RemitsService } from '../../modules/remits/service/RemitsService.ts'
+import LoginModel from '../../user/model/LoginModel'
+import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
+import { ReportEvent } from '../model/events/ReportEvent.ts'
+import { FileEditorService } from '../service/FileEditorService.ts'
+import ReportContainer from './components/ReportContainer'
+import { FlexDataGridColumn, ReactDataGridColumnGroup } from '../../../../../../flexicious'
+import moment from 'moment'
 
 export class ReportContainerMediator extends Mediator {
 	public view: ReportContainer
@@ -22,11 +24,11 @@ export class ReportContainerMediator extends Mediator {
 	public loginModel: LoginModel = LoginModel.getInstance()
 	public remitsModel: RemitsModel = RemitsModel.getInstance()
 
-	private balanceReport: RemitsBalanceReport
+	private balanceReport: RemitsBalanceReport //ref as balanceReport in ReportContainer
 
-	private bankEFTReport: BankEFTReport //ref as reportContainer
+	private bankEFTReport: BankEFTReport //ref as reportContainer in ReportContainer
 
-	private ackReport: AckReportContainer
+	private ackReport: AckReportContainer //ref as ackReport in ReportContainer
 
 	public onRegister(view): ReportContainerMediator {
 		this.view = view
@@ -42,27 +44,21 @@ export class ReportContainerMediator extends Mediator {
 		// this.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)  //Need to Implement
 		this.mapListener(this.eventDispatcher, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)
 
-
 		if (this.view.props.fileData.transType != null && (this.view.props.fileData.transType === '999' || this.view.props.fileData.transType.indexOf('277') >= 0)) {
-
 			// this.service.explainPayload(this.view.getfile().fileId)
 			this.service.explainPayload(this.view.props.fileData.fileId)
-
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === '835') {
-
-			// this.balanceReport = new RemitsBalanceReport() //Need screenshot of this
+			// this.balanceReport = new RemitsBalanceReport() 
 			// this.view.reportsContainer.addChild(this.balanceReport)
 			// this.remitService.runRemitsReport(this.view.getfile(), true)
-
+			this.remitService.runRemitsReport(this.view.props.fileData, true)
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === 'EFT') {
-
 			// this.bankEFTReport = new BankEFTReport()
 			// this.bankEFTReport.id = 'grid'
 			// this.view.reportsContainer.addChild(this.bankEFTReport) //through props added component directly
 			this.bankEFTService.runBankEFTReport(this.view.props.fileData.fileId, null, null, null, null, null, 0)
-
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === '835S') {
-			// var supplementReport: RemitSupReport = new RemitSupReport() 
+			// var supplementReport: RemitSupReport = new RemitSupReport() //through props added component directly
 			var content = this.view.props.fileData.fileContent.toString()
 			//	if (content != null && content.length > 0 && content.substring(0, 3) == "JP9") commented in Flex
 			{
@@ -117,23 +113,22 @@ export class ReportContainerMediator extends Mediator {
 
 
 			}*/
-
-		} else if (this.view.getfile().fileContent !== null && this.view.getfile().reportOnly === true) this.service.runReport(this.view.getfile())
+		} else if (this.view.getfile().fileContent !== null && this.view.getfile().reportOnly === true) this.service.runReport(this.view.props.fileData)
 		return this
-
 	}
 
 	private addRemitHeader(): void {
-		var colGroups: any[] = this.balanceReport.remitsReport.grid.groupedColumns//need to Implrement RemitsBalanceReport page
+		var colGroups: any[] = this.view.balanceReport && this.view.balanceReport.remitsReport.grid.getGroupedColumns() //need to Implrement RemitsBalanceReport page
 
-		for (var x: number = 0; x < this.remitsModel.remitHeader.length; x++) {
+		for (var x: number = 0; x < this.remitsModel.remitHeader && this.remitsModel.remitHeader.length; x++) {
 			if (this.remitsModel.remitHeader[x][1] != 'Recvd') {
 				var cols: any[] = []
-				var colGroup: FlexDataGridColumnGroup = new FlexDataGridColumnGroup()
-				colGroup.headerText = this.remitsModel.remitHeader[x][1]
+				// var colGroup: FlexDataGridColumnGroup = new FlexDataGridColumnGroup()
+				var colGroup: ReactDataGridColumnGroup = new ReactDataGridColumnGroup()
+				colGroup.setHeaderText(this.remitsModel.remitHeader[x][1])
 
 				var claimPayment: FlexDataGridColumn = new FlexDataGridColumn()
-				claimPayment.headerText = 'Claim Payment'
+				claimPayment.setHeaderText('Claim Payment')
 				claimPayment.columnWidthMode == 'fitToContent'
 				claimPayment.dataField = colGroup.headerText.toLowerCase() + 'ClaimPaymentTotal'
 				claimPayment.footerOperation = 'sum'
@@ -149,7 +144,7 @@ export class ReportContainerMediator extends Mediator {
 				cols.push(claimPayment)
 
 				var claimCount: FlexDataGridColumn = new FlexDataGridColumn()
-				claimCount.headerText = 'Claim Count'
+				claimCount.setHeaderText('Claim Count')
 				claimCount.dataField = colGroup.headerText.toLowerCase() + 'ClaimPaymentCount'
 				claimCount.columnWidthMode == 'fitToContent'
 				claimCount.footerOperation = 'sum'
@@ -174,14 +169,15 @@ export class ReportContainerMediator extends Mediator {
 				colGroups.splice(x + 7, 0, colGroup)
 			}
 		}
-		this.balanceReport.remitsReport.grid.groupedColumns = colGroups
-		this.balanceReport.remitsReport.grid.reDraw()
+		// this.balanceReport.remitsReport.grid.groupedColumns = colGroups//Need to implement with some data
+		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setGroupedColumns(colGroups)
+		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.reDraw()
 	}
 
 	public dynamicIconFunction(cell: IFlexDataGridCell, state: string = ''): any {
 		var toolstring: string = '-'
 		if (cell.rowInfo.isDataRow && !cell.rowInfo.isHeaderRow) {
-			trace('value of header was' + cell.column.headerText.toLowerCase() + 'cell.rowInfo.data=' + cell.rowInfo.data.hb_epicClaimPaymentStr)
+			// trace('value of header was' + cell.column.headerText.toLowerCase() + 'cell.rowInfo.data=' + cell.rowInfo.data.hb_epicClaimPaymentStr)
 			if (cell.column.dataField == 'eagleClaimPaymentCount') {
 				toolstring = cell.rowInfo.data.eagleClaimPaymentStr
 			} else if (cell.column.dataField == 'idxmotClaimPaymentCount') {
@@ -251,25 +247,30 @@ export class ReportContainerMediator extends Mediator {
 	protected setReport(event: RemitsReportEvent): void {
 		this.addRemitHeader()
 		this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)
-		if (this.balanceReport == null) {
-			this.balanceReport = new RemitsBalanceReport()
-			this.view.reportsContainer.addChild(this.balanceReport)
-		}
 
-		this.balanceReport.sender.text = event.reportdata.payerName
-		this.balanceReport.fileOwner.text = event.reportdata.fileOwner
-		this.balanceReport.runDate.text = UIUtils.formatDate(new Date())
-		this.balanceReport.intDate.text = UIUtils.formatDate(event.reportdata.rptDate)
+		// if (this.balanceReport == null) {
+		// 	this.balanceReport = new RemitsBalanceReport()
+		// 	this.view.reportsContainer.addChild(this.balanceReport)
+		// }
+
+		this.view.balanceReport &&
+			this.view.balanceReport.setState({
+				sender: event.reportdata.payerName,
+				fileOwner: event.reportdata.fileOwner,
+				runDate: moment(new Date()).format('MMM D, YYYY'),
+				intDate: moment(new Date(event.reportdata.rptDate)).format('MMM D, YYYY')
+			})
+
 		if (event.reportdata.payerName.indexOf('healthfirst') > -1) {
 			var colChrg: FlexDataGridColumn = new FlexDataGridColumn()
-			colChrg.headerText = 'Capp Chrg'
-			colChrg.dataField = 'hsrCapChrgAmt'
+			colChrg.setHeaderText('Capp Chrg')
+			colChrg.setDataField('hsrCapChrgAmt')
 			colChrg.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
 			colChrg.columnWidthMode == 'fitToContent'
 			colChrg.enableCellClickRowSelect = false
 			var colPaid: FlexDataGridColumn = new FlexDataGridColumn()
-			colPaid.headerText = 'Capp Paid'
-			colPaid.dataField = 'hsrCapPaidAmt'
+			colPaid.setHeaderText('Capp Paid')
+			colPaid.setDataField('hsrCapPaidAmt')
 			colPaid.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
 			colPaid.columnWidthMode == 'fitToContent'
 			colPaid.enableCellClickRowSelect = false
@@ -279,9 +280,9 @@ export class ReportContainerMediator extends Mediator {
 			this.balanceReport.remitsReport.grid.columns = columns
 		}
 
-		this.balanceReport.remitsReport.grid.dataProvider = <ArrayCollection>event.reportdata.claimPaymentEntry
-		this.balanceReport.remitsSurcharge.data = <ArrayCollection>event.reportdata.claimPaymentSurchargeEntry
-		this.balanceReport.remitsPLB.data = <ArrayCollection>event.reportdata.pLBEntry
+		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setDataProvider(event.reportdata.claimPaymentEntry)
+		// this.view.balanceReport.remitsSurcharge.data = <ArrayCollection>event.reportdata.claimPaymentSurchargeEntry
+		// this.view.balanceReport.remitsPLB.data = <ArrayCollection>event.reportdata.pLBEntry
 	}
 
 	protected setBankEFTReport(event: BankEFTReportEvent): void {
@@ -304,7 +305,7 @@ export class ReportContainerMediator extends Mediator {
 	}
 
 	private showUCP(event: RemitsReportEvent): void {
-		this.balanceReport.remitsReport.grid.processFilter()
+		this.view.balanceReport.remitsReport.grid.processFilter()
 	}
 
 	protected setError(event: RemitsReportEvent): void {
@@ -315,7 +316,7 @@ export class ReportContainerMediator extends Mediator {
 	protected setExplain(event: ReportEvent): void {
 		// this.ackReport = new AckReportContainer()
 		// this.view.reportsContainer.addChild(this.ackReport) //through props added component directly
-		this.view.ackReport.setState({ackContent: event.reportdata.toString()})
+		this.view.ackReport.setState({ ackContent: event.reportdata.toString() })
 	}
 
 	protected displayReport(event: ReportEvent): void {

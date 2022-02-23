@@ -37,9 +37,13 @@ export class FileEditorService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/explainPayload', formData, null, this.explainSuccessResultEvent.bind(this), this.explainFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public runReport(ediFile: EdiFileBase): void {
-		var rpcCall: AsyncToken = this.fileService.runReport(ediFile)
-		rpcCall.addResponder(new AsyncResponder(this.reportSuccessResultEvent, this.explainFailureFaultEvent))
+	public runReport(ediFile: EdiFileBase): AxiosPromise<any> {
+		var formData = qs.stringify({
+			ediFile: stringifyCircularObjectWithModifiedKeys(ediFile)
+		})
+		// var rpcCall: AsyncToken = this.fileService.runReport(ediFile)
+		// rpcCall.addResponder(new AsyncResponder(this.reportSuccessResultEvent, this.explainFailureFaultEvent))
+		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/runReport', formData, null, this.reportSuccessResultEvent.bind(this), this.explainFailureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	/**

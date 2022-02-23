@@ -7,6 +7,7 @@ import RemitsEvent from '../model/events/RemitsEvent.ts'
 import RemitsModel from '../model/RemitsModel.ts'
 import qs from 'qs' 
 import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
+import { RemitsReportEvent } from '../model/events/RemitsReportEvent.ts'
 
 
 export class RemitsService extends ServiceProxyBase {
@@ -73,10 +74,14 @@ export class RemitsService extends ServiceProxyBase {
 		}
 	}
 
-	public runRemitsReport(ediFile: EdiFileBase, editor: boolean = true): void {
+	public runRemitsReport(ediFile: EdiFileBase, editor: boolean = true): AxiosPromise<any> {
 		this._editor = editor
-		var rpcCall: AsyncToken = this.service.runRemitsReport(ediFile)
-		rpcCall.addResponder(new AsyncResponder(this.remitsReportsuccessResultEvent, this.remitsReportfailureResultEvent))
+		var formData = qs.stringify({
+			file : stringifyCircularObjectWithModifiedKeys(ediFile)
+		})
+		// var rpcCall: AsyncToken = this.service.runRemitsReport(ediFile)
+		// rpcCall.addResponder(new AsyncResponder(this.remitsReportsuccessResultEvent, this.remitsReportfailureResultEvent))
+		return this.callServiceMethod('post', 'DHub/api/remitssvc/runRemitsReport', formData, null, this.remitsReportsuccessResultEvent.bind(this), this.remitsReportfailureResultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public splitRemitsByBillingSystems(file: EdiFileBase): void {
