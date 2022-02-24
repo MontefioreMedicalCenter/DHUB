@@ -27,6 +27,10 @@ class RemitsBalanceReport extends React.Component {
 		}
 	}
 
+	handleOnClick = (event) => {
+		this.props.parentDocument.mediator.showUCP(event)
+	}
+
 	render() {
 		return (
 			<div>
@@ -48,7 +52,7 @@ class RemitsBalanceReport extends React.Component {
 						<div className="details" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 							UCP Only&nbsp;
 							<div>
-								<input type="checkbox" id="chkUCP" style={{ height: '15px', width: '30px' }} />
+								<input type="checkbox" id="chkUCP" style={{ height: '15px', width: '30px' }} onClick={(event) => this.handleOnClick(event)}/>
 							</div>
 						</div>
 					</div>

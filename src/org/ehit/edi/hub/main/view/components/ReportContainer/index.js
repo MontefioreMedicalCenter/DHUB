@@ -43,7 +43,7 @@ class ReportContainer extends React.Component {
 				{this.props.fileData.transType === 'EFT' && <BankEFTReport ref={f => (this.reportContainer = f)} />}
 				{(this.props.fileData.transType === '999' || this.props.fileData.transType.indexOf('277') >= 0) && <AckReportContainer ref={f => (this.ackReport = f)} />}
 				{this.props.fileData.transType === '835S' && <RemitSupReport ref={f => (this.supplementReport = f)} />}
-				{this.props.fileData.transType === '835' && <RemitsBalanceReport ref={f => (this.balanceReport = f)} fileData={this.props.fileData} />}
+				{this.props.fileData.transType === '835' && <RemitsBalanceReport ref={f => (this.balanceReport = f)} fileData={this.props.fileData} parentDocument={this}/>}
 			</div>
 		)
 	}

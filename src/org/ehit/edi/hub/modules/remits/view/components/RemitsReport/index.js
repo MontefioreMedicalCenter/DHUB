@@ -1,26 +1,51 @@
 import React from 'react'
 import { ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 
 class RemitsReport extends React.Component {
+
+	getCellTextColor = cell => {
+		var colorRed = false
+		if (cell.getColumn().getDataField() === 'claimPaymentTotal') {
+			colorRed = cell.rowInfo.getData().claimPaymentTotal < 0
+		}
+		if (cell.getColumn().getDataField() === 'providerAdjustmentPayment') {
+			colorRed = cell.rowInfo.getData().providerAdjustmentPayment < 0
+		}
+
+		if (cell.getColumn().getDataField() === 'discrepancyAmt') {
+			colorRed = cell.rowInfo.getData().discrepancyAmt < 0
+		}
+
+		if (cell.getColumn().getDataField() === 'adjAmount') {
+			colorRed = cell.rowInfo.getData().adjAmount < 0
+		}
+		if (cell.getColumn().getDataField() === 'controlTotal') {
+			colorRed = cell.rowInfo.getData().controlTotal < 0
+		}
+
+		if (colorRed) return 0xff0000
+		else return 0x000000
+	}
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 5px)', width: '100%' }}>
-				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" enableDrillDown={true} horizontalScrollPolicy="auto" footerDrawTopBorder={true} enableEagerDraw={true} /*toolbarExcelHandlerFunction="onToolbarExport"*/ verticalScrollPolicy="on">
+				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" enableDrillDown={true} horizontalScrollPolicy="auto" footerDrawTopBorder={true} enableEagerDraw={true} verticalScrollPolicy="on" pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="20" childrenField="claimDetails" enablePaging={true} pageSize="1000" enableFilters={true} enableFooters={true} initialSortAscending={true}>
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} truncateToFit={true} dataField="batchNumber" enableCellClickRowSelect={false} textAlign="right" headerText="Batch #" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} headerAlign="right" dataField="checkTraceNo" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check/EFT Trace #" textAlign="right" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} truncateToFit={true} /*cellTextColorFunction="getCellTextColor"*/ dataField="checkAmount" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check Amount" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" footerWordWrap={true} />
+						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} truncateToFit={true} cellTextColorFunction={this.getCellTextColor} dataField="checkAmount" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check Amount" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" footerWordWrap={true} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} headerAlign="right" dataField="method" enableCellClickRowSelect={false} headerText="Payment Method" textAlign="right" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} headerAlign="right" dataField="checkIssueDate" enableCellClickRowSelect={false} headerText="Check Issue Date" textAlign="right" /*formatter="{ExampleUtils.dateFormatter2}"*/ />
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} headerAlign="right" dataField="checkPayee" enableCellClickRowSelect={false} headerText="Check Payee" textAlign="right" />
-						<ReactDataGridColumn headerWordWrap={true} /*cellTextColorFunction="getCellTextColor"*/ dataField="claimPaymentTotal" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" headerText="Claim Payment Amt" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
+						<ReactDataGridColumn headerWordWrap={true} cellTextColorFunction={this.getCellTextColor} dataField="claimPaymentTotal" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" headerText="Claim Payment Amt" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
 						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" dataField="claimPaymentCount" enableCellClickRowSelect={false} headerText="Total Claim Count" textAlign="right" footerAlign="right" footerOperation="sum" footerOperationPrecision="0" />
-						<ReactDataGridColumn headerWordWrap={true} truncateToFit={true} headerAlign="right" /*cellTextColorFunction="getCellTextColor"*/ dataField="providerAdjustmentPayment" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" headerText="Provider Adjustment Payment" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
-						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" /*cellTextColorFunction="getCellTextColor"*/ dataField="discrepancyAmt" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" headerText="Discrepancy" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
-						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" /*cellTextColorFunction="getCellTextColor"*/ dataField="adjAmount" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" headerText="Surcharge" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
-						<ReactDataGridColumn headerWordWrap={true} truncateToFit={true} headerAlign="right" /*cellTextColorFunction="getCellTextColor"*/ dataField="controlTotal" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" headerText="Control Total" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
-						<ReactDataGridColumnLevel rowHeight="19" nestIndent="30" headerColors="[0xC0C0C0,0xEEEEEE]" headerRollOverColors="[0xEEEEEE,0xC0C0C0]" alternatingItemColors={[0xffffff, 0xffffff]} /*color="blue"*/ horizontalGridLineColor="#C0C0C0" horizontalGridLineThickness="2">
+						<ReactDataGridColumn headerWordWrap={true} truncateToFit={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} dataField="providerAdjustmentPayment" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" headerText="Provider Adjustment Payment" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
+						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} dataField="discrepancyAmt" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" headerText="Discrepancy" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
+						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} dataField="adjAmount" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" headerText="Surcharge" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
+						<ReactDataGridColumn headerWordWrap={true} truncateToFit={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} dataField="controlTotal" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" headerText="Control Total" /*labelFunction="UIUtils.dataGridFormatCurrencyLabelFunction"*/ textAlign="right" />
+						<ReactDataGridColumnLevel rowHeight="19" nestIndent="30" headerColors={[0xC0C0C0,0xEEEEEE]} headerRollOverColors={[0xEEEEEE,0xC0C0C0]} alternatingItemColors={[0xffffff, 0xffffff]} color="blue" horizontalGridLineColor="#C0C0C0" horizontalGridLineThickness="2">
 							<ReactDataGridColumn width="100" dataField="system" enableCellClickRowSelect={false} headerText="System" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkNo" enableCellClickRowSelect={false} headerText="Check #" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="claimNo" enableCellClickRowSelect={false} headerText="Claim #" />

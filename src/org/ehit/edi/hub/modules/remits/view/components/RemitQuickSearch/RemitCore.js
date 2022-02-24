@@ -5,6 +5,8 @@ import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumn
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 
+const bgcolorarray = [ "0xC0C0C0,0xEEEEEE"]
+const headerbgcolorarray = [ "0xEEEEEE,0xC0C0C0"]
 class RemitCore extends EventDispatcher {
 
 	onClick = (e, data) => {
@@ -57,7 +59,7 @@ class RemitCore extends EventDispatcher {
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="NumericRangeBox" filterWaterMark="Between" dataField="provAdj" headerText="Provider Adj" formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" dataField="totalPatientResp" headerText="Total Patient Resp." formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" dataField="totalNonCovChrg" headerText="Total Non-Covered Charges" formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
-						<ReactDataGridColumnLevel rowHeight="21" nestIndent="30" headerColors="[0xC0C0C0,0xEEEEEE]" headerRollOverColors="[0xEEEEEE,0xC0C0C0]" alternatingItemColors="[0xffffff,0xffffff]" color="blue">
+						<ReactDataGridColumnLevel rowHeight="21" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xffffff,0xffffff]} color="blue">
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.checkTraceNum" enableCellClickRowSelect={false} headerText="Check #" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="billSys" enableCellClickRowSelect={false} headerText="Billing System" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="invoiceNum" enableCellClickRowSelect={false} headerText="PCN #" />

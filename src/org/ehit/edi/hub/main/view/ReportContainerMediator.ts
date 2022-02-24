@@ -118,7 +118,7 @@ export class ReportContainerMediator extends Mediator {
 	}
 
 	private addRemitHeader(): void {
-		var colGroups: any[] = this.view.balanceReport && this.view.balanceReport.remitsReport.grid.getGroupedColumns() //need to Implrement RemitsBalanceReport page
+		var colGroups: any[] = this.view.balanceReport && this.view.balanceReport.remitsReport.grid.getGroupedColumns()
 
 		for (var x: number = 0; x < this.remitsModel.remitHeader && this.remitsModel.remitHeader.length; x++) {
 			if (this.remitsModel.remitHeader[x][1] != 'Recvd') {
@@ -247,7 +247,7 @@ export class ReportContainerMediator extends Mediator {
 	protected setReport(event: RemitsReportEvent): void {
 		this.addRemitHeader()
 		// this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)//Need to Implement
-
+		this.showUCP
 		// if (this.balanceReport == null) {
 		// 	this.balanceReport = new RemitsBalanceReport()
 		// 	this.view.reportsContainer.addChild(this.balanceReport)
@@ -305,7 +305,7 @@ export class ReportContainerMediator extends Mediator {
 	}
 
 	private showUCP(event: RemitsReportEvent): void {
-		this.view.balanceReport.remitsReport.grid.processFilter()
+		this.view.balanceReport&& this.view.balanceReport.remitsReport.grid.processFilter()
 	}
 
 	protected setError(event: RemitsReportEvent): void {

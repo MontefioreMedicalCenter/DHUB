@@ -10,6 +10,9 @@ import { EdiFileBase } from '../../../../../main/model/EdiFileBase.ts'
 import { FileEditorService } from '../../../../../main/service/FileEditorService.ts'
 import { BankEFTReportMediator } from '../../BankEFTReportMediator.ts'
 
+const bgcolorarray = [ "0xC0C0C0,0xEEEEEE"]
+const headerbgcolorarray = [ "0xEEEEEE,0xC0C0C0"]
+
 class BankEFTReport extends React.Component {
 	componentDidMount() {
 		this.mediator = new BankEFTReportMediator().onRegister(this)
@@ -73,7 +76,7 @@ class BankEFTReport extends React.Component {
 							<ReactDataGridColumn width="110" headerText="Remit Check Amt" dataField="coreCheckAmount" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="right" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ footerOperation="sum" footerOperationPrecision="2" />
 						</ReactDataGridColumnGroup>
 						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="Remit File Name" useUnderLine={true} itemRenderer={new ClassFactory(RemitFileNameRenderer)} onHandleViewFile835={(fileId, reportOnly) => this.ViewFile835(fileId, reportOnly)} />
-						<ReactDataGridColumnLevel rowHeight="19" nestIndent="30" headerColors="[0xC0C0C0,0xEEEEEE]" headerRollOverColors="[0xEEEEEE,0xC0C0C0]" alternatingItemColors="[0xE0E0E0  ,0xFFFFFF]">
+						<ReactDataGridColumnLevel rowHeight="19" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xE0E0E0  ,0xFFFFFF]}>
 							<ReactDataGridColumn dataField="coreCheckTraceNum" enableCellClickRowSelect={false} headerText="Check #" />
 							<ReactDataGridColumn dataField="checkAmt" enableCellClickRowSelect={false} headerText="Check Amt" footerAlign="left" /*footerFormatter="{ExampleUtils.globalCurrencyFormatter}"*/ formatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 							<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="Remit File Name" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(BankRemitFileNameRenderer)} onHandleViewFile={(fileId, reportOnly) => this.ViewFile(fileId, reportOnly)} />
