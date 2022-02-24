@@ -59,12 +59,12 @@ export class ReportContainerMediator extends Mediator {
 			this.bankEFTService.runBankEFTReport(this.view.props.fileData.fileId, null, null, null, null, null, 0)
 		} else if (this.view.props.fileData.transType != null && this.view.props.fileData.transType === '835S') {
 			// var supplementReport: RemitSupReport = new RemitSupReport() //through props added component directly
-			var content = this.view.props.fileData.fileContent.toString()
+			var content = this.view.props.fileData.fileContent && this.view.props.fileData.fileContent.toString()
 			//	if (content != null && content.length > 0 && content.substring(0, 3) == "JP9") commented in Flex
 			{
-				var rpt_arr: any[] = content.split('~')
+				var rpt_arr: any[] = content && content.split('~')
 				var supRpt: ArrayCollection = new ArrayCollection()
-				for (var i: number = 0; i < rpt_arr.length; i++) {
+				for (var i: number = 0; i < rpt_arr && rpt_arr.length; i++) {
 					var remitSupRpt: RemitSupRpt = new RemitSupRpt()
 
 					var oneRow: string = rpt_arr[i]

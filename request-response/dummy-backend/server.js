@@ -51,6 +51,7 @@ const runEdiRemitEFTReport = require('./response/runEdiRemitEFTReport')
 const explainPayload =require('./response/explainPayload')
 const runRemitsReport = require('./response/runRemitsReport')
 const runReport = require('./response/runReport')
+const findRemitsProcesses = require('./response/findRemitProcesses')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -257,6 +258,10 @@ app.post('/DHub/api/remitssvc/runRemitsReport', (req, res) => {
 
 app.post('/DHub/api/fileManagersvc/runReport', (req, res) => {
 	sendResponse(res, 200, runReport)
+})
+
+app.post('/DHub/api/remitssvc/findRemitsProcesses', (req, res) => {
+	sendResponse(res, 200, findRemitsProcesses)
 })
 
 app.use(require('express').static(path.join(__dirname, 'build')))

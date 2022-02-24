@@ -3,7 +3,7 @@ import { RemitsService } from '../service/RemitsService.ts'
 import RemitsModel from '../model/RemitsModel.ts'
 import RemitsTracker from './components/RemitsTracker'
 import RemitsEvent from '../model/events/RemitsEvent.ts'
-import {FileEditorEvent} from '../../../main/model/events/FileEditorEvent.ts'
+import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
 import { FlexDataGridColumn, FlexDataGridEvent } from '../../../../../../../flexicious'
 import { DateRangeEvent } from '../../../../../../../utils/dateFormatCombo/DateRangeEvent.ts'
 import naIcon from '../../../../../../../assets/images/minus_black.png'
@@ -11,11 +11,13 @@ import waitIcon from '../../../../../../../assets/images/clock.png'
 import tickIcon from '../../../../../../../assets/images/tick.png'
 import { toast } from 'react-toastify'
 import { EdiFileBase } from '../../../main/model/EdiFileBase.ts'
+import { FileEditorService } from '../../../main/service/FileEditorService.ts'
 
 export default class RemitsTrackerMediator extends Mediator {
 	public view: RemitsTracker
 	public remitsModel: RemitsModel = RemitsModel.getInstance()
 	public remitService: RemitsService = RemitsService.getInstance()
+	public fileEditorService: FileEditorService = FileEditorService.getInstance()
 	private remitsTimer: Timer
 	private _editor: boolean
 	private dateRange: DateRangeEvent
@@ -95,14 +97,14 @@ export default class RemitsTrackerMediator extends Mediator {
 		this.searchByDateRange
 	}
 
-	private searchByDateRange(choosenStartDate, choosenEndDate){
+	private searchByDateRange(choosenStartDate, choosenEndDate) {
 		var startDate: Date = null
 		var endDate: Date = null
 		if (choosenStartDate != null && choosenEndDate != null) {
 			startDate = choosenStartDate
 			endDate = choosenEndDate
 		}
-		this.remitService.findRemitsProcesses(startDate, endDate);//need to call this service directly because we dont have EdiHubContext
+		this.remitService.findRemitsProcesses(startDate, endDate) //need to call this service directly because we dont have EdiHubContext
 	}
 
 	private removeRemits(event: RemitsEvent): void {
@@ -163,7 +165,32 @@ export default class RemitsTrackerMediator extends Mediator {
 		}
 	}
 
-	private viewFile1(event: FileEditorEvent): void {
-		this.dispatch(event)
+	private viewFile1(file): void {
+		// {
+		// 	var file:EdiFileBase=event.file;
+		// 	var fileEditor:FileEditor=new FileEditor();
+		// 	fileEditor.height=contextView.height-40;
+		// 	fileEditor.width=contextView.width-40;
+		// 	PopUpManager.addPopUp(fileEditor, contextView, true);
+		// 	PopUpManager.centerPopUp(fileEditor);
+		// 	fileEditor.container.setfile(file);
+		// 	mediatorMap.createMediator(fileEditor);
+		// 	if (file.reportOnly == true)
+		// 		fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+		// 	else
+		// 		service.getFile(file.fileId, file.removeCRLF);
+
+		// }
+		if(file.reportOnly === true){
+			this.view.setState({ 
+				fileEditoriconWindow: true,
+				fileData: file
+			})
+		}else{
+			this.fileEditorService.getFile(file.fileId, file.removeCRLF);
+			this.view.setState({
+				fileEditorWindow: true
+			})
+		}
 	}
 }

@@ -272,8 +272,8 @@ class RemitQuickSearch extends EventDispatcher {
 					</div>
 				</Paper>
 				<Paper style={{ height: 'calc(100vh - 370px)', marginTop: '1px' }}>
-					<RemitCore ref={g => (this.remitCoreRef = g)} id="remitCoreRef" hide={this.state.hideCore} parentDocument={this} />
-					<RemitDetail ref={g => (this.remitDetailRef = g)} id="remitDetailRef" hide={this.state.hideDetails} parentDocument={this}/>
+					<RemitCore ref={g => (this.remitCoreRef = g)} id="remitCoreRef" hide={this.state.hideCore} parentDocument={this} />{/* RemitCoreTracking */}					
+					<RemitDetail ref={g => (this.remitDetailRef = g)} id="remitDetailRef" hide={this.state.hideDetails} parentDocument={this}/>{/* RemitDetailTracking */}
 				</Paper>
 				<AdvanceDialog
 					open={this.state.fileEditorWindow}
@@ -281,6 +281,7 @@ class RemitQuickSearch extends EventDispatcher {
 					bodyRenderer={
 						<FileEditor
 							ref={g => (this.fileEditor = g)}
+							parentDoc={this}
 							closePopup={() => {
 								return this.setState({ fileEditorWindow: false })
 							}}

@@ -1,7 +1,7 @@
-import { Button, Checkbox, Paper, styled, TextField } from '@material-ui/core';
+import { Button, Paper, styled, TextField } from '@material-ui/core';
 import React from 'react'
 import RemitsQuickSearchDatePicker from '../../../../../../../../../container/views/itemRenderers/RemitsQuickSearchDatePicker';
-import { EventDispatcher, MultiSelectComboBox } from '../../../../../../../../../flexicious';
+import { EventDispatcher } from '../../../../../../../../../flexicious';
 import './eftSearch.scss'
 
 const ColorButton = styled(Button)(({ theme }) => ({
