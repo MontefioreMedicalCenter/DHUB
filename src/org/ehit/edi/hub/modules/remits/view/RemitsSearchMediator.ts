@@ -25,29 +25,29 @@ export class RemitsSearchMediator extends Mediator {
 		this.mapListener(this.eventDispatcher, RemitQuickSearchEvent.SEARCH_PAYERNM, this.populatePayerNm, RemitQuickSearchEvent)
 		this.mapListener(this.eventDispatcher, RemitQuickSearchEvent.GET_STATUS, this.populateStatus, RemitQuickSearchEvent)
 		this.remitSearchService.getPayerName()
-		this.remitSearchService.getSystemId()
-		this.remitSearchService.getStatus()
+		//this.remitSearchService.getSystemId()
+		//this.remitSearchService.getStatus()
 		return this
 	}
 
-	private populateSystemId(event: RemitQuickSearchEvent): void {
+/*	private populateSystemId(event: RemitQuickSearchEvent): void {
 		// this.view.systemIdBtn.dataProvider = event.searchdata
 		this.view.setState({ systemIdBtn_dataProvider: event.searchdata })
 		// this.view.systemIdBtn.selectedItems = ['ALL']
 	}
-
+*/
 	private populatePayerNm(event: RemitQuickSearchEvent): void {
 		// this.view.payerNmBtn.dataProvider = event.searchdata
 		// this.view.setState({payerNmBtn:event.searchdata})
 		this.view.setState({ payerNmBtn_dataProvider: event.searchdata })
 	}
 
-	private populateStatus(event: RemitQuickSearchEvent): void {
+/*	private populateStatus(event: RemitQuickSearchEvent): void {
 		// this.view.statusBtn.dataProvider = event.searchdata
 		this.view.setState({ statusBtn_dataProvider: event.searchdata })
 		// this.view.statusBtn.selectedItems = ['0']
 	}
-
+*/
 	private remitQuickSearch() {
 		var MS_PER_DAY: number = 1000 * 60 * 60 * 24
 		var dateDiff: Date = new Date(this.view.state.startDate.getTime() - this.view.state.endDate.getTime())
@@ -60,21 +60,19 @@ export class RemitsSearchMediator extends Mediator {
 			toast.error('Please select Date Range within six months.')
 			return
 		}
-		!this.view.state.payerId ? this.view.setState({ payerIdError: true }) : this.view.setState({ payerIdError: false })
-		//payerNmBtn
-		!this.view.state.patId ? this.view.setState({ patIdError: true }) : this.view.setState({ patIdError: false })
-		!this.view.state.patFName ? this.view.setState({ patFNameError: true }) : this.view.setState({ patFNameError: false })
-		!this.view.state.patLName ? this.view.setState({ patLNameError: true }) : this.view.setState({ patLNameError: false })
-		!this.view.state.chkNo ? this.view.setState({ chkNoError: true }) : this.view.setState({ chkNoError: false })
-		!this.view.state.claimNo ? this.view.setState({ claimNoError: true }) : this.view.setState({ claimNoError: false })
 		if (this.view.state.patId || this.view.state.payerId || this.view.state.patFName || this.view.state.patLName ||this.view.state.chkNo || this.view.state.claimNo) {
 			if(this.view.state.patId || this.view.state.patFName || this.view.state.patLName || this.view.state.claimNo /*|| this.view.state.statusBtnData.toString().indexOf('0') < 0*/){
-				this.remitSearchService.remitDetailSearch(this.view.state.chkNo, this.view.state.payerId, this.view.state.payerNmBtnLabel, this.view.state.patId, this.view.state.patFName, this.view.state.patLName, this.view.state.claimNo, this.view.state.systemIdBtnLabel, this.view.state.statusBtnData, this.view.state.startDate, this.view.state.endDate, this.view.state.radioValue )
+				this.remitSearchService.remitDetailSearch(this.view.state.chkNo, this.view.state.payerId, this.view.state.payerNmBtnLabel, this.view.state.patId, this.view.state.patFName, this.view.state.patLName, this.view.state.claimNo,/* this.view.state.systemIdBtnLabel, this.view.state.statusBtnData.toString(),*/ this.view.state.startDate, this.view.state.endDate, this.view.state.radioValue )
 			}else{
-				this.remitSearchService.remitCoreSearch(this.view.state.chkNo, this.view.state.payerId, this.view.state.payerNmBtnLabel, this.view.state.systemIdBtnLabel, this.view.state.statusBtnLabel, this.view.state.startDate, this.view.state.endDate, this.view.state.radioValue )
+				this.remitSearchService.remitCoreSearch(this.view.state.chkNo, this.view.state.payerId, this.view.state.payerNmBtnLabel,/* this.view.state.systemIdBtnLabel,  this.view.state.statusBtnData.toString(), */this.view.state.startDate, this.view.state.endDate, this.view.state.radioValue )
 			}
 		}else{
-
+			!this.view.state.payerId ? this.view.setState({ payerIdError: true }) : this.view.setState({ payerIdError: false })
+			!this.view.state.patId ? this.view.setState({ patIdError: true }) : this.view.setState({ patIdError: false })
+			!this.view.state.patFName ? this.view.setState({ patFNameError: true }) : this.view.setState({ patFNameError: false })
+			!this.view.state.patLName ? this.view.setState({ patLNameError: true }) : this.view.setState({ patLNameError: false })
+			!this.view.state.chkNo ? this.view.setState({ chkNoError: true }) : this.view.setState({ chkNoError: false })
+			!this.view.state.claimNo ? this.view.setState({ claimNoError: true }) : this.view.setState({ claimNoError: false })
 			toast.error('Please fill out one of these fields: Check/EFT Trace Number, Payer ID, Payer Name, Member ID, Patient First Name, Patient Last Name, PCN #')
 
 		

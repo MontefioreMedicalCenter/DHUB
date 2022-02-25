@@ -20,7 +20,7 @@ class RemitCore extends EventDispatcher {
 	render() {
 		return (
 			<div style={{ height:'0px'}}>
-			<div style={{ height: 'calc(100vh - 380px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
+			<div style={{ height: 'calc(100vh - 340px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
 				<DataGrid
 					ref={g => (this.grid = g)}
 					enableCopy={true}
@@ -28,7 +28,7 @@ class RemitCore extends EventDispatcher {
 					enablePrint={true}
 					styleName="gridStyle"
 					fontSize="11"
-					alternatingItemColors={['0xFFFFFF', '0xFFFFFF']}
+					alternatingItemColors={[0xe1e8e4, 0xffffff]}
 					horizontalScrollPolicy="auto"
 					horizontalGridLines={true}
 					horizontalGridLineColor="#F2F2F2"

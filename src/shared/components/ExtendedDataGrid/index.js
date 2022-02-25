@@ -149,9 +149,10 @@ export default class DataGrid extends MaterialDataGrid {
 		this.enableActiveCellHighlight = true
 		this.activeCellColor = 0xbdd4f1
 		//Vertical Grid Lines for all Grids
-		this.verticalGridLines = true
-		this.verticalGridLineColor = 0xcccccc
-		this.headerVerticalGridLines = true
+		// this.verticalGridLines = true
+		// this.verticalGridLineColor = 0xcccccc
+		// this.headerVerticalGridLines = true
+		this.alternatingItemColors=[0xe1e8e4, 0xffffff]
 		this.measurerClassName = 'common-row-height-style'
 		this.nativeExcelExporter = new ExcelXlsxExporter()
 		this.setFooterRowHeight(25)

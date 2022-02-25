@@ -19,8 +19,8 @@ class RemitDetail extends EventDispatcher {
 	render() {
 		return (
 			<div style={{ height:'50px'}}>
-			<div style={{ height: this.props.hide ? '1px' : 'calc(100vh - 380px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
-				<DataGrid ref={g => (this.grid = g)} id="grid" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" fontSize="11" useCompactPreferences={true} alternatingItemColors="[0xFFFFFF ,0xFFFFFF]" horizontalScrollPolicy="auto" horizontalGridLines={true} horizontalGridLineColor="#F2F2F2" horizontalGridLineThickness="1" name="remitDetail" width="100%" height="100%" backgroundColor="white" /*creationComplete="onComplete(event)" toolbarExcelHandlerFunction="onToolbarExport" */ >
+			<div style={{ height: this.props.hide ? '1px' : 'calc(100vh - 340px)', visibility: this.props.hide && 'hidden', minHeight: !this.props.hide && '200px' }}>
+				<DataGrid ref={g => (this.grid = g)} id="grid" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" fontSize="11" useCompactPreferences={true} alternatingItemColors={[0xe1e8e4, 0xffffff]} horizontalScrollPolicy="auto" horizontalGridLines={true} horizontalGridLineColor="#F2F2F2" horizontalGridLineThickness="1" name="remitDetail" width="100%" height="100%" backgroundColor="white" /*creationComplete="onComplete(event)" toolbarExcelHandlerFunction="onToolbarExport" */ >
 					<ReactDataGridColumnLevel enableFilters={true} enablePaging={true} pageSize="50" color="0x185B29">
 						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="50" headerWordWrap={true} itemRenderer={new ClassFactory(RemitDetailRenderer)} onHandleClick={(e, data) => {this.onClick(e, data)}} />
 						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File test2" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(RemitDetailFileRenderer)} onHandleFileName={(e, data, reportOnly) => this.viewFile(e, data, reportOnly)}/>

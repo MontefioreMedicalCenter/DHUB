@@ -41,15 +41,15 @@ export class RemitSearchService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/remitSearchsvc/getStatus', null, null, this.getStatusSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public remitCoreSearch(chkNo: string, payerId: string, payerName: string, systemId: string, status: string, startDate: Date, endDate: Date, dateSearch: string): AxiosPromise<any> {
+	public remitCoreSearch(chkNo: string, payerId: string, payerName: string,/* systemId: string, status: string, */startDate: Date, endDate: Date, dateSearch: string): AxiosPromise<any> {
 		// var rpcCall: AsyncToken = this.service.remitCoreSearch(chkNo, payerId, payerName, systemId, status, startDate, endDate, dateSearch)
 		// rpcCall.addResponder(new AsyncResponder(this.coreSearchSuccessResultEvent, this.failureFaultEvent))
 		var formData = qs.stringify({
 			chkNo:chkNo,
 			payerId:payerId,
 			payerName: payerName,
-			systemId: systemId,
-			status: status,
+		//	systemId: systemId,
+		//	status: status,
 			startDate: startDate,
 			endDate: endDate,
 			dateSearch: dateSearch
@@ -57,7 +57,7 @@ export class RemitSearchService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/remitSearchsvc/remitCoreSearch', formData, null, this.coreSearchSuccessResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
-	public remitDetailSearch(chkNo: string, payerId: string, payerName: string, patId: string, patFName: string, patLName: string, claimNo: string, systemId: string, status: any[], startDate: Date, endDate: Date, dateSearch: string): AxiosPromise<any> {
+	public remitDetailSearch(chkNo: string, payerId: string, payerName: string, patId: string, patFName: string, patLName: string, claimNo: string,/* systemId: string, status: any[],*/ startDate: Date, endDate: Date, dateSearch: string): AxiosPromise<any> {
 
 		// var rpcCall: AsyncToken = this.service.remitDetailSearch(chkNo, payerId, payerName, patId, patFName, patLName, claimNo, systemId, status, startDate, endDate, dateSearch)
 		// rpcCall.addResponder(new AsyncResponder(this.detailSearchSuccessResultEvent, this.failureFaultEvent))
@@ -69,8 +69,8 @@ export class RemitSearchService extends ServiceProxyBase {
 			patFName: patFName,
 			patLName: patLName,
 			claimNo: claimNo,
-			systemId: systemId,
-			status: stringifyCircularObjectWithModifiedKeys(status),
+		//	systemId: systemId,
+		//	status: stringifyCircularObjectWithModifiedKeys(status),
 			startDate: startDate,
 			endDate: endDate,
 			dateSearch: dateSearch
