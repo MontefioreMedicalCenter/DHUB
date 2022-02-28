@@ -7,6 +7,7 @@ import { BankEFTReportEvent } from '../model/events/BankEFTReportEvent.ts'
 import { BankEFTModel } from '../model/BankEFTModel.ts'
 import { toast } from 'react-toastify'
 import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
+import { BankEFTSearchEvent } from '../model/events/BankEFTSearchEvent.ts'
 
 export class BankEFTService extends ServiceProxyBase {
 	public static REMOTE_DESTINATION: string = 'BankEFTService'
@@ -29,7 +30,6 @@ export class BankEFTService extends ServiceProxyBase {
 		// var rpcCall: AsyncToken = this.service.findBankEFTHeader()
 		// rpcCall.addResponder(new AsyncResponder(this.headerResultEvent, this.failureFaultEvent))
 		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/findBankEFTHeader', null, null, this.headerResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
-	
 	}
 
 	protected headerResultEvent(event: ResultEvent, token: Object = null): void {
@@ -63,7 +63,6 @@ export class BankEFTService extends ServiceProxyBase {
 			// var rpcCall: AsyncToken = this.service.findBankEFTProcesses(startDate, endDate)
 			// rpcCall.addResponder(new AsyncResponder(this.successResultEvent, this.failureFaultEvent))
 			return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/findBankEFTProcesses', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
-
 		}
 	}
 
@@ -80,7 +79,7 @@ export class BankEFTService extends ServiceProxyBase {
 			endDate: endDate,
 			dateSearch: dataSearch
 		})
-		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/runEdiRemitEFTReport', formData, null,  this.eftReportsuccessResultEvent.bind(this), this.eftReportfailureResultEvent.bind(this), 'form', this.getHeaderFormData())
+		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/runEdiRemitEFTReport', formData, null, this.eftReportsuccessResultEvent.bind(this), this.eftReportfailureResultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	protected eftReportsuccessResultEvent(event: ResultEvent, token: Object = null): void {
@@ -90,14 +89,14 @@ export class BankEFTService extends ServiceProxyBase {
 	}
 
 	protected eftReportfailureResultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
+		var msg: ErrorMessage = <ErrorMessage>event
 		var bankEFTReportEvent: BankEFTReportEvent
 
 		if (this._editor) {
-			bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.REPORT_ERROR_EDITOR, null, msg.faultString)
+			bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.REPORT_ERROR_EDITOR, null, msg.error.message)
 			this.dispatch(bankEFTReportEvent)
 		} else {
-			bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.REPORT_ERROR, null, msg.faultString)
+			bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.REPORT_ERROR, null, msg.error.message)
 			this.dispatch(bankEFTReportEvent)
 		}
 	}
@@ -108,40 +107,44 @@ export class BankEFTService extends ServiceProxyBase {
 	protected failureFaultEvent(event: FaultEvent, token: Object = null): void {
 		var msg: ErrorMessage = <ErrorMessage>event
 		// this.bankEFTModel.errMsg = msg.faultString
-		toast.error(msg.error.message);
-		
+		toast.error(msg.error.message)
 	}
 
-	public getTxnNoList(): void {
-		var rpcCall: AsyncToken = this.service.findUniqueTxn()
-		rpcCall.addResponder(new AsyncResponder(this.txnNumberResultEvent, this.failureFaultEvent))
+	public getTxnNoList(): AxiosPromise<any> {
+		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/findUniqueTxn', null, null, this.txnNumberResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		
+		// var rpcCall: AsyncToken = this.service.findUniqueTxn()
+		// rpcCall.addResponder(new AsyncResponder(this.txnNumberResultEvent, this.failureFaultEvent))
 	}
 
 	protected txnNumberResultEvent(event: ResultEvent, token: Object = null): void {
 		var bankEFTSearchEvent: BankEFTSearchEvent = new BankEFTSearchEvent(BankEFTSearchEvent.TXN_LS)
-		bankEFTSearchEvent.txnList = <ArrayCollection>event.result
+		bankEFTSearchEvent.txnList = ArrayCollection.from(event.result)
 		this.dispatch(bankEFTSearchEvent)
 	}
 
-	public getPayerList(): void {
-		var rpcCall: AsyncToken = this.service.findUniquePayer()
-		rpcCall.addResponder(new AsyncResponder(this.PayerResultEvent, this.failureFaultEvent))
+	public getPayerList():AxiosPromise<any> {
+		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/findUniquePayer', null, null, this.PayerResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		
+		// var rpcCall: AsyncToken = this.service.findUniquePayer()
+		// rpcCall.addResponder(new AsyncResponder(this.PayerResultEvent, this.failureFaultEvent))
 	}
 
 	protected PayerResultEvent(event: ResultEvent, token: Object = null): void {
 		var bankEFTSearchEvent: BankEFTSearchEvent = new BankEFTSearchEvent(BankEFTSearchEvent.PAYER_LS)
-		bankEFTSearchEvent.payerList = <ArrayCollection>event.result
+		bankEFTSearchEvent.payerList = ArrayCollection.from(event.result)
 		this.dispatch(bankEFTSearchEvent)
 	}
 
-	public getTraceNumberList(): void {
-		var rpcCall: AsyncToken = this.service.findUniqueTraceNumber()
-		rpcCall.addResponder(new AsyncResponder(this.traceNumberResultEvent, this.failureFaultEvent))
+	public getTraceNumberList(): AxiosPromise<any> {
+		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/findUniqueTraceNumber', null, null, this.traceNumberResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+		// var rpcCall: AsyncToken = this.service.findUniqueTraceNumber()
+		// rpcCall.addResponder(new AsyncResponder(this.traceNumberResultEvent, this.failureFaultEvent))
 	}
 
 	protected traceNumberResultEvent(event: ResultEvent, token: Object = null): void {
 		var bankEFTSearchEvent: BankEFTSearchEvent = new BankEFTSearchEvent(BankEFTSearchEvent.TRACENUMBER_LS)
-		bankEFTSearchEvent.traceNumberList = <ArrayCollection>event.result
+		bankEFTSearchEvent.traceNumberList = ArrayCollection.from(event.result)
 		this.dispatch(bankEFTSearchEvent)
 	}
 }

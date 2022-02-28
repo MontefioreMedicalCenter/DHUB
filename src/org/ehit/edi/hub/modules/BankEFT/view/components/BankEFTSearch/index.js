@@ -1,27 +1,33 @@
-import { Button, Paper, styled, TextField } from '@material-ui/core';
+import { Button, Paper, styled, TextField } from '@material-ui/core'
 import React from 'react'
-import RemitsQuickSearchDatePicker from '../../../../../../../../../container/views/itemRenderers/RemitsQuickSearchDatePicker';
-import { EventDispatcher } from '../../../../../../../../../flexicious';
+import RemitsQuickSearchDatePicker from '../../../../../../../../../container/views/itemRenderers/RemitsQuickSearchDatePicker'
+import { EventDispatcher } from '../../../../../../../../../flexicious'
+import CustomAutoComplete from '../../../../../../../../../shared/components/CustomAutoComplete'
+import { BankEFTSearchMediator } from '../../BankEFTSearchMediator.ts'
+import BankEFTReport from '../BankEFTReport'
 import './eftSearch.scss'
 
 const ColorButton = styled(Button)(({ theme }) => ({
 	color: theme.palette.getContrastText('#cec0c0'),
 	background: 'linear-gradient(153deg, #fefcfc, #848b87)'
 }))
-class BankEFTSearch extends EventDispatcher{
-
-    constructor(props) {
+class BankEFTSearch extends EventDispatcher {
+	constructor(props) {
 		super(props)
 		this.state = {
-			payerNmBtn_dataProvider: [],
-			systemIdBtn_dataProvider: [],
-			statusBtn_dataProvider: [],
-			payerId: '',
-			patId: '',
-			patFName: '',
-			claimNo: '',
-			patLName: '',
+			payerName_dataProvider: [],
+			trnNo_dataProvider: [],
+			checkNumber_dataProvider: [],
+
+			
+			payer: '',
+			// patId: '',
+			// patFName: '',
+			// claimNo: '',
+			// patLName: '',
 			chkNo: '',
+			trnNo: '',
+
 			startDate: new Date(),
 			endDate: new Date(),
 			systemIdBtnSelectedData: [],
@@ -35,6 +41,7 @@ class BankEFTSearch extends EventDispatcher{
 			patFNameError: false,
 			chkNoError: false,
 			claimNoError: false,
+			trnErr: false,
 			radioValue: 'fileDate',
 			hideCore: true,
 			hideDetails: true,
@@ -46,16 +53,36 @@ class BankEFTSearch extends EventDispatcher{
 		this._stSequenceNum = 0
 		this._unitSequenceNum = 0
 	}
-    handleDateChange = (date, key) => {
-		this.setState({ [key]: date })
+
+	componentDidMount() {
+		this.mediator = new BankEFTSearchMediator().onRegister(this)
 	}
 
-    render(){
-        return(
-            <Paper>
-                <div className='bankSearchHeader'>
+	componentWillUnmount() {
+		this.mediator.onUnRegister()
+	}
 
-                <div style={{ height: '100%', padding: '5px' }}>
+	handleDateChange = (date, key) => {
+		this.setState({ [key]: date })
+	}
+	handleOnRadioClick = value => {
+		this.setState({ radioValue: value })
+	}
+
+	handleOnChange = e => {
+		if (e.target.id) {
+			this.setState({ [e.target.id]: e.target.value })
+		} else {
+			this.setState({ [e.target.name]: e.target.value })
+		}
+	}
+
+
+	render() {
+		return (
+			<Paper style={{ height: 'calc(100% - 40px)' }}>
+				<div className="bankSearchHeader">
+					<div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems:'center' }}>
 						<div className="column-divider">
 							<div className="mainDiv">
 								<div className="line">
@@ -81,31 +108,41 @@ class BankEFTSearch extends EventDispatcher{
 										From
 									</span>
 									<span style={{ color: 'Red', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>*</span>
-									<RemitsQuickSearchDatePicker id="startDate" selectedDate={this.state.startDate} onDateChange={date => this.handleDateChange(date, 'startDate')} RemitsQuickSearchDatePickerStyle={{ width: '145px' }} />
+									<RemitsQuickSearchDatePicker id="startDate" selectedDate={this.state.startDate} onDateChange={date => this.handleDateChange(date, 'startDate')} RemitsQuickSearchDatePickerStyle={{ width: '155px' }} />
 									<span className="font" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 										To
 									</span>
 									<span style={{ color: 'Red', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>*</span>
-									<RemitsQuickSearchDatePicker id="endDate" selectedDate={this.state.endDate} onDateChange={date => this.handleDateChange(date, 'endDate')} RemitsQuickSearchDatePickerStyle={{ width: '145px' }} />
+									<RemitsQuickSearchDatePicker id="endDate" selectedDate={this.state.endDate} onDateChange={date => this.handleDateChange(date, 'endDate')} RemitsQuickSearchDatePickerStyle={{ width: '155px' }} />
 								</div>
+								<div className="line">
+									<span className="font2">Check/EFT Trace Number</span>
+									<div>
+										{/* <TextField variant="outlined" value={this.state.chkNo} error={this.state.chkNoError} onChange={e => this.setState({ chkNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '537px', marginLeft: '5px' } } }} /> */}
+										<CustomAutoComplete ref={g => (this.chkNo = g)} id="chkNo" name="chkNo" value={this.state.chkNo} data={this.state.checkNumber_dataProvider} onChange={(e, value) => this.setState({ checkNo: value })} onSelect={value => this.setState({ checkNo: value })} handleOnChange={this.handleOnChange} />
+									</div>
+								</div>
+							</div>
+							<div style={{display: 'flex', flexDirection: 'column', rowGap: '5px', alignItems: 'flex-end'}}>
 								<div className="line">
 									<span className="font2">Payer Id</span>
 									<div>
-										<TextField variant="outlined" id="payerId" error={this.state.payerIdError} onChange={e => this.setState({ payerId: e.target.value })} value={this.state.payerId} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '182px', marginLeft: '5px' } } }} />
+										{/* <TextField variant="outlined" id="payerId" error={this.state.payerIdError} onChange={e => this.setState({ payer: e.target.value })} value={this.state.payer} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '182px', marginLeft: '5px' } } }} /> */}
+										<CustomAutoComplete ref={g => (this.payer = g)} id="payer" name="payer" value={this.state.payer} data={this.state.payerName_dataProvider} onChange={(e, value) => this.setState({ payer: value })} onSelect={value => this.setState({ payer: value })} handleOnChange={this.handleOnChange} />
+
 									</div>
 								</div>
-								<div className="line" style={{ marginRight: '310px' }}>
-									<span className="font2">Check/EFT Trace Number</span>
+								<div className="line" >
+									<span className="font2">TRN#</span>
 									<div>
-										<TextField variant="outlined" value={this.state.chkNo} error={this.state.chkNoError} onChange={e => this.setState({ chkNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '182px', marginLeft: '5px' } } }} />
+										{/* <TextField variant="outlined" value={this.state.trnNo} error={this.state.trnErr} onChange={e => this.setState({ trnNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '182px', marginLeft: '5px' } } }} /> */}
+										<CustomAutoComplete ref={g => (this.trnNo = g)} id="trnNo" name="trnNo" value={this.state.trnNo} data={this.state.trnNo_dataProvider} onChange={(e, value) => this.setState({ trnNo: value })} onSelect={value => this.setState({ trnNo: value })} handleOnChange={this.handleOnChange} />
 									</div>
 								</div>
-								
 							</div>
-							
-							</div>
+						</div>
 						<div>
-							<ColorButton style={{ height: '30px', width: '90px' }} onClick={this.handleOnSearch}>
+							<ColorButton style={{ height: '30px', width: '90px' }} onClick={() => this.mediator.ediEftQuickSearch()}>
 								Search
 							</ColorButton>
 							&nbsp;&nbsp;&nbsp;&nbsp;
@@ -114,12 +151,13 @@ class BankEFTSearch extends EventDispatcher{
 							</ColorButton>
 						</div>
 					</div>
-	
-                    </div>
-                
-            </Paper>
-        )
-    }
+				</div>
+				<div style={{ height: 'calc(100% - 170px)' }}>
+					<BankEFTReport ref={f => (this.bankEFTReport = f)} />
+				</div>
+			</Paper>
+		)
+	}
 }
 
 export default BankEFTSearch

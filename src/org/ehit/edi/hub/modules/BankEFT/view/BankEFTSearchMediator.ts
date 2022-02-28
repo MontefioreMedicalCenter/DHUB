@@ -1,6 +1,7 @@
+import { toast } from 'react-toastify'
 import Mediator from '../../../../../../../modules/main/view/Mediator.ts'
-import { BankEFTReportEvent } from '../model/events/BankEFTReportEvent'
-import { BankEFTSearchEvent } from '../model/events/BankEFTSearchEvent'
+import { BankEFTReportEvent } from '../model/events/BankEFTReportEvent.ts'
+import { BankEFTSearchEvent } from '../model/events/BankEFTSearchEvent.ts'
 import { BankEFTService } from '../service/BankEFTService.ts'
 
 export class BankEFTSearchMediator extends Mediator {
@@ -11,81 +12,92 @@ export class BankEFTSearchMediator extends Mediator {
 	public bankEFTService: BankEFTService = BankEFTService.getInstance()
 
 
-	public onRegister(): void {
-		// this.eventMap.mapListener(this.view.searchBtn, MouseEvent.CLICK, this.ediEftQuickSearch, MouseEvent)
-		// this.eventMap.mapListener(this.view.clearBtn, MouseEvent.CLICK, this.clearSearch, MouseEvent)
+	public onRegister(view): BankEFTSearchMediator {
 
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTReportEvent.BANKEFT_REPORT, this.bankEFTReport, BankEFTReportEvent)
+		this.view =view;
+		// this.mapListener(this.view.searchBtn, MouseEvent.CLICK, this.ediEftQuickSearch, MouseEvent)
+		// this.mapListener(this.view.clearBtn, MouseEvent.CLICK, this.clearSearch, MouseEvent)
 
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTSearchEvent.TRACENUMBER_LS, this.setTraceNumberList, BankEFTSearchEvent)
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTSearchEvent.GET_TRACENUMBER_LS, this.getTraceNumberList, BankEFTSearchEvent)
+		this.mapListener(this.eventDispatcher, BankEFTReportEvent.BANKEFT_REPORT, this.bankEFTReport, BankEFTReportEvent)
 
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTSearchEvent.TXN_LS, this.setTxnList, BankEFTSearchEvent)
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTSearchEvent.GET_TXN_LS, this.getTxnList, BankEFTSearchEvent)
+		this.mapListener(this.eventDispatcher, BankEFTSearchEvent.TRACENUMBER_LS, this.setTraceNumberList, BankEFTSearchEvent)
+		this.mapListener(this.eventDispatcher, BankEFTSearchEvent.GET_TRACENUMBER_LS, this.getTraceNumberList, BankEFTSearchEvent)
 
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTSearchEvent.PAYER_LS, this.setPayerList, BankEFTSearchEvent)
-		this.eventMap.mapListener(this.eventDispatcher, BankEFTSearchEvent.GET_PAYER_LS, this.getPayerList, BankEFTSearchEvent)
+		this.mapListener(this.eventDispatcher, BankEFTSearchEvent.TXN_LS, this.setTxnList, BankEFTSearchEvent)
+		this.mapListener(this.eventDispatcher, BankEFTSearchEvent.GET_TXN_LS, this.getTxnList, BankEFTSearchEvent)
 
-		this.dispatch(new BankEFTSearchEvent(BankEFTSearchEvent.GET_TRACENUMBER_LS))
-		this.dispatch(new BankEFTSearchEvent(BankEFTSearchEvent.GET_PAYER_LS))
-		this.dispatch(new BankEFTSearchEvent(BankEFTSearchEvent.GET_TXN_LS))
+		this.mapListener(this.eventDispatcher, BankEFTSearchEvent.PAYER_LS, this.setPayerList, BankEFTSearchEvent)
+		this.mapListener(this.eventDispatcher, BankEFTSearchEvent.GET_PAYER_LS, this.getPayerList, BankEFTSearchEvent)
+
+		// this.dispatch(new BankEFTSearchEvent(BankEFTSearchEvent.GET_TRACENUMBER_LS))
+		// this.dispatch(new BankEFTSearchEvent(BankEFTSearchEvent.GET_PAYER_LS))
+		// this.dispatch(new BankEFTSearchEvent(BankEFTSearchEvent.GET_TXN_LS))
+		this.getTraceNumberList({traceNumberList: null})
+		this.getPayerList({payerList: null})
+		this.getTxnList({txnList: null})
+		return this;
 	}
 
 	private getTraceNumberList(event: BankEFTSearchEvent): void {
-		if (event.traceNumberList == null) {
+		if (event && event.traceNumberList == null) {
 			this.bankEFTService.getTraceNumberList()
 		}
 	}
 
 	private setTraceNumberList(event: BankEFTSearchEvent): void {
-		this.view.chkNo.autoCompleteSource = event.traceNumberList
+		
+		this.view.setState({checkNumber_dataProvider:event.traceNumberList})
+		// this.view.chkNo.autoCompleteSource = event.traceNumberList
 	}
 
 	private getTxnList(event: BankEFTSearchEvent): void {
-		if (event.txnList == null) {
+		if (event && event.txnList == null) {
 			this.bankEFTService.getTxnNoList()
 		}
 	}
 
 	private setTxnList(event: BankEFTSearchEvent): void {
-		this.view.trnNo.autoCompleteSource = event.txnList
+			
+		this.view.setState({trnNo_dataProvider:event.txnList })
+		// this.view.trnNo.autoCompleteSource = event.txnList
 	}
 
 	private getPayerList(event: BankEFTSearchEvent): void {
-		if (event.payerList == null) {
+		if (event && event.payerList == null) {
 			this.bankEFTService.getPayerList()
 		}
 	}
 
 	private setPayerList(event: BankEFTSearchEvent): void {
-		this.view.payer.autoCompleteSource = event.payerList
+		this.view.setState({payerName_dataProvider:event.payerList})
+		// this.view.payer.autoCompleteSource = event.payerList
 	}
 
 	private ediEftQuickSearch(event: MouseEvent): void {
 		var MS_PER_DAY: number = 1000 * 60 * 60 * 24
-		var dateDiff: Date = new Date(this.view.startDate.selectedDate.time - this.view.endDate.selectedDate.time)
+		var dateDiff: Date = new Date(this.view.state.startDate.getTime() - this.view.state.endDate.getTime())
 		var difference: number = Math.abs(Math.round(dateDiff.time / MS_PER_DAY))
 
-		if (this.view.startDate.selectedDate == null || this.view.endDate.selectedDate == null || this.view.startDate.selectedDate > this.view.endDate.selectedDate) {
-			Alert.show('Start and End Dates are required and Start Date should be less than End Date.')
+		if (this.view.state.startDate == null || this.view.state.endDate == null || this.view.state.startDate > this.view.state.endDate) {
+			toast.error('Start and End Dates are required and Start Date should be less than End Date.')
 			return
 		} else if (difference > 365) {
-			Alert.show('Please select Date Range within one year.')
+			toast.error('Please select Date Range within one year.')
 			return
 		}
-		var validationResult: any[] = Validator.validateAll([this.view.chkNo, this.view.trnNo, this.view.payer])
+		// var validationResult: any[] = Validator.validateAll([this.view.chkNo, this.view.trnNo, this.view.payer])
 
-		if (validationResult.length == 7) {
-		} else {
-			this.view.chkNo.errorString = ''
-			this.view.trnNo.errorString = ''
-			this.view.payer.errorString = ''
+		// if (validationResult.length == 7) {
+		// } else {
+			// this.view.chkNo.errorString = ''
+			// this.view.trnNo.errorString = ''
+			// this.view.payer.errorString = ''
 			var dateSearch: number
-			if (this.view.fileDate.selected) dateSearch = 1
-			else if (this.view.depositDate.selected) dateSearch = 2
+			if (this.view.state.radioValue === 'fileDate') dateSearch = 1
+			else if (this.view.state.radioValue === 'fileDate') dateSearch = 2
 
-			this.bankEFTService.runBankEFTReport(0, this.view.chkNo.text, this.view.trnNo.text, this.view.payer.text, this.view.startDate.selectedDate, this.view.endDate.selectedDate, dateSearch)
-		}
+			this.bankEFTService.runBankEFTReport(0, this.view.state.chkNo, this.view.state.trnNo, this.view.state.payer, this.view.state.startDate, this.view.state.endDate, dateSearch)
+		// }
 	}
 
 	private clearSearch(event: MouseEvent): void {
@@ -98,7 +110,7 @@ export class BankEFTSearchMediator extends Mediator {
 	}
 
 	private bankEFTReport(event: BankEFTReportEvent): void {
-		this.view.bankEFTReport.grid.dataProvider = event.reportdata
+		this.view.bankEFTReport.grid.setDataProvider(event.reportdata) 
 	}
 
 	private viewFile(event: FlexDataGridEvent): void {
