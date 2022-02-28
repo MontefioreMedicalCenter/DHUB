@@ -171,7 +171,8 @@ export class BankEFTTrackerMediator extends Mediator {
 		} else {
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 			this.view.setState({
-				fileEditorWindow: true
+				fileEditorWindow: true,
+				fileData: file
 			})
 		}
 

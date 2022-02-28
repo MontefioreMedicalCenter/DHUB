@@ -13,8 +13,9 @@ import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import { ReportEvent } from '../model/events/ReportEvent.ts'
 import { FileEditorService } from '../service/FileEditorService.ts'
 import ReportContainer from './components/ReportContainer'
-import { FlexDataGridColumn, ReactDataGridColumnGroup } from '../../../../../../flexicious'
+import { FlexDataGridColumn, ReactDataGridColumnGroup, ClassFactory } from '../../../../../../flexicious'
 import moment from 'moment'
+import fileReference from "js-file-download"
 
 export class ReportContainerMediator extends Mediator {
 	public view: ReportContainer
@@ -39,7 +40,7 @@ export class ReportContainerMediator extends Mediator {
 		this.mapListener(this.eventDispatcher, ReportEvent.REPORT, this.displayReport, ReportEvent)
 		this.mapListener(this.eventDispatcher, ReportEvent.EXPLAIN_REPORT, this.setExplain, ReportEvent)
 		this.mapListener(this.eventDispatcher, ReportEvent.EXPLAIN_ERROR, this.setExplainError, ReportEvent)
-		// this.mapListener(this.view.editorMenu, ItemClickEvent.ITEM_CLICK, this.changeContent) //Need to Implement
+		// this.mapListener(this.view.editorMenu, ItemClickEvent.ITEM_CLICK, this.changeContent) //Implemented
 		this.mapListener(this.eventDispatcher, BankEFTReportEvent.BANKEFT_REPORT, this.setBankEFTReport, BankEFTReportEvent)
 		// this.mapListener(this.view, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)  //Need to Implement
 		this.mapListener(this.eventDispatcher, FileEditorEvent.VIEW_FILE, this.viewFile, FileEditorEvent)
@@ -105,7 +106,7 @@ export class ReportContainerMediator extends Mediator {
 					supRpt.addItem(remitSupRpt)
 				}
 				// this.view.reportsContainer.addChild(supplementReport) // through props added component directly
-				this.view.supplementReport.grid.setDataProvider(supRpt) //dataProvider = supRpt
+				this.view.supplementReport.grid.setDataProvider(supRpt) 
 			}
 			/*else
 			{
@@ -119,13 +120,14 @@ export class ReportContainerMediator extends Mediator {
 
 	private addRemitHeader(): void {
 		var colGroups: any[] = this.view.balanceReport && this.view.balanceReport.remitsReport.grid.getGroupedColumns()
+		for (var x = 0; x < this.remitsModel.remitHeader.length; x++) {
 
-		for (var x: number = 0; x < this.remitsModel.remitHeader && this.remitsModel.remitHeader.length; x++) {
 			if (this.remitsModel.remitHeader[x][1] != 'Recvd') {
 				var cols: any[] = []
 				// var colGroup: FlexDataGridColumnGroup = new FlexDataGridColumnGroup()
 				var colGroup: ReactDataGridColumnGroup = new ReactDataGridColumnGroup()
-				colGroup.setHeaderText(this.remitsModel.remitHeader[x][1])
+				// colGroup.setHeaderText(this.remitsModel.remitHeader[x][1])
+				colGroup.headerText = this.remitsModel.remitHeader[x][1];
 
 				var claimPayment: FlexDataGridColumn = new FlexDataGridColumn()
 				claimPayment.setHeaderText('Claim Payment')
@@ -135,8 +137,8 @@ export class ReportContainerMediator extends Mediator {
 				claimPayment.enableCellClickRowSelect = false
 				claimPayment.footerAlign = 'right'
 				claimPayment.footerOperationPrecision = 2
-				claimPayment.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
-				claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
+				// claimPayment.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
+				// claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
 				claimPayment.filterControl = 'TextInput'
 				claimPayment.filterWaterMark = 'Contains'
 				claimPayment.cellTextColorFunction = this.getCellTextColor
@@ -169,53 +171,53 @@ export class ReportContainerMediator extends Mediator {
 				colGroups.splice(x + 7, 0, colGroup)
 			}
 		}
-		// this.balanceReport.remitsReport.grid.groupedColumns = colGroups//Need to implement with some data
-		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setGroupedColumns(colGroups)
+		// this.balanceReport.remitsReport.grid.groupedColumns = colGroups//Need to implement
+		// this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setColumnGroups(colGroups)//;Need to implement in React
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.reDraw()
 	}
 
-	public dynamicIconFunction(cell: IFlexDataGridCell, state: string = ''): any {
+	dynamicIconFunction = (cell, state = '') => {
 		var toolstring: string = '-'
-		if (cell.rowInfo.isDataRow && !cell.rowInfo.isHeaderRow) {
+		if (cell.rowInfo.getIsDataRow() && !cell.rowInfo.getIsHeaderRow()) {
 			// trace('value of header was' + cell.column.headerText.toLowerCase() + 'cell.rowInfo.data=' + cell.rowInfo.data.hb_epicClaimPaymentStr)
-			if (cell.column.dataField == 'eagleClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.eagleClaimPaymentStr
-			} else if (cell.column.dataField == 'idxmotClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.idxmotClaimPaymentStr
-			} else if (cell.column.dataField == 'idxmocClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.idxmocClaimPaymentStr
-			} else if (cell.column.dataField == 'hhClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.hhClaimPaymentStr
-			} else if (cell.column.dataField == 'hb_epicClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.hb_epicClaimPaymentStr
-			} else if (cell.column.dataField == 'pb_epicClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.pb_epicClaimPaymentStr
-			} else if (cell.column.dataField == 'hh_epicClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.hh_epicClaimPaymentStr
-			} else if (cell.column.dataField == 'satpClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.satpClaimPaymentStr
-			} else if (cell.column.dataField == 'dosaClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.dosaClaimPaymentStr
-			} else if (cell.column.dataField == 'cercClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.cercClaimPaymentStr
-			} else if (cell.column.dataField == 'ucpClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.ucpClaimPaymentStr
-			} else if (cell.column.dataField == 'meditechClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.meditechClaimPaymentStr
-			} else if (cell.column.dataField == 'zotecClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.zotecClaimPaymentStr
-			} else if (cell.column.dataField == 'ucpClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.ucpClaimPaymentStr
-			} else if (cell.column.dataField == 'mckessonClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.mckessonClaimPaymentStr
-			} else if (cell.column.dataField == 'mckesson2ClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.mckesson2ClaimPaymentStr
-			} else if (cell.column.dataField == 'caduceusClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.caduceusClaimPaymentStr
-			} else if (cell.column.dataField == 'obgynClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.obgynClaimPaymentStr
-			} else if (cell.column.dataField == 'otherClaimPaymentCount') {
-				toolstring = cell.rowInfo.data.otherClaimPaymentStr
+			if (cell.getColumn().getDataField() === 'eagleClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().eagleClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'idxmotClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().idxmotClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'idxmocClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().idxmocClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'hhClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().hhClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'hb_epicClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().hb_epicClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'pb_epicClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().pb_epicClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'hh_epicClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().hh_epicClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'satpClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().satpClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'dosaClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().dosaClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'cercClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().cercClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'ucpClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().ucpClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'meditechClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().meditechClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'zotecClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().zotecClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'ucpClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().ucpClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'mckessonClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().mckessonClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'mckesson2ClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().mckesson2ClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'caduceusClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().caduceusClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'obgynClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().obgynClaimPaymentStr
+			} else if (cell.getColumn().getDataField() == 'otherClaimPaymentCount') {
+				toolstring = cell.rowInfo.getData().otherClaimPaymentStr
 			} else {
 				toolstring = '*'
 			}
@@ -223,7 +225,7 @@ export class ReportContainerMediator extends Mediator {
 			var productRenderer: ClassFactory = new ClassFactory(CustomToolTipRender)
 			productRenderer.properties = { _mydata: toolstring }
 
-			cell.column.iconTooltipRenderer = productRenderer
+			cell.getColumn().iconTooltipRenderer = productRenderer
 
 			//var iconField:String=cell.rowInfo.data.id;
 			//var img:Class=iconField.toString()!="" ? search : null;
@@ -236,17 +238,24 @@ export class ReportContainerMediator extends Mediator {
 	/*[Embed('/org/ehit/edi/hub/assets/img/search.png')]*/
 	private static search: Class
 
-	public changeContent(event: ItemClickEvent): void {
-		if (event.item.label == 'content') {
-			this.view.dispatchEvent(new Event('reportsToContent'))
-		} else if (event.item.label == 'save') {
-			this.downloadExplainFile()
+	public changeContent(file, label): void {
+		// if (event.item.label == 'content') {
+		// 	this.view.dispatchEvent(new Event('reportsToContent'))
+		// } else if (event.item.label == 'save') {
+		// 	this.downloadExplainFile()
+		// }
+		var rootDocument = this.view.props.reportContainer.props.parentDocument.props.parentDoc
+		if(label === 'content'){
+			rootDocument.viewFile(rootDocument.state.selectedColumnFileId, false)
+			rootDocument.setState({fileEditoriconWindow: false})
+		}else if(label === 'save'){
+			fileReference(this.view.ackReport.state.ackContent, this.view.props.fileData.origFileName +'.explain')
 		}
 	}
 
 	protected setReport(event: RemitsReportEvent): void {
 		this.addRemitHeader()
-		// this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)//Need to Implement
+		// this.mapListener(this.view, RemitsReportEvent.UCP_ONLY, this.showUCP, RemitsReportEvent)
 		this.showUCP
 		// if (this.balanceReport == null) {
 		// 	this.balanceReport = new RemitsBalanceReport()
@@ -305,12 +314,12 @@ export class ReportContainerMediator extends Mediator {
 	}
 
 	private showUCP(event: RemitsReportEvent): void {
-		this.view.balanceReport&& this.view.balanceReport.remitsReport.grid.processFilter()
+		this.view.balanceReport.remitsReport && this.view.balanceReport.remitsReport.grid.processFilter()
 	}
 
 	protected setError(event: RemitsReportEvent): void {
-		this.balanceReport.remitsReport.grid.noDataMessage = event.errMsg
-		this.balanceReport.remitsReport.grid.dataProvider = null
+		// this.balanceReport.remitsReport.grid.noDataMessage = event.errMsg
+		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setDataProvider(null)
 	}
 
 	protected setExplain(event: ReportEvent): void {

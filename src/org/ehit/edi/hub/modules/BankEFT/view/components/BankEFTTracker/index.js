@@ -171,6 +171,7 @@ class BankEFTTracker extends EventDispatcher {
 								ref={g => (this.fileEditor = g)}
 								parentDoc={this}
 								tabName="BankEFTTracker"
+								fileData={this.state.fileData}
 								closePopup={() => {
 								return this.setState({ fileEditorWindow: false })
 							}}

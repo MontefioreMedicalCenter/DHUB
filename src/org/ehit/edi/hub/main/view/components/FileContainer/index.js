@@ -34,7 +34,7 @@ class FileContainer extends React.Component {
     render() {
         return (
             <div>
-                {(this.props.parentDocument.props.parentDoc.state.fileEditorWindow || this.props.parentDocument.props.parentDoc.state.fileEditorWindow) && <FileContentContainer ref={f => (this.fileContentContainer = f)} />}
+                {(this.props.parentDocument.props.parentDoc.state.fileEditorWindow || this.props.parentDocument.props.parentDoc.state.fileEditorWindow) && <FileContentContainer ref={f => (this.fileContentContainer = f)} parentDocument={this} fileData={this.props.fileData}/>}
                 {this.props.parentDocument.props.parentDoc.state.fileEditoriconWindow && <ReportContainer ref={f => (this.reportContainer = f)} reportContainer={this} fileData={this.props.fileData} />} 
             </div>
         )

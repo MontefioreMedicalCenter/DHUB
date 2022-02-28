@@ -9,3 +9,11 @@
     justify-content: center;
     column-gap: 2px;
 }
+
+.buttonStyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    height: 25px;
+}

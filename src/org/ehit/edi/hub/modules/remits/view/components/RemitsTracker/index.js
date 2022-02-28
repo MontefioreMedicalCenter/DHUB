@@ -21,7 +21,9 @@ class RemitsTracker extends EventDispatcher {
 		this.state = {
 			tabValue: this.props.location.pathname,
 			fileEditorWindow: false,
-			fileEditoriconWindow: false
+			fileEditoriconWindow: false,
+			selectedColumnFileId: 0,
+			selectedColumnReportOnly: false
 		}
 	}
 	componentDidMount() {
@@ -50,7 +52,6 @@ class RemitsTracker extends EventDispatcher {
 	}
 
 	getStatus = (status) => {
-		debugger
 		var pollStatus = 'Completed'
 
 		var statusArr = status && status.split(';')
@@ -103,7 +104,8 @@ class RemitsTracker extends EventDispatcher {
 							<FileEditor
 								ref={g => (this.fileEditor = g)}
 								parentDoc={this}
-								tabName="BankEFTTracker"
+								tabName="RemitsTracker"
+								fileData={this.state.fileData}
 								closePopup={() => {
 									return this.setState({ fileEditorWindow: false })
 								}}

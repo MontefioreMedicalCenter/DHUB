@@ -145,12 +145,12 @@ export default class RemitsTrackerMediator extends Mediator {
 			var fileId: number = 0
 			var file: EdiFileBase = new EdiFileBase()
 			var transaction: string = '835'
-			if (event.cell instanceof IFlexDataGridDataCell && event.cell.column != null) {
-				for (var x: number = 0; x < event.cell.rowInfo.data.deliveryLogs.length; x++) {
-					var stepArr: any[] = event.cell.rowInfo.data.deliveryLogs.getItemAt(x).deliveryControl.stepNo.split(',')
+			if (event.cell && event.cell.getColumn() != null) {
+				for (var x: number = 0; x < event.cell.rowInfo.getData().deliveryLogs.length; x++) {
+					var stepArr: any[] = event.cell.rowInfo.getData().deliveryLogs[x].deliveryControl.stepNo.split(',')
 					for (var n: number = 0; n < stepArr.length; n++) {
-						if (stepArr[n] == event.cell.column.dataField) {
-							fileId = event.cell.rowInfo.data.deliveryLogs.getItemAt(x).postFileId
+						if (stepArr[n] === event.cell.getColumn().getDataField()) {
+							fileId = event.cell.rowInfo.getData().deliveryLogs[x].postFileId
 						}
 					}
 				}
@@ -161,7 +161,7 @@ export default class RemitsTrackerMediator extends Mediator {
 				this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
 			}
 		} catch (e) {
-			trace('something bad happened')
+			console.log('something bad happened')
 		}
 	}
 
@@ -189,7 +189,8 @@ export default class RemitsTrackerMediator extends Mediator {
 		}else{
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF);
 			this.view.setState({
-				fileEditorWindow: true
+				fileEditorWindow: true,
+				fileData: file
 			})
 		}
 	}

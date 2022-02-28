@@ -158,6 +158,12 @@ class FileContentContainer extends EventDispatcher {
         }
     }
 
+    reportPopUp = () => {
+        var rootPage = this.props.parentDocument.props.parentDocument.props.parentDoc
+        rootPage.viewFile(rootPage.state.selectedColumnFileId, true)
+        rootPage.setState({ fileEditorWindow: false })
+    }
+
     render() {
         return (
             <div className='pop-up_size'>
@@ -168,12 +174,14 @@ class FileContentContainer extends EventDispatcher {
                         <Button id='wrap' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'wrap')}>Wrap</Button>
                         <Button id='unwrap' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'unwrap')}>UnWrap</Button>
                         <Button id='save' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'save')}>Save</Button>
+                        {(this.props.fileData.transType === '835' || this.props.fileData.transType === '835S') && <Button id='save' variant="contained" color="primary" onClick={this.reportPopUp}>Reports</Button>/* <Button id='save' variant="contained" color="primary" onClick={}>split X12</Button> */}
+                        {(this.props.fileData.transType === '999' || this.props.fileData.transType.indexOf('277') >= 0) && <Button id='save' variant="contained" color="primary">explain</Button>}
                     </ButtonGroup>
                     <TextField variant="outlined" id="searchTxt" value={this.state.searchTxt} onChange={event => this.setState({ searchTxt: event.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '40px', width: '182px', marginLeft: '5px' } } }} />
-                    <CustomButton id="searchBtn" style={{ minWidth: '20px', width: '35px', height: '40px' }} onClick={this.button1_clickHandler} >
+                    <CustomButton id="searchBtn" style={{ minWidth: '20px', width: '35px', height: '40px' }} onClick={this.button1_clickHandler}>
                         <img src={binocular} alt="binocular" />
                     </CustomButton>
-                    <CustomButton id="searchFwdBtn" style={{ minWidth: '20px', width: '35px', height: '40px' }} onClick={this.button2_clickHandler} >
+                    <CustomButton id="searchFwdBtn" style={{ minWidth: '20px', width: '35px', height: '40px' }} onClick={this.button2_clickHandler}>
                         <img src={binocularForward} alt="binocularForward" />
                     </CustomButton>
                     <CustomButton id="searchBckBtn" style={{ minWidth: '20px', width: '35px', height: '40px' }} onClick={this.button3_clickHandler}>

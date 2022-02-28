@@ -106,15 +106,18 @@ export class RemitsService extends ServiceProxyBase {
 	}
 
 	protected remitsReportfailureResultEvent(event: FaultEvent, token: Object = null): void {
-		var msg: ErrorMessage = <ErrorMessage>event.message
+		var msg: ErrorMessage = <ErrorMessage>event
 		var remitsReportEvent: RemitsReportEvent
+		
 		if (this._editor) {
-			remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REPORT_ERROR_EDITOR, null, msg.faultString)
+			remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REPORT_ERROR_EDITOR, null, event.error.message)
 			this.dispatch(remitsReportEvent)
 		} else {
-			remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REPORT_ERROR, null, msg.faultString)
+			remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REPORT_ERROR, null, event.error.message)
 			this.dispatch(remitsReportEvent)
 		}
+		
+		toast.error(msg.error.message)
 	}
 
 	/**
