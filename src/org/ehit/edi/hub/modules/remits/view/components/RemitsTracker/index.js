@@ -72,12 +72,28 @@ class RemitsTracker extends EventDispatcher {
 		return pollStatus
 	}
 
+	getRowTextColor = cell => {	
+		var status = this.getStatus(cell.getRowInfo().getData().status.toString())
+		if (status.indexOf('In-process') === 0)
+		{
+			return '0x0000FF';
+		}
+		if (status.indexOf('Rejected') === 0 )
+		{
+			return '0xFF0000';
+		}
+		if (status.indexOf('Duplicate Checks') === 0 )
+		{
+			return '0xFF0000';
+		}
+	}
+
 	render() {
 		return (
 			<Paper className="page_style_remits">
 				<div style={{ height: 'calc(100vh - 135px)', width: '100%', marginTop: '2px' }}>
 					<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" /*toolbarExcelHandlerFunction="onToolbarExport"*/ toolbarExcelHandlerFunction={this.onToolbarExport} pagerRenderer={MontefioreUtils.pagerFactory} enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false} parentDocument={this}>
-						<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" /*rowTextColorFunction="getRowTextColor"*/>
+						<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" rowTextColorFunction={this.getRowTextColor}>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />
 							<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(RemitsFileNameRenderer)} onHandleFileName={(fileId, reportOnly) => this.viewFile(fileId, reportOnly)} />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />

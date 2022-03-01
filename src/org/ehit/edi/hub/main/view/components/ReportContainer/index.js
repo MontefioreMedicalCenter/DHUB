@@ -19,6 +19,10 @@ const CustomButton = styled(Button)(({ theme }) => ({
 class ReportContainer extends React.Component {
 	constructor() {
 		super()
+		this.state = {
+			remitsSurcharge:[],
+			remitsPLB:[]
+		}
 		this._file = null
 	}
 

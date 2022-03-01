@@ -16,6 +16,8 @@ import ReportContainer from './components/ReportContainer'
 import { FlexDataGridColumn, FlexDataGridColumnGroup, ClassFactory } from '../../../../../../flexicious'
 import moment from 'moment'
 import fileReference from "js-file-download"
+import ExampleUtils from '../../../../../../utils/ExampleUtils'
+import Search from '../../../../../../assets/images/search.png'
 
 export class ReportContainerMediator extends Mediator {
 	public view: ReportContainer
@@ -136,7 +138,7 @@ export class ReportContainerMediator extends Mediator {
 				claimPayment.footerAlign = 'right'
 				claimPayment.footerOperationPrecision = 2
 				// claimPayment.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
-				// claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
+				claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
 				claimPayment.filterControl = 'TextInput'
 				claimPayment.filterWaterMark = 'Contains'
 				claimPayment.cellTextColorFunction = this.getCellTextColor
@@ -221,19 +223,22 @@ export class ReportContainerMediator extends Mediator {
 
 			// var productRenderer: ClassFactory = new ClassFactory(CustomToolTipRender)//Need to Implement
 			// productRenderer.properties = { _mydata: toolstring }//Need to Implement
-
 			// cell.getColumn().iconTooltipRenderer = productRenderer//Need to Implement
+
 
 			//var iconField:String=cell.rowInfo.data.id;
 			//var img:Class=iconField.toString()!="" ? search : null;
-			return ReportContainerMediator.search
+			
+			return Search
+			// return ReportContainerMediator.search
 		}
 
-		return ReportContainerMediator.search
+		return Search
+		// return ReportContainerMediator.search
 	}
 
-	/*[Embed('/org/ehit/edi/hub/assets/img/search.png')]*/
-	private static search: Class
+	// /*[Embed('/org/ehit/edi/hub/assets/img/search.png')]*/
+	// private static search: Class
 
 	public changeContent(file, label): void {
 		// if (event.item.label == 'content') {
@@ -287,8 +292,10 @@ export class ReportContainerMediator extends Mediator {
 		}
 
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setDataProvider(event.reportdata.claimPaymentEntry)
-		// this.view.balanceReport.remitsSurcharge.data = <ArrayCollection>event.reportdata.claimPaymentSurchargeEntry
-		// this.view.balanceReport.remitsPLB.data = <ArrayCollection>event.reportdata.pLBEntry
+		this.view.setState({
+			remitsSurcharge: event.reportdata.claimPaymentSurchargeEntry,
+			remitsPLB: event.reportdata.pLBEntry
+		})
 	}
 
 	protected setBankEFTReport(event: BankEFTReportEvent): void {
@@ -299,14 +306,13 @@ export class ReportContainerMediator extends Mediator {
 		this.view.reportContainer && this.view.reportContainer.grid.setDataProvider(event.reportdata)
 	}
 
-	private getCellTextColor(cell: IFlexDataGridDataCell): number {
+	private getCellTextColor(cell): number {
 		try {
-			if (Number(cell.text) < 0) return 0xff0000
+			if (Number(cell.getText()) < 0) return 0xff0000
 			else return 0x000000
 		} catch (e) {
-			trace('Handled the error')
+			console.log('Handled the error')
 		}
-
 		return 0x000000
 	}
 

@@ -49,7 +49,7 @@ export default class RemitsTrackerMediator extends Mediator {
 	// 	this.remitService.findRemitHeader();
 	// }
 
-	public dynamicIconFunction(cell: IFlexDataGridCell, state: string = ''): any {
+	dynamicIconFunction = (cell, state = '') => {
 		var iconField: string = null
 		var img = naIcon
 		if (cell.rowInfo.getIsDataRow()) {
@@ -62,7 +62,7 @@ export default class RemitsTrackerMediator extends Mediator {
 			}
 			for (var n: number = 0; n < statusArr.length; n++) {
 				var stepstatus: any[] = statusArr[n].split('=')
-				if (stepstatus[0] === cell.getColumn().dataField) {
+				if (Number(stepstatus[0]) === cell.getColumn().dataField) {
 					iconField = stepstatus[1]
 					img = iconField === 'Completed' ? tickIcon : iconField === 'Pending' ? waitIcon : naIcon
 					return img
@@ -146,11 +146,11 @@ export default class RemitsTrackerMediator extends Mediator {
 			var file: EdiFileBase = new EdiFileBase()
 			var transaction: string = '835'
 			if (event.cell && event.cell.getColumn() != null) {
-				for (var x: number = 0; x < event.cell.rowInfo.getData().deliveryLogs.length; x++) {
-					var stepArr: any[] = event.cell.rowInfo.getData().deliveryLogs[x].deliveryControl.stepNo.split(',')
+				for (var x: number = 0; x < event.cell.getRowInfo().getData().deliveryLogs.length; x++) {
+					var stepArr: any[] = event.cell.getRowInfo().getData().deliveryLogs[x].deliveryControl.stepNo.split(',')
 					for (var n: number = 0; n < stepArr.length; n++) {
-						if (stepArr[n] === event.cell.getColumn().getDataField()) {
-							fileId = event.cell.rowInfo.getData().deliveryLogs[x].postFileId
+						if (Number(stepArr[n]) === event.cell.getColumn().getDataField()) {
+							fileId = event.cell.getRowInfo().getData().deliveryLogs[x].postFileId
 						}
 					}
 				}
@@ -158,7 +158,8 @@ export default class RemitsTrackerMediator extends Mediator {
 			if (fileId > 0) {
 				file.fileId = fileId
 				file.removeCRLF = true
-				this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
+				// this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
+				this.viewFile1(file)
 			}
 		} catch (e) {
 			console.log('something bad happened')
