@@ -5,10 +5,9 @@ import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import FileContainer from './components/FileContainer'
 
 export class FileContainerMediator extends Mediator {
-	/*[Inject]*/
 	public view: FileContainer
 
-	/*override*/ public onRegister(view): FileContainerMediator {
+	public onRegister(view): FileContainerMediator {
 		this.view = view
 		this.mapListener(this.eventDispatcher, FileEditorEvent.FILE_CONTENT, this.addFileContent, FileEditorEvent)
 		// this.mapListener(this.view.fileContentContainer, 'contentToReports', this.runReport)//passed File through props
@@ -32,13 +31,9 @@ export class FileContainerMediator extends Mediator {
 	}
 
 	private addFileContent(event: FileEditorEvent): void {
-		this .view. fileContentContainer && this.view.setfile(event.file)
-		// var fileEditor = this.view.props.parentDocument
-		// fileEditor.title = event.file.origFileName
-		// this.mediatorMap.createMediator(this.view.fileContentContainer)
-		this.view.setState({
-			fileContentContainerWindow : true,
-		})
+		this.view.fileContentContainer && this.view.setfile(event.file)
+		this.view.props.parentDocument.props.parentDoc.setState({fileEditorWindowTitle: event.file.origFileName})
+		this.view.setState({fileContentContainerWindow : true})
 	}
 
 	public onRemove(): void {

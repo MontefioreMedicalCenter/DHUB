@@ -166,13 +166,13 @@ export class ClaimsMediator extends Mediator {
 
 	private execute(file): void {
 		if (file.reportOnly === true) {
-			toast.warning('Need to Implement file.reportOnly')
 			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
 		} else {
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+			this.view.setState({
+				fileEditorWindow: true,
+				fileData: file
+			})
 		}
-		this.view.setState({
-			fileEditorWindow: true
-		})
 	}
 }

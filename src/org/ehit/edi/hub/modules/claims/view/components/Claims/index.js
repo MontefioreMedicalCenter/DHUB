@@ -21,7 +21,8 @@ class Claims extends EventDispatcher {
 		this.state = {
 			tabValue: '/main/claims',
 			fileEditorWindow: false,
-			fileContentContainerWindow: false
+			fileContentContainerWindow: false,
+			fileData: null,
 		}
 	}
 
@@ -87,6 +88,7 @@ class Claims extends EventDispatcher {
 							<FileEditor
 								ref={g => (this.fileEditor = g)}
 								parentDoc={this}
+								fileData={this.state.fileData}
 								closePopup={() => {
 									return this.setState({ fileEditorWindow: false })
 								}}

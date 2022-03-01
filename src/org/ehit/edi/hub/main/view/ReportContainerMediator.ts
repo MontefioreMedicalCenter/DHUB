@@ -13,7 +13,7 @@ import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import { ReportEvent } from '../model/events/ReportEvent.ts'
 import { FileEditorService } from '../service/FileEditorService.ts'
 import ReportContainer from './components/ReportContainer'
-import { FlexDataGridColumn, ReactDataGridColumnGroup, ClassFactory } from '../../../../../../flexicious'
+import { FlexDataGridColumn, FlexDataGridColumnGroup, ClassFactory } from '../../../../../../flexicious'
 import moment from 'moment'
 import fileReference from "js-file-download"
 
@@ -124,10 +124,8 @@ export class ReportContainerMediator extends Mediator {
 
 			if (this.remitsModel.remitHeader[x][1] != 'Recvd') {
 				var cols: any[] = []
-				// var colGroup: FlexDataGridColumnGroup = new FlexDataGridColumnGroup()
-				var colGroup: ReactDataGridColumnGroup = new ReactDataGridColumnGroup()
-				// colGroup.setHeaderText(this.remitsModel.remitHeader[x][1])
-				colGroup.headerText = this.remitsModel.remitHeader[x][1];
+				var colGroup: FlexDataGridColumnGroup = new FlexDataGridColumnGroup()
+				colGroup.setHeaderText(this.remitsModel.remitHeader[x][1])
 
 				var claimPayment: FlexDataGridColumn = new FlexDataGridColumn()
 				claimPayment.setHeaderText('Claim Payment')
@@ -167,12 +165,11 @@ export class ReportContainerMediator extends Mediator {
 
 				cols.push(claimCount)
 
-				colGroup.children = cols
+				colGroup.setChildren(cols)
 				colGroups.splice(x + 7, 0, colGroup)
 			}
 		}
-		// this.balanceReport.remitsReport.grid.groupedColumns = colGroups//Need to implement
-		// this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setColumnGroups(colGroups)//;Need to implement in React
+		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setGroupedColumns(colGroups)
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.reDraw()
 	}
 
@@ -222,10 +219,10 @@ export class ReportContainerMediator extends Mediator {
 				toolstring = '*'
 			}
 
-			var productRenderer: ClassFactory = new ClassFactory(CustomToolTipRender)
-			productRenderer.properties = { _mydata: toolstring }
+			// var productRenderer: ClassFactory = new ClassFactory(CustomToolTipRender)//Need to Implement
+			// productRenderer.properties = { _mydata: toolstring }//Need to Implement
 
-			cell.getColumn().iconTooltipRenderer = productRenderer
+			// cell.getColumn().iconTooltipRenderer = productRenderer//Need to Implement
 
 			//var iconField:String=cell.rowInfo.data.id;
 			//var img:Class=iconField.toString()!="" ? search : null;
@@ -346,11 +343,6 @@ export class ReportContainerMediator extends Mediator {
 		// this.view.reportsContainer.addChild(this.ackReport)
 		// this.ackReport.ackContent.text = event.errMsg
 		toast.error(event.errMsg)
-	}
-
-	public downloadExplainFile(): void {
-		var fileReference: FileReference = new FileReference()
-		fileReference.save(this.ackReport.ackContent.text, this.view.getfile().origFileName + '.explain')
 	}
 
 	public onRemove(): void {

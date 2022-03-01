@@ -19,11 +19,13 @@ class RemitsTracker extends EventDispatcher {
 	constructor(props) {
 		super(props)
 		this.state = {
+			fileData: null,
 			tabValue: this.props.location.pathname,
 			fileEditorWindow: false,
 			fileEditoriconWindow: false,
 			selectedColumnFileId: 0,
-			selectedColumnReportOnly: false
+			selectedColumnReportOnly: false,
+			fileEditorWindowTitle:''
 		}
 	}
 	componentDidMount() {
@@ -99,6 +101,7 @@ class RemitsTracker extends EventDispatcher {
 					/>
 					<AdvanceDialog
 						open={this.state.fileEditorWindow}
+						headerTitle={this.state.fileEditorWindowTitle}
 						handleClose={() => this.setState({ fileEditorWindow: false })}
 						bodyRenderer={
 							<FileEditor
