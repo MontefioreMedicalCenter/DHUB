@@ -38,7 +38,7 @@ class CustomAutoComplete extends React.Component {
 	renderItem = item => {
 		return (
 			<div id={item} key={item} className="searchItem">
-				{item}
+				<span style={{padding: '5px'}}>{item}</span>
 			</div>
 		)
 	}
@@ -51,7 +51,7 @@ class CustomAutoComplete extends React.Component {
 			const Item = items[index]
 			const onMouseDown = e => {
 				if (e.button === 0) {
-					this.props.onSelect(Item.props.children)
+					this.props.onSelect(Item.props.children.props.children)
 					this.setState({ open: false })
 				}
 			}
@@ -59,7 +59,12 @@ class CustomAutoComplete extends React.Component {
 				<div className="pop-over">
 					<CellMeasurer cache={this.cellHeightCache} key={key} parent={parent} rowIndex={index}>
 						{React.cloneElement(Item, {
-							style: style,
+							style: {...style , 
+								display: 'flex',
+								borderBottom: '1px solid #00000038',
+								alignItems: 'center',
+								minHeight: '35px'
+							},
 							key: key,
 							onMouseEnter: null,
 							onMouseDown: onMouseDown
@@ -79,11 +84,11 @@ class CustomAutoComplete extends React.Component {
 					position: 'absolute',
 					backgroundColor: 'white',
 					height: 'auto',
-					minWidth: '250px',
 					maxHeight: '207px',
 					overflowY: 'scroll',
 					zIndex: 999,
-					textAlign: 'left'
+					textAlign: 'left',
+					boxShadow: '#80808094 1px 2px 8px 0px'
 				}}
 			/>
 		)

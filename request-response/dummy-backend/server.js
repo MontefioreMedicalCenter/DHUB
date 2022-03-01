@@ -52,6 +52,9 @@ const explainPayload =require('./response/explainPayload')
 const runRemitsReport = require('./response/runRemitsReport')
 const runReport = require('./response/runReport')
 const findRemitsProcesses = require('./response/findRemitProcesses')
+const findUniqueTraceNumber = require('./response/findUniqueTraceNumber')
+const findUniqueTxn = require('./response/findUniqueTxn')
+const findUniquePayer = require('./response/findUniquePayer')
 // const loginResponse = require('./response/loginResponse')
 
 
@@ -246,6 +249,16 @@ app.post('/DHub/api/remitssvc/remitMonth', (req, res) => {
 
 app.post('/DHub/api/bankEFTsvc/runEdiRemitEFTReport', (req, res) => {
 	sendResponse(res, 200, runEdiRemitEFTReport)
+})
+
+app.post('/DHub/api/bankEFTsvc/findUniqueTraceNumber', (req, res) => {
+	sendResponse(res, 200, findUniqueTraceNumber)
+})
+app.post('/DHub/api/bankEFTsvc/findUniquePayer', (req, res) => {
+	sendResponse(res, 200, findUniquePayer)
+})
+app.post('/DHub/api/bankEFTsvc/findUniqueTxn', (req, res) => {
+	sendResponse(res, 200, findUniqueTxn)
 })
 
 app.post('/DHub/api/fileManagersvc/explainPayload', (req, res) => {

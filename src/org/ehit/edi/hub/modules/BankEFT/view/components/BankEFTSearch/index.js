@@ -1,4 +1,4 @@
-import { Button, Paper, styled, TextField } from '@material-ui/core'
+import { Button, Paper, styled /* , TextField  */ } from '@material-ui/core'
 import React from 'react'
 import RemitsQuickSearchDatePicker from '../../../../../../../../../container/views/itemRenderers/RemitsQuickSearchDatePicker'
 import { EventDispatcher } from '../../../../../../../../../flexicious'
@@ -19,7 +19,6 @@ class BankEFTSearch extends EventDispatcher {
 			trnNo_dataProvider: [],
 			checkNumber_dataProvider: [],
 
-			
 			payer: '',
 			// patId: '',
 			// patFName: '',
@@ -77,12 +76,11 @@ class BankEFTSearch extends EventDispatcher {
 		}
 	}
 
-
 	render() {
 		return (
 			<Paper style={{ height: 'calc(100% - 40px)' }}>
 				<div className="bankSearchHeader">
-					<div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems:'center' }}>
+					<div style={{ padding: '5px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 						<div className="column-divider">
 							<div className="mainDiv">
 								<div className="line">
@@ -118,25 +116,21 @@ class BankEFTSearch extends EventDispatcher {
 								<div className="line">
 									<span className="font2">Check/EFT Trace Number</span>
 									<div>
-										{/* <TextField variant="outlined" value={this.state.chkNo} error={this.state.chkNoError} onChange={e => this.setState({ chkNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '537px', marginLeft: '5px' } } }} /> */}
-										<CustomAutoComplete ref={g => (this.chkNo = g)} id="chkNo" name="chkNo" value={this.state.chkNo} data={this.state.checkNumber_dataProvider} onChange={(e, value) => this.setState({ checkNo: value })} onSelect={value => this.setState({ checkNo: value })} handleOnChange={this.handleOnChange} />
+										<CustomAutoComplete ref={g => (this.chkNo = g)} id="chkNo" name="chkNo" value={this.state.chkNo} data={this.state.checkNumber_dataProvider} onChange={(e, value) => this.setState({ chkNo: value })} onSelect={value => this.setState({ chkNo: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ width: '540px' }} />
 									</div>
 								</div>
 							</div>
-							<div style={{display: 'flex', flexDirection: 'column', rowGap: '5px', alignItems: 'flex-end'}}>
+							<div style={{ display: 'flex', flexDirection: 'column', rowGap: '5px', alignItems: 'flex-end' }}>
 								<div className="line">
 									<span className="font2">Payer Id</span>
 									<div>
-										{/* <TextField variant="outlined" id="payerId" error={this.state.payerIdError} onChange={e => this.setState({ payer: e.target.value })} value={this.state.payer} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '182px', marginLeft: '5px' } } }} /> */}
-										<CustomAutoComplete ref={g => (this.payer = g)} id="payer" name="payer" value={this.state.payer} data={this.state.payerName_dataProvider} onChange={(e, value) => this.setState({ payer: value })} onSelect={value => this.setState({ payer: value })} handleOnChange={this.handleOnChange} />
-
+										<CustomAutoComplete ref={g => (this.payer = g)} id="payer" name="payer" value={this.state.payer} data={this.state.payerName_dataProvider} onChange={(e, value) => this.setState({ payer: value })} onSelect={value => this.setState({ payer: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ width: '240px' }} />
 									</div>
 								</div>
-								<div className="line" >
+								<div className="line">
 									<span className="font2">TRN#</span>
 									<div>
-										{/* <TextField variant="outlined" value={this.state.trnNo} error={this.state.trnErr} onChange={e => this.setState({ trnNo: e.target.value })} InputProps={{ inputProps: { style: { padding: '0px', height: '35px', width: '182px', marginLeft: '5px' } } }} /> */}
-										<CustomAutoComplete ref={g => (this.trnNo = g)} id="trnNo" name="trnNo" value={this.state.trnNo} data={this.state.trnNo_dataProvider} onChange={(e, value) => this.setState({ trnNo: value })} onSelect={value => this.setState({ trnNo: value })} handleOnChange={this.handleOnChange} />
+										<CustomAutoComplete ref={g => (this.trnNo = g)} id="trnNo" name="trnNo" value={this.state.trnNo} data={this.state.trnNo_dataProvider} onChange={(e, value) => this.setState({ trnNo: value })} onSelect={value => this.setState({ trnNo: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ width: '240px' }} />
 									</div>
 								</div>
 							</div>
