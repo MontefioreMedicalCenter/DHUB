@@ -1,9 +1,12 @@
 import React from 'react'
+import moment from 'moment'
 import FileNameRenderer from '../../../../../../../../../container/views/itemRenderers/FileNameRenderer'
 import RemitCoreRenderer from '../../../../../../../../../container/views/itemRenderers/RemitCoreRenderer'
-import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import { DateRange, ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
+import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
+
 
 const bgcolorarray = [ "0xC0C0C0,0xEEEEEE"]
 const headerbgcolorarray = [ "0xEEEEEE,0xC0C0C0"]
@@ -15,6 +18,11 @@ class RemitCore extends EventDispatcher {
 
 	viewFile = (e, data, reportOnly) => {
 		this.props.parentDocument.viewFile(data, reportOnly)
+	}
+
+	dateForm = (item, col) => {
+		const dataField = col.dataField.split('.')
+		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY HH:MM A') : null
 	}
 
 	render() {
@@ -42,25 +50,25 @@ class RemitCore extends EventDispatcher {
 				>
 					<ReactDataGridColumnLevel enableFilters={true} enablePaging={true} enableFooters={true} pageSize="50" color="0x185B29" childrenField="xremitDetailTrackings">
 						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="50" headerWordWrap={true} itemRenderer={new ClassFactory(RemitCoreRenderer)} onHandleClick={(e, data) => {this.onClick(e, data)}} />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File test1" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(FileNameRenderer)} onHandleFileName={(e, data, reportOnly) => {this.viewFile(e, data, reportOnly)}} />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xhubTransmission.insertDatetime" enableCellClickRowSelect={false} headerText="File Recvd Date" formatter={ExampleUtils.globalDateFormatter} />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xhubTransmission.systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System" headerWordWrap={false} />
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File Name" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(FileNameRenderer)} onHandleFileName={(e, data, reportOnly) => {this.viewFile(e, data, reportOnly)}} />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="transmissionDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="File Recvd Date" filterRenderer={EdiDateRangeCombo}/>
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System" headerWordWrap={false} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkTraceNum" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check/EFT Trace Number" headerWordWrap={true} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="paymentMethod" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payment Method" headerWordWrap={true} />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkIssueDate" enableCellClickRowSelect={false} filterControl="DateComboBox" formatter={ExampleUtils.dateFormatter2} headerText="Check Issue Date" headerWordWrap={true} />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkIssueDate" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="Check Issue Date" filterRenderer={EdiDateRangeCombo}/>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkAmt" enableCellClickRowSelect={false} filterControl="NumericRangeBox" filterWaterMark="Between" headerText="Check Amount" headerWordWrap={true} footerAlign="left" formatter={ExampleUtils.globalCurrencyFormatter} footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payeeName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payee" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payeeId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payee ID" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payerId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer ID" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payerName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xhubTranSet.stUnitCount" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Total Claim Count" headerWordWrap={true} footerAlign="left" footerOperation="sum" footerOperationPrecision="0" />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="stUnitCount" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Total Claim Count" headerWordWrap={true} footerAlign="left" footerOperation="sum" footerOperationPrecision="0" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalChrgAmt" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Total Charges" formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalPaymentAmt" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Total Payment Amount" formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="NumericRangeBox" filterWaterMark="Between" dataField="provAdj" headerText="Provider Adj" formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" dataField="totalPatientResp" headerText="Total Patient Resp." formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" dataField="totalNonCovChrg" headerText="Total Non-Covered Charges" formatter={ExampleUtils.globalCurrencyFormatter} headerWordWrap={true} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" />
 						<ReactDataGridColumnLevel rowHeight="21" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xffffff,0xffffff]} color="blue">
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.checkTraceNum" enableCellClickRowSelect={false} headerText="Check #" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkTraceNum" enableCellClickRowSelect={false} headerText="Check #" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="billSys" enableCellClickRowSelect={false} headerText="Billing System" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="invoiceNum" enableCellClickRowSelect={false} headerText="PCN #" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="status" enableCellClickRowSelect={false} headerText="Status" />

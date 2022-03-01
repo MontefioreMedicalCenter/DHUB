@@ -1,10 +1,13 @@
 import React from 'react'
+import moment from 'moment'
 import ClaimServiceDateRenderer from '../../../../../../../../../container/views/itemRenderers/ClaimServiceDateRenderer'
 import RemitDetailFileRenderer from '../../../../../../../../../container/views/itemRenderers/RemitDetailFileRenderer'
 import RemitDetailRenderer from '../../../../../../../../../container/views/itemRenderers/RemitDetailRenderer'
-import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import {DateRange,  ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
+import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
+
 
 class RemitDetail extends EventDispatcher {
 
@@ -16,6 +19,11 @@ class RemitDetail extends EventDispatcher {
 		this.props.parentDocument.viewFile(data, reportOnly)
 	}
 
+	dateForm = (item, col) => {
+		const dataField = col.dataField.split('.')
+		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY HH:MM A') : null
+	}
+
 	render() {
 		return (
 			<div style={{ height:'50px'}}>
@@ -23,13 +31,13 @@ class RemitDetail extends EventDispatcher {
 				<DataGrid ref={g => (this.grid = g)} id="grid" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" fontSize="11" useCompactPreferences={true} alternatingItemColors={[0xe1e8e4, 0xffffff]} horizontalScrollPolicy="auto" horizontalGridLines={true} horizontalGridLineColor="#F2F2F2" horizontalGridLineThickness="1" name="remitDetail" width="100%" height="100%" backgroundColor="white" /*creationComplete="onComplete(event)" toolbarExcelHandlerFunction="onToolbarExport" */ >
 					<ReactDataGridColumnLevel enableFilters={true} enablePaging={true} pageSize="50" color="0x185B29">
 						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="50" headerWordWrap={true} itemRenderer={new ClassFactory(RemitDetailRenderer)} onHandleClick={(e, data) => {this.onClick(e, data)}} />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File test2" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(RemitDetailFileRenderer)} onHandleFileName={(e, data, reportOnly) => this.viewFile(e, data, reportOnly)}/>
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.xhubTransmission.insertDatetime" enableCellClickRowSelect={false} headerText="File Recvd Date" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" formatter={ExampleUtils.globalDateFormatter} />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.xhubTransmission.systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System" headerWordWrap={false} />
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File Name" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(RemitDetailFileRenderer)} onHandleFileName={(e, data, reportOnly) => this.viewFile(e, data, reportOnly)}/>
+				   	 	<ReactDataGridColumn columnWidthMode="fitToContent" dataField="transmissionDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="File Recvd Date" filterRenderer={EdiDateRangeCombo}/>
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="transmissionSystemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkTraceNum" enableCellClickRowSelect={false} headerText="Check/EFT Trace Number" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.payeeName" enableCellClickRowSelect={false} headerText="Payee Name" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.payeeId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payee ID" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="xremitCoreTracking.payerName" enableCellClickRowSelect={false} headerText="Payer Name" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payeeName" enableCellClickRowSelect={false} headerText="Payee Name" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payeeId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payee ID" />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payerName" enableCellClickRowSelect={false} headerText="Payer Name" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="billSys" enableCellClickRowSelect={false} headerText="Billing System" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="invoiceNum" enableCellClickRowSelect={false} headerText="PCN #" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="status" enableCellClickRowSelect={false} headerText="Status" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
