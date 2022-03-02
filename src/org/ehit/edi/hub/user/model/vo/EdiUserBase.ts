@@ -2,8 +2,8 @@ import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 import VoBase from '../../../../../../../vo/VoBase'
 
 export class EdiUserBase extends VoBase {
-	private _ediUserRoleMaps: ArrayCollection
-	private _ediMemberships: ArrayCollection
+	private _ediUserRoleMaps: ArrayCollection = new ArrayCollection()
+	private _ediMemberships: ArrayCollection = new ArrayCollection()
 	private _userActiveFlag: number
 	private _userAddress1: string
 	private _userAddress2: string
@@ -164,8 +164,7 @@ export class EdiUserBase extends VoBase {
 		}
 		*/
 	public hasRole(role: string): boolean {
-		debugger
-		if (this.isAdmin() == true) return true
+		if (this.isAdmin() === true) return true
 		var grantedRoles: ArrayCollection = this.ediUserRoleMaps
 		for (var i: Object in grantedRoles) {
 			var userRole: EdiUserRoleMap = grantedRoles[i]
@@ -176,11 +175,10 @@ export class EdiUserBase extends VoBase {
 	}
 
 	public isAdmin(): boolean {
-		debugger
 		var grantedRoles: ArrayCollection = this.ediUserRoleMaps
 		for (var i: Object in grantedRoles) {
 			var userRole: EdiUserRoleMap = grantedRoles[i]
-			if (userRole.id.roleId == 'Admin' && userRole.accessActiveFlag == 1) return true
+			if (userRole.id.roleId === 'Admin' && userRole.accessActiveFlag === 1) return true
 		}
 
 		return false

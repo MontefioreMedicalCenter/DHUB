@@ -11,24 +11,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import AlertDialog from '../../../../../../../../shared/components/AlertDialog'
 import { removeMessage } from '../../../../../../../../AppConfig/store/actions/homeAction'
 import { PortalMediator } from '../../PortalMediator.ts'
+import LoginModel from '../../../model/LoginModel'
 
 const PortalCanvas = () => {
-    const history = useHistory()
-    const dispatch = useDispatch()
-    const loginModel = useSelector(state => state.loginState.loginModel)
-    const dayString = `${moment()}`
-    const alertData = useSelector(state => state.homeState.alertPopup)
+	const history = useHistory()
+	const dispatch = useDispatch()
+	const loginModel = useSelector(state => state.loginState.loginModel)
+	const dayString = `${moment()}`
+	const alertData = useSelector(state => state.homeState.alertPopup)
 	const dateString = `${moment(localStorage.getItem('login-time')).format('MM/DD/YYYY')}`
 	const timeString = `${moment(localStorage.getItem('login-time')).format('HH:mm:ss')}`
-    const [tabValue, handleTabChange] = useState('/main/claims')
+	const [tabValue, handleTabChange] = useState('/main/claims')
+	const [mainTabData, setTabData] = useState([])
 
-    var mediator = useRef(null)
+	var mediator = useRef(null)
 
 	useEffect(() => {
 		mediator.current = new PortalMediator().onRegister()
-        if(tabValue==='/main/claims'){
-            mediator.current.refreshTab(tabValue)
-        }
+		if (tabValue === '/main/claims') {
+			mediator.current.refreshTab(history.location.pathname)
+		}
 
 		return () => {
 			mediator.current && mediator.current.onUnRegister()
@@ -37,83 +39,121 @@ const PortalCanvas = () => {
 	}, [])
 
     useEffect(() => {
-		if (Object.keys(loginModel).length === 0) {
+        var loginModel = LoginModel.getInstance()
+		if (Object.keys(loginModel).length) {
+            var hasAdmin = loginModel.user.hasRole('Admin')
+            var hasClaims = loginModel.user.hasRole('Claims')
+            var hasRemits = loginModel.user.hasRole('Remits')
+            var hasInterfaces = loginModel.user.hasRole('Interfaces')
+            var hasBankEFT = loginModel.user.hasRole('Bank EFT')
+            var hasClaimStatus = false
+    
+            let tabData = []
+            if (hasClaims) {
+                tabData.push(tabList[0])
+            }
+            if (hasRemits) {
+                tabData.push(tabList[1])
+            }
+            if (hasBankEFT) {
+                tabData.push(tabList[2])
+            }
+            if (hasInterfaces) {
+                // tabData.push(tabList[3])
+            }
+    
+            if (hasClaimStatus) {
+                //Not Implemented Tab
+                // var claimStatusTab:NavigatorContent=new NavigatorContent();
+				// claimStatusTab.label="Claim Status"
+				// var claimStatus:ClaimStatus=new ClaimStatus()
+				// claimStatus.initialIndex=index
+				// claimStatusTab.addElement(claimStatus);
+				// this.portalCanvas.viewStack.addElementAt(claimStatusTab, index);
+				// index++ 
+            }
+            if (hasAdmin) {
+                // tabData.push(tabList[4])
+            }
+            if (hasClaims || hasRemits || hasInterfaces || hasAdmin) {
+                //Not Implemented Tab
+                // var userTab:NavigatorContent=new NavigatorContent();
+                // userTab.label=this.loginModel.user.userId + '\'sTab'
+                // var myTab:MyTab=new MyTab()
+                // myTab.initialIndex=index
+                // userTab.addElement(myTab);
+                // this.portalCanvas.viewStack.addElementAt(userTab, index);
+            }
+            setTabData(tabData)
+		} else {
 			history.push('/')
-            localStorage.clear()
 		}
 	}, [loginModel, history])
 
-    const handleLogout = () => {
-        localStorage.clear()
-        history.push('/')
-    }
+	useEffect(() => {
+		if (Object.keys(loginModel).length === 0) {
+			history.push('/')
+			localStorage.clear()
+		}
+	}, [loginModel, history])
 
-    const handleTabChangefunction = (e, value) => {
-        handleTabChange(value)
-        mediator.current.refreshTab(value)
-    }
+	const handleLogout = () => {
+		localStorage.clear()
+		history.push('/')
+	}
 
+	const handleTabChangefunction = (e, value) => {
+		handleTabChange(value)
+		mediator.current.refreshTab(value)
+	}
 
-    return (
-        <div className="main-container">
-            <Paper className="title" style={{ background: 'linear-gradient(to right, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)' }}>
-                <div className="title-logo">
-                    <img
-                        id="montefiore"
-                        alt="Montefiorelogo"
-                        src={DoingMoreLogo}
-                        style={{ height: '30px' }}
-                    />
-                </div>
-                <div className="title-content">
-                    {dayString.slice(0, 3)},&nbsp;
-                    {dateString} -&nbsp;
-                    {timeString} |&nbsp;
-                    {loginModel && loginModel.user ? loginModel.user.userId : ''} |&nbsp;
-                    <span className="logout-btn" onClick={handleLogout}>
-                        logout
-                    </span>
-                </div>
-            </Paper>
-            <div>
-                <CustomizedTabs
-                    customstyle={tabStyles}
-                    setTabValue={(e, value) => {
-                            handleTabChangefunction(e, value)
-                        }}
-                    tabValue={tabValue}
-                    tabList={tabList}
-                    width='70%'
-                    tabType="main-tab"
-                />
-                <div className="container-main-view">
-                    <Switch>
-                        {PRIVATE_ROUTES.map((route, idx) => {
-                            return route.component ? (
-                                <Route
-                                    key={idx}
-                                    path={route.url}
-                                    exact={route.exact}
-                                    name={route.name}
-                                    render={props => <route.component {...props} />}
-                                />
-                            ) : null
-                        })}
-                    </Switch>
-                </div>
-            </div>
-            <p
-                style={{
-                    fontSize: '13px',
-                    textAlign: 'right',
-                    margin: '5px',
-                    padding: '0px 10px'
-                }}>
-                Version 2.0, Content © 2022, MIT .All rights reserved.
-            </p>
-            <AlertDialog {...alertData} onClose={() => dispatch(removeMessage())} />
-        </div>
-    )
+	return (
+		<div className="main-container">
+			<Paper className="title" style={{ background: 'linear-gradient(to right, white, #c0cec6, white, #c0cec6, white, #c0cec6, white, #c0cec6, white)' }}>
+				<div className="title-logo">
+					<img id="montefiore" alt="Montefiorelogo" src={DoingMoreLogo} style={{ height: '30px' }} />
+				</div>
+				<div className="title-content">
+					{dayString.slice(0, 3)},&nbsp;
+					{dateString} -&nbsp;
+					{timeString} |&nbsp;
+					{loginModel && loginModel.user ? loginModel.user.userId : ''} |&nbsp;
+					<span className="logout-btn" onClick={handleLogout}>
+						logout
+					</span>
+				</div>
+			</Paper>
+			<div>
+				<CustomizedTabs
+					customstyle={tabStyles}
+					setTabValue={(e, value) => {
+						handleTabChangefunction(e, value)
+					}}
+					tabValue={tabValue}
+					tabList={mainTabData}
+					width="70%"
+					tabType="main-tab"
+				/>
+				<div className="container-main-view">
+					<Switch>
+						{PRIVATE_ROUTES.map((route, idx) => {
+							return route.component ? <Route key={idx} path={route.url} exact={route.exact} name={route.name} render={props => <route.component {...props} />} /> : null
+						})}
+					</Switch>
+				</div>
+			</div>
+			<p
+				style={{
+					fontSize: '13px',
+					textAlign: 'right',
+					margin: '5px',
+					padding: '0px 10px'
+				}}>
+				Version 2.0, Content © 2022, MIT .All rights reserved.
+			</p>
+			<AlertDialog {...alertData} onClose={() => dispatch(removeMessage())} />
+		</div>
+	)
 }
 
 export default PortalCanvas

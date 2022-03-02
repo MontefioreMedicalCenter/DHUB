@@ -80,9 +80,9 @@ export class LoginService extends ServiceProxyBase {
 	}
 
 	protected loginResultDBEvent(event: any, token: Object = null): void {
-		this.loginModel = new EdiUserBase().fromJson({ user: event.result })
+		// this.loginModel = new EdiUserBase().fromJson({ user: event.result })
 		store.dispatch(saveLoginModel(this.loginModel))
-		// this.loginModel.fromJson({ user: event.result })
+		this.loginModel.fromJson({ user: event.result })
 		localStorage.setItem('user-id', event.result.userId)
 		localStorage.setItem('token', event.result.restApiKey)
 		localStorage.setItem('login-time', new Date())

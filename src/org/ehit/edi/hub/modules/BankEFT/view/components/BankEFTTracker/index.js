@@ -11,6 +11,7 @@ import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceD
 import FileEditor from '../../../../../main/view/components/FileEditor'
 import moment from 'moment'
 import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
+import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 // import ReportContainer from '../../../../../main/view/components/ReportContainer'
 
 class BankEFTTracker extends EventDispatcher {
@@ -49,20 +50,7 @@ class BankEFTTracker extends EventDispatcher {
 		return filename.substring(filename.lastIndexOf('/') + 1, filename.length)
 	}
 
-	getRowTextColor(cell) {
-		var status = this.getStatus(cell.rowInfo.data.status.toString())
-		if (status.indexOf('In-process') === 0) {
-			return '0x0000FF'
-		}
-		if (status.indexOf('Rejected') === 0) {
-			return '0xFF0000'
-		}
-		if (status.indexOf('Duplicate Checks') === 0) {
-			return '0xFF0000'
-		}
 
-		return null
-	}
 
 	//  convertDate(item, col)
 	// {
@@ -123,13 +111,34 @@ class BankEFTTracker extends EventDispatcher {
 		if (item.logDatetime != null) return moment(new Date(item.logDatetime)).format('MM/DD/YYYY h:mm a')
 	}
 
+	dataFormat = (item, col) => {
+		return item.status? this.getStatus(item.status) : null
+	}
+
+	getRowTextColor = cell => {
+		var status = cell.getRowInfo().getData().status.toString()
+		if (status.indexOf('In-process') === 0)
+		{
+			return 0x0000FF;
+		}
+		if (status.indexOf('Rejected') === 0)
+		{
+			return 0xFF0000;
+		}
+		if (status.indexOf('Duplicate Checks') === 0 )
+		{
+			return 0xFF0000;
+		}
+		return null;
+	}
+
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 35px)', width: '100%' }}>
-				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} parentDocument={this} enableExport={true} enablePrint={true} styleName="gridStyle" /*toolbarExcelHandlerFunction="onToolbarExport"*/ enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false}>
-					<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" /*rowTextColorFunction="getRowTextColor"*/>
+				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} parentDocument={this} enableExport={true} enablePrint={true} styleName="gridStyle" enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false} pagerRenderer={MontefioreUtils.pagerFactory}>
+					<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" rowTextColorFunction={this.getRowTextColor}>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile}>
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile} dataField='filename'>
 							{/* <nestedtreedatagrid:itemRenderer>
 								<fx:Component>
 									<mx:Canvas horizontalScrollPolicy="off">
@@ -146,7 +155,7 @@ class BankEFTTracker extends EventDispatcher {
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(BankEFTStatusRenderer)} parentDocument={this}>
 						</ReactDataGridColumn>
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} /*formatter={ExampleUtils.globalDateFormatter}*/ filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterRenderer={EdiDateRangeCombo} enableCellClickRowSelect={false} headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} /*formatter={ExampleUtils.globalDateFormatter}*/ filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterRenderer={EdiDateRangeCombo} enableCellClickRowSelect={false} headerText="Log Time" filterConverterFunction={this.convertDate}/*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
 					</ReactDataGridColumnLevel>
 				</DataGrid>
 				<AdvanceDialog
