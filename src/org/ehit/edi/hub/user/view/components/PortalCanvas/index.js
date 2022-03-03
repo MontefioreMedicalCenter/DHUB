@@ -9,9 +9,10 @@ import { PRIVATE_ROUTES } from '../../../../../../../../AppConfig/AppRouter/cons
 import { Paper } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import AlertDialog from '../../../../../../../../shared/components/AlertDialog'
-import { removeMessage } from '../../../../../../../../AppConfig/store/actions/homeAction'
+import { removeMessage, showMessage } from '../../../../../../../../AppConfig/store/actions/homeAction'
 import { PortalMediator } from '../../PortalMediator.ts'
 import LoginModel from '../../../model/LoginModel'
+import IdleTimer from './IdleTimer'
 
 const PortalCanvas = () => {
 	const history = useHistory()
@@ -38,6 +39,28 @@ const PortalCanvas = () => {
 		// eslint-disable-next-line
 	}, [])
 
+	useEffect(() => {
+		const timer = new IdleTimer({
+			timeout: 2100, // checkin ideal time for 35 mins
+			onTimeout: () => {
+				handleOnSessionTimeout()
+			}
+		})
+
+		return () => {
+			timer.cleanup()
+		}
+		// eslint-disable-next-line
+	}, [])
+
+	const handleOnSessionTimeout = () => {
+		dispatch(
+			showMessage('Session Timeout', 'Session Timeout, Please login again.', 'Ok', () => {
+				handleLogout()
+			})
+		)
+	}
+
     useEffect(() => {
         var loginModel = LoginModel.getInstance()
 		if (Object.keys(loginModel).length) {
@@ -61,7 +84,6 @@ const PortalCanvas = () => {
             if (hasInterfaces) {
                 // tabData.push(tabList[3])
             }
-    
             if (hasClaimStatus) {
                 //Not Implemented Tab
                 // var claimStatusTab:NavigatorContent=new NavigatorContent();

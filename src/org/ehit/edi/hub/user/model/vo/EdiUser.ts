@@ -32,7 +32,6 @@ export default class EdiUser extends EdiUserBase {
 	}
 
 	public hasRoleWithFacServ(role: string): boolean {
-		debugger
 		if (this.isAdminWithFs() == true) return true
 		var grantedRoles: ListCollectionView = this.ediUserRoleMaps
 		for (var i: Object in grantedRoles) {
@@ -44,7 +43,6 @@ export default class EdiUser extends EdiUserBase {
 	}
 
 	public isAdminWithFs(): boolean {
-		debugger
 		var grantedRoles: ListCollectionView = this.ediUserRoleMaps
 		for (var i: Object in grantedRoles) {
 			var userRole: EdiUserRoleMap = grantedRoles[i]
