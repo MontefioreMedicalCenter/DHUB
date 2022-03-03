@@ -277,6 +277,10 @@ app.post('/DHub/api/remitssvc/findRemitsProcesses', (req, res) => {
 	sendResponse(res, 200, findRemitsProcesses)
 })
 
+app.post('/DHub/api/authenticationsvc/logOut', (req, res) => {
+	sendResponse(res, 200)
+})
+
 app.use(require('express').static(path.join(__dirname, 'build')))
 
 app.get('/', function (req, res) {

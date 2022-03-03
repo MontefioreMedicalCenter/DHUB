@@ -16,7 +16,6 @@ import store from '../../../../../../AppConfig/store/configureStore'
 import { saveLoginModel } from '../../../../../../AppConfig/store/actions/loginAction'
 
 export class LoginService extends ServiceProxyBase {
-
 	dispatchEvent(evt) {
 		GlobalEventDispatcher.instance().dispatchEvent(evt)
 	}
@@ -53,16 +52,7 @@ export class LoginService extends ServiceProxyBase {
 		})
 		// var rpcCall: AsyncToken = this.service.authenticateUser(user.userId, user.password)
 		// rpcCall.addResponder(new AsyncResponder(this.loginResultDBEvent, this.failureFaultEvent))
-		return this.callServiceMethod(
-			'post', 
-			'DHub/api/authenticationsvc/authenticateUser', 
-			formData, 
-			null, 
-			this.loginResultDBEvent.bind(this), 
-			this.failureFaultEvent.bind(this), 
-			'form', 
-			this.getHeaderFormData()
-		)
+		return this.callServiceMethod('post', 'DHub/api/authenticationsvc/authenticateUser', formData, null, this.loginResultDBEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	public saveServiceArea(roleMap: EdiUserRoleMap): AxiosPromise<any> {
@@ -87,7 +77,7 @@ export class LoginService extends ServiceProxyBase {
 		localStorage.setItem('token', event.result.restApiKey)
 		localStorage.setItem('login-time', new Date())
 		localStorage.setItem('loginModel', JSON.stringify(event.result))
-		
+
 		var serv: ArrayCollection = ArrayCollection.from(this.loginModel.user.ediUserRoleMaps)
 		var servSelected: ArrayCollection = new ArrayCollection()
 		if (serv.length > 1) {
@@ -112,11 +102,12 @@ export class LoginService extends ServiceProxyBase {
 		this.dispatchEvent(loginEvent)
 	}
 
-	public logOut(): void {
-		this.loginModel.user = null
-		var rpcCall: AsyncToken = this.service.logOut()
-		rpcCall.addResponder(new AsyncResponder(this.logoutSuccessEvent, this.failureFaultEvent))
-		this.dispatch(new LoginEvent(LoginEvent.LOGOUT))
+	public logOut(resultHandler): AxiosPromise<any> {
+		// this.loginModel.user = null
+		// var rpcCall: AsyncToken = this.service.logOut()
+		// rpcCall.addResponder(new AsyncResponder(this.logoutSuccessEvent, this.failureFaultEvent))
+		// this.dispatch(new LoginEvent(LoginEvent.LOGOUT))
+		return this.callServiceMethod('post', 'DHub/api/authenticationsvc/logOut', null, null, resultHandler, this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
 	protected logoutSuccessEvent(event: ResultEvent, token: Object = null): void {

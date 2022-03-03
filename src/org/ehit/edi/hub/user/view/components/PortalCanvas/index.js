@@ -13,6 +13,7 @@ import { removeMessage, showMessage } from '../../../../../../../../AppConfig/st
 import { PortalMediator } from '../../PortalMediator.ts'
 import LoginModel from '../../../model/LoginModel'
 import IdleTimer from './IdleTimer'
+import { LoginService } from '../../../service/LoginService.ts'
 
 const PortalCanvas = () => {
 	const history = useHistory()
@@ -119,9 +120,13 @@ const PortalCanvas = () => {
 		}
 	}, [loginModel, history])
 
-	const handleLogout = () => {
+	const onSuccessLogout = () => {
 		localStorage.clear()
 		history.push('/')
+	}
+
+	const handleLogout = () => {
+		LoginService.getInstance().logOut(onSuccessLogout)
 	}
 
 	const handleTabChangefunction = (e, value) => {
