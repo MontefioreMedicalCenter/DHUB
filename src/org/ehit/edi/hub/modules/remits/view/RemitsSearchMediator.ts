@@ -4,12 +4,17 @@ import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
 import { RemitQuickSearchEvent } from '../model/events/RemitQuickSearchEvent.ts'
 import { RemitSearchService } from '../service/RemitSearchService.ts'
 import RemitQuickSearch from './components/RemitQuickSearch'
+import { FileEditorService } from '../../../main/service/FileEditorService.ts'
+import { EdiFileBase } from '../../../main/model/EdiFileBase.ts'
+
 
 
 export class RemitsSearchMediator extends Mediator {
 	public view: RemitQuickSearch
 
 	public remitSearchService: RemitSearchService = RemitSearchService.getInstance()
+	public fileEditorService: FileEditorService = FileEditorService.getInstance()
+
 	
 	public onRegister(view): RemitsSearchMediator {
 		this.view = view
@@ -158,6 +163,21 @@ export class RemitsSearchMediator extends Mediator {
 	}
 
 	private viewFile(event: FileEditorEvent): void {
-		this.dispatch(event)
+	//	this.dispatch(event)
+	var file: EdiFileBase = new EdiFileBase()
+	file = event.file
+
+		if(file.reportOnly === true){
+			this.view.setState({ 
+				fileEditoriconWindow: true,
+				fileData: file
+			})
+		}else{
+			this.fileEditorService.getFile(file.fileId, file.removeCRLF);
+			this.view.setState({
+				fileEditorWindow: true,
+				fileData: file
+			})
+		}
 	}
 }
