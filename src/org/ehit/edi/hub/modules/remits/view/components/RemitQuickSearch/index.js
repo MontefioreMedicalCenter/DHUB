@@ -49,7 +49,8 @@ class RemitQuickSearch extends EventDispatcher {
 			radioValue: 'fileDate',
 			hideCore: true,
 			hideDetails: true,
-			fileEditorWindow: false
+			fileEditorWindow: false,
+			fileEditoriconWindow: false
 		}
 		this._xmitId = 0
 		this._isaSequenceNum = 0
@@ -156,7 +157,9 @@ class RemitQuickSearch extends EventDispatcher {
 		file.fileId = fileId
 		file.transType = '835'
 		file.reportOnly = reportOnly
-		this.dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
+		// this.dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
+		this.mediator.viewFile(file)
+
 	}
 
 	render() {
@@ -283,12 +286,27 @@ class RemitQuickSearch extends EventDispatcher {
 					<RemitDetail ref={g => (this.remitDetailRef = g)} id="remitDetailRef" hide={this.state.hideDetails} parentDocument={this}/>{/* RemitDetailTracking */}
 				</Paper>
 				<AdvanceDialog
+					open={this.state.fileEditoriconWindow}
+					handleClose={() => this.setState({ fileEditoriconWindow: false})}
+					bodyRenderer={
+							<FileEditor
+								ref={g => (this.fileEditor = g)}
+								parentDoc={this}
+								fileData={this.state.fileData}
+								closePopup={() => {
+								return this.setState({ fileEditoriconWindow: false })
+							}}
+						/>
+					}
+				/>
+				<AdvanceDialog
 					open={this.state.fileEditorWindow}
 					handleClose={() => this.setState({ fileEditorWindow: false })}
 					bodyRenderer={
 						<FileEditor
 							ref={g => (this.fileEditor = g)}
 							parentDoc={this}
+							fileData={this.state.fileData}
 							closePopup={() => {
 								return this.setState({ fileEditorWindow: false })
 							}}

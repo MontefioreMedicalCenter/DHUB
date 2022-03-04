@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify'
 import Mediator from '../../../../../../../modules/main/view/Mediator.ts'
 import { FileEditorEvent } from '../../../main/model/events/FileEditorEvent.ts'
+import { FileEditorService } from '../../../main/service/FileEditorService.ts'
 import { RemitQuickSearchEvent } from '../model/events/RemitQuickSearchEvent.ts'
 import { RemitSearchService } from '../service/RemitSearchService.ts'
 import RemitQuickSearch from './components/RemitQuickSearch'
@@ -14,7 +15,6 @@ export class RemitsSearchMediator extends Mediator {
 
 	public remitSearchService: RemitSearchService = RemitSearchService.getInstance()
 	public fileEditorService: FileEditorService = FileEditorService.getInstance()
-
 	
 	public onRegister(view): RemitsSearchMediator {
 		this.view = view
@@ -162,18 +162,16 @@ export class RemitsSearchMediator extends Mediator {
 		if (this.view.getChildByName('remitDetail') != null) (<FlexDataGrid>this.view.getChildByName('remitDetail')).processFilter()
 	}
 
-	private viewFile(event: FileEditorEvent): void {
-	//	this.dispatch(event)
-	var file: EdiFileBase = new EdiFileBase()
-	file = event.file
-
-		if(file.reportOnly === true){
-			this.view.setState({ 
-				fileEditoriconWindow: true,
-				fileData: file
-			})
+	private viewFile(file): void {
+		if (file.reportOnly == true){
+		// 		fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
+		this.view.setState({ 
+			fileEditoriconWindow: true,
+			fileData: file
+		})
 		}else{
-			this.fileEditorService.getFile(file.fileId, file.removeCRLF);
+			debugger
+			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 			this.view.setState({
 				fileEditorWindow: true,
 				fileData: file
