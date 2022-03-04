@@ -12,7 +12,7 @@ import './remitsQuickSearch.scss'
 import { RemitQuickSearchEvent } from '../../../model/events/RemitQuickSearchEvent.ts'
 import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
 import FileEditor from '../../../../../main/view/components/FileEditor'
-import { FileEditorEvent } from '../../../../../main/model/events/FileEditorEvent.ts'
+// import { FileEditorEvent } from '../../../../../main/model/events/FileEditorEvent.ts'
 import { EdiFileBase } from '../../../../../main/model/EdiFileBase.ts'
 
 const ColorButton = styled(Button)(({ theme }) => ({

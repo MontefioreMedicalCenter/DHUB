@@ -5,7 +5,6 @@ import { FileEditorService } from '../../../main/service/FileEditorService.ts'
 import { RemitQuickSearchEvent } from '../model/events/RemitQuickSearchEvent.ts'
 import { RemitSearchService } from '../service/RemitSearchService.ts'
 import RemitQuickSearch from './components/RemitQuickSearch'
-import { FileEditorService } from '../../../main/service/FileEditorService.ts'
 import { EdiFileBase } from '../../../main/model/EdiFileBase.ts'
 
 
