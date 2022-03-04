@@ -145,6 +145,7 @@ const PortalCanvas = () => {
 					{dateString} -&nbsp;
 					{timeString} |&nbsp;
 					{loginModel && loginModel.user ? loginModel.user.userId : ''} |&nbsp;
+					{loginModel && loginModel.serviceAreaName ? loginModel.serviceAreaName : ''} |&nbsp;
 					<span className="logout-btn" onClick={handleLogout}>
 						logout
 					</span>

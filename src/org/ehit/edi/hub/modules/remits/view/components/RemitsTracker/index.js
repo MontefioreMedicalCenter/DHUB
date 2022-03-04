@@ -92,6 +92,11 @@ class RemitsTracker extends EventDispatcher {
 		return item.status? this.getStatus(item.status) : null
 	}
 
+	dateForm = (item, col) => {
+		const dataField = col.dataField.split('.')
+		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY HH:MM A') : null
+	}
+
 	render() {
 		return (
 			<Paper className="page_style_remits">
@@ -102,7 +107,8 @@ class RemitsTracker extends EventDispatcher {
 							<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(RemitsFileNameRenderer)} onHandleFileName={(fileId, reportOnly) => this.viewFile(fileId, reportOnly)} dataField="filename"/>
 							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
 							<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(RemitsStatusRenderer)} parentDocument={this} labelFunction={this.dataFormat}/>
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.logDatetime} enableCellClickRowSelect={false} headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo} />
+							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo}/>
+
 						</ReactDataGridColumnLevel>
 					</DataGrid>
 					<AdvanceDialog
