@@ -6,7 +6,7 @@ class RemitDetailFileRenderer extends React.Component{
     render(){
         return(
             <div>
-                {this.props.row.getData() && <img alt='reportpng' src={reportpng} />}
+                {this.props.row.getData() && <img alt='reportpng' src={reportpng} onClick={(e) => {this.props.column.handleFileName(e, this.props.row.getData().fileId, true)}}/>}
                 <span id="lbl" style={{color:'#712464', cursor:'pointer'}} onClick={(e) => {this.props.column.handleFileName(e, this.props.row.getData().fileId, false)}}> {this.props.row.getData() && this.props.row.getData().xmitFileName}</span>
             </div>
         )

@@ -12,6 +12,7 @@ import ComboBox from '../../../../../../../../shared/components/ComboBox'
 import { LoginMediator } from '../../LoginMediator.ts'
 import { LoginEvent } from '../../../model/events/LoginEvent.ts'
 import EdiUser from '../../../model/vo/EdiUser.ts'
+import LoaderBar from '../../../../../../../../shared/components/LoaderBar'
 
 const VALIDATOR_PROPERTY = ''
 class Login extends EventDispatcher {
@@ -149,6 +150,9 @@ class Login extends EventDispatcher {
 						</div>
 						{/* <p className="versionField">Version 2.0, Content © 2021, MIT .All rights reserved. Build Date: {preval`module.exports = new Date().toLocaleString();`}.</p> */}
 					</div>
+				</div>
+				<div>
+					<LoaderBar />
 				</div>
 			</div>
 		)

@@ -14,6 +14,7 @@ import { PortalMediator } from '../../PortalMediator.ts'
 import LoginModel from '../../../model/LoginModel'
 import IdleTimer from './IdleTimer'
 import { LoginService } from '../../../service/LoginService.ts'
+import LoaderBar from '../../../../../../../../shared/components/LoaderBar'
 
 const PortalCanvas = () => {
 	const history = useHistory()
@@ -62,52 +63,52 @@ const PortalCanvas = () => {
 		)
 	}
 
-    useEffect(() => {
-        var loginModel = LoginModel.getInstance()
+	useEffect(() => {
+		var loginModel = LoginModel.getInstance()
 		if (Object.keys(loginModel).length) {
-            var hasAdmin = loginModel.user.hasRole('Admin')
-            var hasClaims = loginModel.user.hasRole('Claims')
-            var hasRemits = loginModel.user.hasRole('Remits')
-            var hasInterfaces = loginModel.user.hasRole('Interfaces')
-            var hasBankEFT = loginModel.user.hasRole('Bank EFT')
-            var hasClaimStatus = false
-    
-            let tabData = []
-            if (hasClaims) {
-                tabData.push(tabList[0])
-            }
-            if (hasRemits) {
-                tabData.push(tabList[1])
-            }
-            if (hasBankEFT) {
-                tabData.push(tabList[2])
-            }
-            if (hasInterfaces) {
-                // tabData.push(tabList[3])
-            }
-            if (hasClaimStatus) {
-                //Not Implemented Tab
-                // var claimStatusTab:NavigatorContent=new NavigatorContent();
+			var hasAdmin = loginModel.user.hasRole('Admin')
+			var hasClaims = loginModel.user.hasRole('Claims')
+			var hasRemits = loginModel.user.hasRole('Remits')
+			var hasInterfaces = loginModel.user.hasRole('Interfaces')
+			var hasBankEFT = loginModel.user.hasRole('Bank EFT')
+			var hasClaimStatus = false
+
+			let tabData = []
+			if (hasClaims) {
+				tabData.push(tabList[0])
+			}
+			if (hasRemits) {
+				tabData.push(tabList[1])
+			}
+			if (hasBankEFT) {
+				tabData.push(tabList[2])
+			}
+			if (hasInterfaces) {
+				// tabData.push(tabList[3])
+			}
+			if (hasClaimStatus) {
+				//Not Implemented Tab
+				// var claimStatusTab:NavigatorContent=new NavigatorContent();
 				// claimStatusTab.label="Claim Status"
 				// var claimStatus:ClaimStatus=new ClaimStatus()
 				// claimStatus.initialIndex=index
 				// claimStatusTab.addElement(claimStatus);
 				// this.portalCanvas.viewStack.addElementAt(claimStatusTab, index);
-				// index++ 
-            }
-            if (hasAdmin) {
-                // tabData.push(tabList[4])
-            }
-            if (hasClaims || hasRemits || hasInterfaces || hasAdmin) {
-                //Not Implemented Tab
-                // var userTab:NavigatorContent=new NavigatorContent();
-                // userTab.label=this.loginModel.user.userId + '\'sTab'
-                // var myTab:MyTab=new MyTab()
-                // myTab.initialIndex=index
-                // userTab.addElement(myTab);
-                // this.portalCanvas.viewStack.addElementAt(userTab, index);
-            }
-            setTabData(tabData)
+				// index++
+			}
+			if (hasAdmin) {
+				// tabData.push(tabList[4])
+			}
+			if (hasClaims || hasRemits || hasInterfaces || hasAdmin) {
+				//Not Implemented Tab
+				// var userTab:NavigatorContent=new NavigatorContent();
+				// userTab.label=this.loginModel.user.userId + '\'sTab'
+				// var myTab:MyTab=new MyTab()
+				// myTab.initialIndex=index
+				// userTab.addElement(myTab);
+				// this.portalCanvas.viewStack.addElementAt(userTab, index);
+			}
+			setTabData(tabData)
 		} else {
 			history.push('/')
 		}
@@ -180,6 +181,9 @@ const PortalCanvas = () => {
 				Version 2.0, Content © 2022, MIT .All rights reserved.
 			</p>
 			<AlertDialog {...alertData} onClose={() => dispatch(removeMessage())} />
+			<div>
+				<LoaderBar />
+			</div>
 		</div>
 	)
 }

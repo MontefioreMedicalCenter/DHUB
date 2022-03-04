@@ -138,24 +138,11 @@ class BankEFTTracker extends EventDispatcher {
 				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} parentDocument={this} enableExport={true} enablePrint={true} styleName="gridStyle" enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false} pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" rowTextColorFunction={this.getRowTextColor}>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile} dataField='filename'>
-							{/* <nestedtreedatagrid:itemRenderer>
-								<fx:Component>
-									<mx:Canvas horizontalScrollPolicy="off">
-										<s:HGroup>
-											<mx:Image top="5" right="2" id="infoIcon" source="@Embed('/org/ehit/edi/hub/assets/img/report_go.png')" useHandCursor={true} buttonMode={true}
-													  mouseChildren={false} toolTip="Click to view report" click="parentDocument.viewFile(data.id.fileId, true)"/>
-											<mx:Label id="lbl" selectable={true} text="{parentDocument.getFileName(data.filename)}" buttonMode={true}
-													  click="parentDocument.viewFile(data.id.fileId, false)" useHandCursor={true} mouseChildren={false} color="#712464"/>
-										</s:HGroup>
-									</mx:Canvas>
-								</fx:Component>
-							</nestedtreedatagrid:itemRenderer> */}
-						</ReactDataGridColumn>
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile} dataField='filename'/>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
 						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(BankEFTStatusRenderer)} parentDocument={this}>
 						</ReactDataGridColumn>
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} /*formatter={ExampleUtils.globalDateFormatter}*/ filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterRenderer={EdiDateRangeCombo} enableCellClickRowSelect={false} headerText="Log Time" filterConverterFunction={this.convertDate}/*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox" */ />
+						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterRenderer={EdiDateRangeCombo} enableCellClickRowSelect={false} headerText="Log Time" filterConverterFunction={this.convertDate}/*filterConverterFunction="convertDate" */ />
 					</ReactDataGridColumnLevel>
 				</DataGrid>
 				<AdvanceDialog
