@@ -6,6 +6,7 @@ import { DateRange, ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDat
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 import EdiDateRangeCombo from '../../../../../../../../../utils/dateFormatCombo/EdiDateRangeCombo'
+import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 
 
 const bgcolorarray = [ "0xC0C0C0,0xEEEEEE"]
@@ -45,12 +46,13 @@ class RemitCore extends EventDispatcher {
 					width="100%"
 					height="100%"
 					backgroundColor="white"
-					/*creationComplete="onComplete(event)"*/ enableDrillDown={true}
-					/*toolbarExcelHandlerFunction="onToolbarExport"*/
+					/*creationComplete="onComplete(event)"*/ 
+					enableDrillDown={true}
+					pagerRenderer={MontefioreUtils.pagerFactory}
 				>
 					<ReactDataGridColumnLevel enableFilters={true} enablePaging={true} enableFooters={true} pageSize="50" color="0x185B29" childrenField="xremitDetailTrackings">
 						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="50" headerWordWrap={true} itemRenderer={new ClassFactory(RemitCoreRenderer)} onHandleClick={(e, data) => {this.onClick(e, data)}} />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="Testing" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(FileNameRenderer)} onHandleFileName={(e, data, reportOnly) => {this.viewFile(e, data, reportOnly)}} />
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="150" headerText="File Name" useUnderLine={true} fontWeight="bold" itemRenderer={new ClassFactory(FileNameRenderer)} onHandleFileName={(e, data, reportOnly) => {this.viewFile(e, data, reportOnly)}} dataField="xmitFileName"/>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="transmissionDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="File Recvd Date" filterRenderer={EdiDateRangeCombo}/>
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System" headerWordWrap={false} />
 						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkTraceNum" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check/EFT Trace Number" headerWordWrap={true} />
