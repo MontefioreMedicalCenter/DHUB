@@ -66,6 +66,13 @@ export class LoginService extends ServiceProxyBase {
 	}
 
 	protected saveServiceAreaEvent(event: ResultEvent, token: Object = null): void {
+		
+		store.dispatch(saveLoginModel(this.loginModel))
+		this.loginModel.fromJson({ user: event.result })
+		localStorage.setItem('user-id', event.result.userId)
+		localStorage.setItem('token', event.result.restApiKey)
+		localStorage.setItem('login-time', new Date())
+		localStorage.setItem('loginModel', JSON.stringify(event.result))
 		this.dispatchEvent(new LoginEvent(LoginEvent.LOGIN_SUCCESS))
 	}
 

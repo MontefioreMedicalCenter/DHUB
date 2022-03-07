@@ -71,7 +71,6 @@ const PortalCanvas = () => {
 			var hasRemits = loginModel.user.hasRole('Remits')
 			var hasInterfaces = loginModel.user.hasRole('Interfaces')
 			var hasBankEFT = loginModel.user.hasRole('Bank EFT')
-			var hasClaimStatus = false
 
 			let tabData = []
 			if (hasClaims) {
@@ -86,20 +85,10 @@ const PortalCanvas = () => {
 			if (hasInterfaces) {
 				// tabData.push(tabList[3])
 			}
-			if (hasClaimStatus) {
-				//Not Implemented Tab
-				// var claimStatusTab:NavigatorContent=new NavigatorContent();
-				// claimStatusTab.label="Claim Status"
-				// var claimStatus:ClaimStatus=new ClaimStatus()
-				// claimStatus.initialIndex=index
-				// claimStatusTab.addElement(claimStatus);
-				// this.portalCanvas.viewStack.addElementAt(claimStatusTab, index);
-				// index++
-			}
 			if (hasAdmin) {
 				// tabData.push(tabList[4])
 			}
-			if (hasClaims || hasRemits || hasInterfaces || hasAdmin) {
+			if ( hasRemits || hasInterfaces || hasAdmin) {
 				//Not Implemented Tab
 				// var userTab:NavigatorContent=new NavigatorContent();
 				// userTab.label=this.loginModel.user.userId + '\'sTab'
