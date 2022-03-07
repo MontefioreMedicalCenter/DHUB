@@ -83,7 +83,7 @@ app.post('/DHub/api/authenticationsvc/authenticateUser', (req, res) => {
 })
 
 app.post('/DHub/api/authenticationsvc/saveServiceArea', (req, res) => {
-	sendResponse(res, 200, saveServiceArea)
+	sendResponse(res, 200, authenticateUser)
 })
 
 app.post('/DHub/api/adminsvc/activatePoller', (req, res) => {

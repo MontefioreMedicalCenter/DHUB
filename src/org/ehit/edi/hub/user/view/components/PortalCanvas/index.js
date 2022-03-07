@@ -23,7 +23,7 @@ const PortalCanvas = () => {
 	const dayString = `${moment()}`
 	const alertData = useSelector(state => state.homeState.alertPopup)
 	const dateString = `${moment(localStorage.getItem('login-time')).format('MM/DD/YYYY')}`
-	const timeString = `${moment(localStorage.getItem('login-time')).format('HH:mm:ss')}`
+	const timeString = `${moment(localStorage.getItem('login-time')).format('HH:mm:ss a')}`
 	const [tabValue, handleTabChange] = useState('/main/claims')
 	const [mainTabData, setTabData] = useState([])
 
@@ -170,9 +170,6 @@ const PortalCanvas = () => {
 				Version 2.0, Content © 2022, MIT .All rights reserved.
 			</p>
 			<AlertDialog {...alertData} onClose={() => dispatch(removeMessage())} />
-			<div>
-				<LoaderBar />
-			</div>
 		</div>
 	)
 }
