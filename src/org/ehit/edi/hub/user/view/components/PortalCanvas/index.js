@@ -14,7 +14,6 @@ import { PortalMediator } from '../../PortalMediator.ts'
 import LoginModel from '../../../model/LoginModel'
 import IdleTimer from './IdleTimer'
 import { LoginService } from '../../../service/LoginService.ts'
-import LoaderBar from '../../../../../../../../shared/components/LoaderBar'
 
 const PortalCanvas = () => {
 	const history = useHistory()

@@ -57,7 +57,7 @@ export class LoginService extends ServiceProxyBase {
 
 	public saveServiceArea(roleMap: EdiUserRoleMap): AxiosPromise<any> {
 		// var rpcCall: AsyncToken = this.service.saveServiceArea(roleMap)
-		// this.loginModel.serviceAreaName = roleMap.id.serviceAreaId
+		this.loginModel.serviceAreaName = roleMap.id.serviceAreaId
 		// rpcCall.addResponder(new AsyncResponder(this.saveServiceAreaEvent, this.failureFaultEvent))
 		var formData = qs.stringify({
 			ediUserRoleMap: stringifyCircularObjectWithModifiedKeys(roleMap)
