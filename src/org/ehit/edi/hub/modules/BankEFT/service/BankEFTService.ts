@@ -52,14 +52,14 @@ export class BankEFTService extends ServiceProxyBase {
 			this.searchStartDt = startDate
 			this.searchEndDt = endDate
 
-			// var formData = qs.stringify({
-			// 	startDate: startDate,
-			// 	endDate: endDate
-			// })
 			var formData = qs.stringify({
-				startDate: new Date('02/10/2021'),
+				startDate: startDate,
 				endDate: endDate
 			})
+			// var formData = qs.stringify({
+			// 	startDate: new Date('02/10/2021'),
+			// 	endDate: endDate
+			// })
 			// var rpcCall: AsyncToken = this.service.findBankEFTProcesses(startDate, endDate)
 			// rpcCall.addResponder(new AsyncResponder(this.successResultEvent, this.failureFaultEvent))
 			return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/findBankEFTProcesses', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
