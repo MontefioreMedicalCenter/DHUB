@@ -94,6 +94,7 @@ export class ClaimsMediator extends Mediator {
 		}
 
 		this.view.grid.reDraw()
+		this.claimsService.findClaimProcesses()
 	}
 
 	private addClaims(event: ClaimsEvent): void {
