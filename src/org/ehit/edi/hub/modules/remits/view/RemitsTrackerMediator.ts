@@ -82,9 +82,9 @@ export default class RemitsTrackerMediator extends Mediator {
 			col.hideText = true
 			col.enableIcon = true
 			col.iconHandCursor = true
-			col.columnWidthMode = 'fitToContent'
-			col.width = 65
-			col.setStyle('iconLeft', 15)
+			//col.columnWidthMode = 'fitToContent'
+			col.setWidth(70)
+			col.setStyle('iconLeft', 10)
 			col.enableCellClickRowSelect = false
 			col.iconFunction = this.dynamicIconFunction
 			if (col.getHeaderText() != 'Recvd') {
