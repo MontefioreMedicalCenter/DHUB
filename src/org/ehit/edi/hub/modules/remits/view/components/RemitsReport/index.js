@@ -30,7 +30,7 @@ class RemitsReport extends React.Component {
 	}
 	render() {
 		return (
-			<div style={{ height: 'calc(100% - 5px)', width: '100%' }}>
+			<div style={{ height: 'calc(100% - 1px)', width: '100%' }}>
 				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" enableDrillDown={true} horizontalScrollPolicy="auto" footerDrawTopBorder={true} enableEagerDraw={true} verticalScrollPolicy="on" pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="20" childrenField="claimDetails" enablePaging={true} pageSize="1000" enableFilters={true} enableFooters={true} initialSortAscending={true}>
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerWordWrap={true} truncateToFit={true} dataField="batchNumber" enableCellClickRowSelect={false} textAlign="right" headerText="Batch #" />

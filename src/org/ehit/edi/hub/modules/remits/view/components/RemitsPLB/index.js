@@ -5,7 +5,7 @@ import DataGrid from '../../../../../../../../../shared/components/ExtendedDataG
 class RemitsPLB extends React.Component {
 	render() {
 		return (
-			<div style={{ height: 'calc(100% - 5px)', width: '100%' }}>
+			<div style={{ height: 'calc(100% - 1px)', width: '100%' }}>
 				<DataGrid id="grid" width="100%" height="100%" enableCopy="true" dataProvider={this.props.RemitsBalanceReport.props.parentDocument.state.remitsPLB} enableExport="true" styleName="gridStyle" horizontalScrollPolicy="auto" footerDrawTopBorder="true" enableEagerDraw="true">
 					<ReactDataGridColumnLevel rowHeight="21" enablePaging="true" pageSize="1000" enableFilters="true">
 						<ReactDataGridColumn width="200" dataField="checkNo" enableCellClickRowSelect="false" headerText="Check #" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />

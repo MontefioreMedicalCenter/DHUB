@@ -167,7 +167,7 @@ class FileContentContainer extends EventDispatcher {
     render() {
         return (
             <div className='pop-up_size'>
-                <textarea ref={g => (this.ediContent = g)} id="ediContent" name="ediContent" value={this.state.ediContent} onChange={e => this.setState({ ediContent: e.target.value })} style={{ height: '736px', width: '1125px', margin: '4px', resize: 'none' }} />
+                <textarea ref={g => (this.ediContent = g)} id="ediContent" name="ediContent" value={this.state.ediContent} onChange={e => this.setState({ ediContent: e.target.value })} style={{ height: ' calc(100vh - 160px)', width: 'calc(100vh - 35px)', margin: '4px', resize: 'none' }} />
                 <div className='lowerDiv'>
                     <ButtonGroup id="editorMenu">
                         <Button id='view' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'view')}>View</Button>
