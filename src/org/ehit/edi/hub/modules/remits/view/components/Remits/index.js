@@ -1,6 +1,9 @@
 import { Paper } from '@material-ui/core'
 import React from 'react'
+import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import * as actions from '../../../../../../../../../AppConfig/store/actions/headersAction'
 import { remitsTabList } from '../../../../../../../../../AppConfig/AppRouter/constant'
 import { EventDispatcher } from '../../../../../../../../../flexicious'
 import CustomizedTabs from '../../../../../../../../../shared/components/Tabs'
@@ -62,4 +65,18 @@ class Remits extends EventDispatcher {
     }
 }
 
-export default Remits
+const mapStateToProps = state => {
+	return {
+		remitsHeader: state.headerState.remitsHeaderState
+	}
+}
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators(
+		{
+			...actions
+		},
+		dispatch
+	)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Remits)

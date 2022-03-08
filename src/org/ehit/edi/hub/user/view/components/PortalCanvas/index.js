@@ -14,6 +14,8 @@ import { PortalMediator } from '../../PortalMediator.ts'
 import LoginModel from '../../../model/LoginModel'
 import IdleTimer from './IdleTimer'
 import { LoginService } from '../../../service/LoginService.ts'
+import store from '../../../../../../../../AppConfig/store/configureStore'
+import { setClaimsHeader, setRemitsHeader } from '../../../../../../../../AppConfig/store/actions/headersAction'
 
 const PortalCanvas = () => {
 	const history = useHistory()
@@ -115,12 +117,13 @@ const PortalCanvas = () => {
 	}
 
 	const handleLogout = () => {
+		console.log(store.dispatch(setClaimsHeader([])))
+		console.log(store.dispatch(setRemitsHeader([])))
 		LoginService.getInstance().logOut(onSuccessLogout)
 	}
 
 	const handleTabChangefunction = (e, value) => {
 		handleTabChange(value)
-		mediator.current.refreshTab(value)
 	}
 
 	return (
