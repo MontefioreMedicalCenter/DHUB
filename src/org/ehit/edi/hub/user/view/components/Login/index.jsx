@@ -12,7 +12,6 @@ import ComboBox from '../../../../../../../../shared/components/ComboBox'
 import { LoginMediator } from '../../LoginMediator.ts'
 import { LoginEvent } from '../../../model/events/LoginEvent.ts'
 import EdiUser from '../../../model/vo/EdiUser.ts'
-import LoaderBar from '../../../../../../../../shared/components/LoaderBar'
 
 const VALIDATOR_PROPERTY = ''
 class Login extends EventDispatcher {
@@ -148,7 +147,7 @@ class Login extends EventDispatcher {
 						<div className="login-button">
 							<ButtonComponent id="signInButton" label="Login" onClick={() => this.mediator.onServiceArea()} />
 						</div>
-						{/* <p className="versionField">Version 2.0, Content © 2021, MIT .All rights reserved. Build Date: {preval`module.exports = new Date().toLocaleString();`}.</p> */}
+						<p className="versionField">Version 2.0, Content © 2022, MIT .All rights reserved. Build Date: {preval`module.exports = new Date().toLocaleString();`}.</p> 
 					</div>
 				</div>
 			</div>
