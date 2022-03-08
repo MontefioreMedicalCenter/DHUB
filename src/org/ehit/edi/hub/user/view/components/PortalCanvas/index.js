@@ -117,8 +117,8 @@ const PortalCanvas = () => {
 	}
 
 	const handleLogout = () => {
-		console.log(store.dispatch(setClaimsHeader([])))
-		console.log(store.dispatch(setRemitsHeader([])))
+		store.dispatch(setClaimsHeader([]))
+		store.dispatch(setRemitsHeader([]))
 		LoginService.getInstance().logOut(onSuccessLogout)
 	}
 
