@@ -120,6 +120,11 @@ export class ReportContainerMediator extends Mediator {
 		return this
 	}
 
+	claimPaymentLabelFunction = (item, col) => {
+		const dataField = col.dataField.split('.')
+		return item[dataField].toFixed(2)
+	}
+
 	private addRemitHeader(): void {
 		var colGroups: any[] = this.view.balanceReport && this.view.balanceReport.remitsReport.grid.getGroupedColumns()
 		for (var x = 0; x < this.remitsModel.remitHeader.length; x++) {
@@ -137,7 +142,7 @@ export class ReportContainerMediator extends Mediator {
 				claimPayment.enableCellClickRowSelect = false
 				claimPayment.footerAlign = 'right'
 				claimPayment.footerOperationPrecision = 2
-				// claimPayment.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
+				claimPayment.setLabelFunction(this.claimPaymentLabelFunction)
 				claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
 				claimPayment.filterControl = 'TextInput'
 				claimPayment.filterWaterMark = 'Contains'
