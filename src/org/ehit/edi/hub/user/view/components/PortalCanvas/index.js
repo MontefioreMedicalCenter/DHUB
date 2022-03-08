@@ -24,7 +24,7 @@ const PortalCanvas = () => {
 	const dayString = `${moment()}`
 	const alertData = useSelector(state => state.homeState.alertPopup)
 	const dateString = `${moment(localStorage.getItem('login-time')).format('MM/DD/YYYY')}`
-	const timeString = `${moment(localStorage.getItem('login-time')).format('HH:mm:ss a')}`
+	const timeString = `${moment(localStorage.getItem('login-time')).format('hh:mm:ss A')}`
 	const [tabValue, handleTabChange] = useState('/main/claims')
 	const [mainTabData, setTabData] = useState([])
 

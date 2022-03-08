@@ -20,7 +20,7 @@ class RemitDetail extends EventDispatcher {
 
 	dateForm = (item, col) => {
 		const dataField = col.dataField.split('.')
-		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY HH:MM A') : null
+		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY hh:mm A') : null
 	}
 
 	render() {
