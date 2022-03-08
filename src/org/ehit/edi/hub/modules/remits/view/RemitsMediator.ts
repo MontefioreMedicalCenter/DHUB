@@ -1,13 +1,14 @@
 import { toast } from "react-toastify";
 import Mediator from "../../../../../../../modules/main/view/Mediator.ts"
 import RemitsEvent from "../model/events/RemitsEvent.ts"
+import RemitsModel from "../model/RemitsModel.ts";
 import { RemitsService } from "../service/RemitsService.ts";
 import Remits from "./components/Remits"
 
 export class RemitsMediator extends Mediator {
 
 	public view: Remits
-	
+	public remitsModel: RemitsModel = RemitsModel.getInstance()
 	public remitsService: RemitsService = RemitsService.getInstance();
 
 	public onRegister(view): RemitsMediator {
@@ -15,7 +16,12 @@ export class RemitsMediator extends Mediator {
 		// this.mapListener(this.view.viewStack, Event.CHANGE, this.refreshTab, Event)
 		// if (this.view.initialIndex == 0) {this.dispatch(new RemitsEvent(RemitsEvent.GET_REMIT_HEADER))}
 		if(this.view.props.history.location.pathname === '/main/remittance'){
-			this.remitsService.findRemitHeader();
+			if(this.view.props.remitsHeader.length){
+				this.remitsModel.remitHeader = this.view.props.remitsHeader
+				this.remitsService.findRemitsProcesses()
+			}else{
+				this.remitsService.findRemitHeader();
+			}
 		}
 		return this
 	}

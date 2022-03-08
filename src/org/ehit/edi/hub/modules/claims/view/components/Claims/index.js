@@ -1,6 +1,9 @@
 import { Paper } from '@material-ui/core'
 import moment from 'moment'
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../../../../../../../../../AppConfig/store/actions/headersAction'
 import { DateRange, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
@@ -101,4 +104,19 @@ class Claims extends EventDispatcher {
 	}
 }
 
-export default Claims
+const mapStateToProps = state => {
+	return {
+		claimsHeaders: state.headerState.claimsHeaderState
+	}
+}
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators(
+		{
+			...actions
+		},
+		dispatch
+	)
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Claims)

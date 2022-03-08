@@ -74,6 +74,7 @@ export default class RemitsTrackerMediator extends Mediator {
 	}
 
 	private addRemitHeader(event: RemitsEvent): void {
+		this.view.props.setRemitsHeader(this.remitsModel.remitHeader)
 		for (var x: number = 0; x < this.remitsModel.remitHeader.length; x++) {
 			var col: FlexDataGridColumn = new FlexDataGridColumn()
 			col.setHeaderText(this.remitsModel.remitHeader[x][1])

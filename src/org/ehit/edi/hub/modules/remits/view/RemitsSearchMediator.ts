@@ -169,7 +169,6 @@ export class RemitsSearchMediator extends Mediator {
 			fileData: file
 		})
 		}else{
-			debugger
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 			this.view.setState({
 				fileEditorWindow: true,

@@ -35,9 +35,11 @@ export class ClaimsMediator extends Mediator {
 		// this.mapListener(this.claimsTimer, TimerEvent.TIMER, this.refreshClaims)
 		if (this.view.state.tabValue === '/main/claims') {
 			/** Directly called service call's from Claims Command */
-			this.claimsService.findClaimHeader()
-		} else {
-			// claimsService.findClaimProcesses(event.startDate, event.endDate)
+			if(this.view.props.claimsHeaders.length){
+				this.addClaimHeader()
+			}else{
+				this.claimsService.findClaimHeader()
+			}
 		}
 		return this
 	}
@@ -70,6 +72,11 @@ export class ClaimsMediator extends Mediator {
 	}
 
 	private addClaimHeader(event: ClaimsEvent): void {
+	if(this.view.props.claimsHeaders.length > 0){
+		this.claimsModel.claimHeader.length ? null : this.claimsModel.claimHeader = this.view.props.claimsHeaders
+	}else{
+		this.view.props.setClaimsHeader(this.claimsModel.claimHeader)
+	}
 		for (var x: number = 0; x < this.claimsModel.claimHeader.length; x++) {
 			var col: FlexDataGridColumn = new FlexDataGridColumn()
 			col.setHeaderText(this.claimsModel.claimHeader[x][1])

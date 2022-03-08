@@ -14,6 +14,9 @@ import './remitsTracker.scss'
 import { EdiFileBase } from '../../../../../main/model/EdiFileBase.ts'
 import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
 import FileEditor from '../../../../../main/view/components/FileEditor'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../../../../../../../../../AppConfig/store/actions/headersAction'
 
 class RemitsTracker extends EventDispatcher {
 	constructor(props) {
@@ -147,4 +150,18 @@ class RemitsTracker extends EventDispatcher {
 	}
 }
 
-export default RemitsTracker
+const mapStateToProps = state => {
+	return {
+		remitsHeader: state.headerState.remitsHeaderState
+	}
+}
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators(
+		{
+			...actions
+		},
+		dispatch
+	)
+
+export default connect(mapStateToProps, mapDispatchToProps)( RemitsTracker)
