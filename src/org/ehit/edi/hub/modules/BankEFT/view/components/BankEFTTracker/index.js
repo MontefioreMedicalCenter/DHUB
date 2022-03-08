@@ -135,14 +135,13 @@ class BankEFTTracker extends EventDispatcher {
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 35px)', width: '100%' }}>
-				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} parentDocument={this} enableExport={true} enablePrint={true} styleName="gridStyle" enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false} pagerRenderer={MontefioreUtils.pagerFactory}>
+				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} parentDocument={this} enableExport={true} enablePrint={true} styleName="gridstyle" enableEagerDraw={false} showSpinnerOnFilterPageSort={true} initialSortField="logDatetime" initialSortAscending={false} pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" rowTextColorFunction={this.getRowTextColor}>
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="240" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile} dataField='filename' filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
-						<ReactDataGridColumn columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(BankEFTStatusRenderer)} parentDocument={this}>
-						</ReactDataGridColumn>
-						<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterRenderer={EdiDateRangeCombo} enableCellClickRowSelect={false} headerText="Log Time" filterConverterFunction={this.convertDate}/*filterConverterFunction="convertDate" */ />
+						<ReactDataGridColumn width="500" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" textAlign="left"/>
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="300" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(BankEFTFilerenderer)} viewFile={this.viewFile} dataField='filename' filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
+						<ReactDataGridColumn width="450" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" textAlign="left"/>
+						<ReactDataGridColumn width="450" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(BankEFTStatusRenderer)} parentDocument={this}/>
+						<ReactDataGridColumn width="450" dataField="logDatetime" labelFunction={this.globalDateFormatter.bind(this)} filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterRenderer={EdiDateRangeCombo} enableCellClickRowSelect={false} headerText="Log Time" filterConverterFunction={this.convertDate}/*filterConverterFunction="convertDate" */ textAlign="left"/>
 					</ReactDataGridColumnLevel>
 				</DataGrid>
 				<AdvanceDialog
