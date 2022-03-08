@@ -86,14 +86,15 @@ export class ClaimsMediator extends Mediator {
 			col.enableIcon = true
 			col.iconHandCursor = true
 			col.columnWidthMode = 'fixed'
-			col.width = 80
-			col.setStyle('iconLeft', 25)
+			col.setWidth(60)
+			col.setStyle('iconLeft', 10)
 			col.enableCellClickRowSelect = false
 			col.iconFunction = this.dynamicIconFunction
 			this.view.grid.addColumn(col)
 		}
 
 		this.view.grid.reDraw()
+		this.claimsService.findClaimProcesses()
 	}
 
 	private addClaims(event: ClaimsEvent): void {

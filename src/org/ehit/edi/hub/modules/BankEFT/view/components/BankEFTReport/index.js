@@ -59,7 +59,7 @@ class BankEFTReport extends React.Component {
 
 	render() {
 		return (
-			<div style={{ height: 'calc(100% - 40px)', width: '100%' }}>
+			<div style={{ height: 'calc(100vh - 130px)', width: '100%' }}>
 				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enablePrint={true} styleName="gridStyle" enableDrillDown={true} enableExport={true} enableCopy={true} verticalScrollPolicy="on" horizontalScrollPolicy="auto" footerDrawTopBorder={true} enableEagerDraw={true} pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="21" childrenField="ediRemitEftList" enableFilters={true} enablePaging={true} enableFooters={true} pageSize="10000" rowTextColorFunction={this.getRowTextColor}>
 						<ReactDataGridColumn columnWidthMode="fitToContent" headerText="ID" dataField="id" textAlign="right" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />

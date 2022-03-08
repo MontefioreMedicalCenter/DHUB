@@ -71,7 +71,7 @@ class RemitsBalanceReport extends React.Component {
 					<Tab style={{ margin: '0px', backgroundColor: '#82988c', color: this.state.tab === 1 ? 'white' : 'black' }} label="Surcharge" />
 					<Tab style={{ margin: '0px', backgroundColor: '#82988c', color: this.state.tab === 2 ? 'white' : 'black' }} label="Adjustment" />
 				</Tabs>
-				<Paper style={{ height: 650 }}>
+				<Paper style={{ height: "calc(70vh - 50px)" }}>
 					{this.state.tab === 0 && <RemitsReport ref={g => (this.remitsReport = g)} RemitsBalanceReport={this}/>}
 					{this.state.tab === 1 && <RemitsSurcharge ref={g => (this.remitsSurcharge = g)} RemitsBalanceReport={this}/>}
 					{this.state.tab === 2 && <RemitsPLB ref={g => (this.remitsPLB = g)} RemitsBalanceReport={this}/>}

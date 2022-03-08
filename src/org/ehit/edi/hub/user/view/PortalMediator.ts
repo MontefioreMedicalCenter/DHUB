@@ -160,13 +160,13 @@ import { LoginService } from "../service/LoginService.ts";
 		private refreshTab(value):void 
 		{
 			// var labelStr:string=(<NavigatorContent>this.portalCanvas.viewStack.getChildAt(this.portalCanvas.viewStack.selectedIndex) ).label
-			if(value === "/main/claims"){
+			// if(value === "/main/claims"){
 				// this.dispatch(new ClaimsEvent(ClaimsEvent.GET_CLAIMS));
-				this.claimsService.findClaimProcesses();//event.startDate, event.endDate
+				// this.claimsService.findClaimProcesses();//event.startDate, event.endDate
 			// 	this.dispatch(new RemitsEvent(RemitsEvent.REMOVE_REMITS));
 			// 	this.dispatch(new InterfacesEvent(InterfacesEvent.REMOVE_INTERFACES));
 			// 	this.dispatch(new InterfacesEvent(AdminEvent.REMOVE_ADMIN));
-			}
+			// }
 			// if (labelStr == "Claims")
 			// {
 			// 	this.dispatch(new ClaimsEvent(ClaimsEvent.GET_CLAIMS));
