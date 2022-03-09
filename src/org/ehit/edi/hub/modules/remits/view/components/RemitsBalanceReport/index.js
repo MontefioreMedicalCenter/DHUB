@@ -33,7 +33,7 @@ class RemitsBalanceReport extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{height: 'calc(100% - 45px)'}}>
 				<Paper>
 					<span className="reportHeader"> 835 Remittance BPR Report </span>
 					<div className="fileDetailStyle">
@@ -71,7 +71,7 @@ class RemitsBalanceReport extends React.Component {
 					<Tab style={{ margin: '0px', backgroundColor: '#82988c', color: this.state.tab === 1 ? 'white' : 'black' }} label="Surcharge" />
 					<Tab style={{ margin: '0px', backgroundColor: '#82988c', color: this.state.tab === 2 ? 'white' : 'black' }} label="Adjustment" />
 				</Tabs>
-				<Paper style={{ height: "calc(70vh - 50px)" }}>
+				<Paper style={{ height: "calc(100% - 85px)" }}>
 					{this.state.tab === 0 && <RemitsReport ref={g => (this.remitsReport = g)} RemitsBalanceReport={this}/>}
 					{this.state.tab === 1 && <RemitsSurcharge ref={g => (this.remitsSurcharge = g)} RemitsBalanceReport={this}/>}
 					{this.state.tab === 2 && <RemitsPLB ref={g => (this.remitsPLB = g)} RemitsBalanceReport={this}/>}
