@@ -79,7 +79,7 @@ class Claims extends EventDispatcher {
 								<ReactDataGridColumn dataField="stepStartTime" enableCellClickRowSelect={false} headerText="Step Start Time" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} />
 								<ReactDataGridColumn dataField="stepEndTime" enableCellClickRowSelect={false} headerText="Step End Time" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} />
 								<ReactDataGridColumn dataField="stepDeadline" enableCellClickRowSelect={false} headerText="Step Deadline" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} />
-								<ReactDataGridColumn dataField="stepStatus" enableCellClickRowSelect={false} headerText="Step Status" />
+								<ReactDataGridColumn dataField="stepStatus" enableCellClickRowSelect={false} headerText="Step Status" textAlign="left"/>
 								<ReactDataGridColumn width="400" dataField="stepLongStatus" enableCellClickRowSelect={false} headerText="Step Long Status" />
 							</ReactDataGridColumnLevel>
 						</ReactDataGridColumnLevel>
