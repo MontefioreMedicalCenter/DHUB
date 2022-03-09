@@ -17,4 +17,13 @@
 }
 .tabStyle{
     color: aliceblue;
+    min-height: 30px !important;
+    .MuiTabs-centered {
+        height: 30px;
+        .MuiTab-root {
+            height: 30px !important;
+            min-height: 30px !important;
+            padding: 0px !important;
+        }
+    }
 }
