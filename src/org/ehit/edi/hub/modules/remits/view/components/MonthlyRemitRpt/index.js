@@ -13,11 +13,11 @@ const playerNameEditor = new ClassFactory(PlayerNameEditor.editorWrapper)
 class MonthlyRemitRpt extends EventDispatcher {
 	constructor() {
 		super()
-		this.state={
-			remitPayerComBoxDataProvider:[],
-			remitMonthComBoxDataProvider:[],
-			remitPayerComBox:'',
-			remitMonthComBox:''
+		this.state = {
+			remitPayerComBoxDataProvider: [],
+			remitMonthComBoxDataProvider: [],
+			remitPayerComBox: '',
+			remitMonthComBox: ''
 		}
 		this._indEdit = -1
 	}
@@ -50,8 +50,8 @@ class MonthlyRemitRpt extends EventDispatcher {
 
 	onClickClear = e => {
 		this.setState({
-			remitPayerComBox:'',
-			remitMonthComBox:''
+			remitPayerComBox: '',
+			remitMonthComBox: ''
 		})
 	}
 
@@ -82,7 +82,7 @@ class MonthlyRemitRpt extends EventDispatcher {
 							<Button variant="contained" color="primary" onClick={this.onSearch}>
 								Search
 							</Button>
-							<Button variant="contained" color="primary"  onClick={this.onClickClear}>
+							<Button variant="contained" color="primary" onClick={this.onClickClear}>
 								Clear
 							</Button>
 						</div>
@@ -91,8 +91,18 @@ class MonthlyRemitRpt extends EventDispatcher {
 				<div className="gridStyle">
 					<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" editable={true} cellEditableFunction={this.isCellEditable} enableCopy={true} enableEagerDraw={true} enableExport={true} enableFooters={true} styleName="gridStyle" enableToolbarActions={true} footerVisible={true} pagerRenderer={MontefioreUtils.pagerFactory}>
 						<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="50">
-							<ReactDataGridColumn columnWidthMode="fitToContent" width="120" dataField="id.payerName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="Payer Name" itemEditorApplyOnValueCommit={true} itemEditor={playerNameEditor} footerLabel="Total Amount:" parentDocument={this} />
-							<ReactDataGridColumn columnWidthMode="fitToContent" width="50" dataField="id.remitMonth" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="Month" itemEditorApplyOnValueCommit={true} footerLabel="" />
+							<ReactDataGridColumn textAlign="left" columnWidthMode="fitToContent" width="120" dataField="id.payerName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="Payer Name" itemEditorApplyOnValueCommit={true} itemEditor={playerNameEditor} footerLabel="Total Amount:" parentDocument={this} />
+							<ReactDataGridColumn textAlign="left"  width="110" dataField="id.remitMonth" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" headerText="Month" itemEditorApplyOnValueCommit={true} footerLabel="" />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="hb" enableCellClickRowSelect={false} headerText="HB-EPIC" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="pb" enableCellClickRowSelect={false} headerText="PB-EPIC" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="epichh" enableCellClickRowSelect={false} headerText="HH-EPIC" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="cerc" enableCellClickRowSelect={false} headerText="CERC" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="hsr" enableCellClickRowSelect={false} headerText="EAGLE" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="fpp" enableCellClickRowSelect={false} headerText="IDXMOT" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="hh" enableCellClickRowSelect={false} headerText="HH" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="satp" enableCellClickRowSelect={false} headerText="SATP" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="cmo" enableCellClickRowSelect={false} headerText="CMO" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  />
+							<ReactDataGridColumn textAlign="left" width="110" dataField="total" enableCellClickRowSelect={false} headerText="TOTAL" itemEditorApplyOnValueCommit={true} footerAlign="center" footerOperation="sum" footerOperationPrecision="2"  /> 
 						</ReactDataGridColumnLevel>
 					</DataGrid>
 				</div>
