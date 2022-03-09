@@ -83,7 +83,7 @@ export default class RemitsTrackerMediator extends Mediator {
 			col.enableIcon = true
 			col.iconHandCursor = true
 			//col.columnWidthMode = 'fitToContent'
-			col.setWidth(70)
+			col.setWidth(65)
 			col.setStyle('iconLeft', 10)
 			col.enableCellClickRowSelect = false
 			col.iconFunction = this.dynamicIconFunction
