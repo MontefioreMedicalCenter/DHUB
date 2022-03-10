@@ -57,16 +57,16 @@ export class ClaimsService extends ServiceProxyBase {
 		startDate = startDate == null && this.searchStartDt == null ? lastWeek : startDate != null ? startDate : this.searchStartDt
 		endDate = endDate == null && this.searchEndDt == null ? now : endDate != null ? endDate : this.searchEndDt
 
-		this.searchStartDt = startDate
-		this.searchEndDt = endDate
+		this.searchStartDt = new Date(new Date(Date.parse(startDate)).getTime() - new Date(Date.parse(startDate)).getTimezoneOffset()* 60000)
+		this.searchEndDt = new Date(new Date(Date.parse(endDate)).getTime() - new Date(Date.parse(endDate)).getTimezoneOffset()* 60000)
+		
+		
 
 		var formData = qs.stringify({
-			startDate: startDate,
-			endDate: endDate
+			startDate: this.searchStartDt,
+			endDate: this.searchEndDt
 		})
 
-		// var rpcCall: AsyncToken = this.service.findClaimProcesses(startDate, endDate)
-		// rpcCall.addResponder(new AsyncResponder(this.successResultEvent, this.failureFaultEvent))
 		return this.callServiceMethod('post', 'DHub/api/claimsvc/findClaimProcesses', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 

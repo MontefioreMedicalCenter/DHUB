@@ -140,6 +140,7 @@ const nullOutWorkGroup = wg => {
 const resetWorkGroup = wg => {
 	wg.workLists.forEach(wl => (wl.worklistGroup = wg))
 }
+/*
 export const stringifyCircularObjectWithModifiedKeys = selectedRequest => {
 	let savedWls = null
 	if (selectedRequest.constructorName === 'IdWorklist') {
@@ -156,13 +157,24 @@ export const stringifyCircularObjectWithModifiedKeys = selectedRequest => {
 				return value
 			}
 		})
-	)
-	modifyKeys(data)
-	const returnvalue = JSON.stringify(data)
-	if (selectedRequest.constructorName === 'IdWorklist') {
-		selectedRequest.worklistGroup.workLists = savedWls
-	} else if (selectedRequest.constructorName === 'IdWorklistGroup') {
-		resetWorkGroup(selectedRequest)
-	}
-	return returnvalue
+	)*/
+
+
+	export const stringifyCircularObjectWithModifiedKeys = selectedRequest => {
+		const data = JSON.parse(
+			JSON.stringify(selectedRequest, function(key, value) {
+				if (value && (key.endsWith('Date') || key.indexOf('date') >= 0 )) {
+					return moment(new Date(new Date(Date.parse(value)).getTime() + new Date(Date.parse(value)).getTimezoneOffset() * 60000)).format('yyyy-MM-DD HH:mm:ss')
+				} else {
+					return value
+				}
+			})
+		)
+
+
+
+
+		modifyKeys(data)
+		const returnvalue = JSON.stringify(data)
+		return returnvalue
 }
