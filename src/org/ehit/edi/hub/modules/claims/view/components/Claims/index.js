@@ -76,11 +76,11 @@ class Claims extends EventDispatcher {
 								<ReactDataGridColumn dataField="id.stepNum" enableCellClickRowSelect={false} headerText="Step No." />
 								<ReactDataGridColumn dataField="id.instanceId" enableCellClickRowSelect={false} headerText="Instance ID" />
 								<ReactDataGridColumn dataField="stepDescr" enableCellClickRowSelect={false} headerText="Step Desc" />
-								<ReactDataGridColumn dataField="stepStartTime" enableCellClickRowSelect={false} headerText="Step Start Time" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} />
-								<ReactDataGridColumn dataField="stepEndTime" enableCellClickRowSelect={false} headerText="Step End Time" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} />
-								<ReactDataGridColumn dataField="stepDeadline" enableCellClickRowSelect={false} headerText="Step Deadline" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} />
+								<ReactDataGridColumn dataField="stepStartTime" enableCellClickRowSelect={false} headerText="Step Start Time" labelFunction={this.dateForm} />
+								<ReactDataGridColumn dataField="stepEndTime" enableCellClickRowSelect={false} headerText="Step End Time" labelFunction={this.dateForm} />
+								<ReactDataGridColumn dataField="stepDeadline" enableCellClickRowSelect={false} headerText="Step Deadline" labelFunction={this.dateForm} />
 								<ReactDataGridColumn dataField="stepStatus" enableCellClickRowSelect={false} headerText="Step Status" textAlign="left"/>
-								<ReactDataGridColumn width="400" dataField="stepLongStatus" enableCellClickRowSelect={false} headerText="Step Long Status" textAlign="left"/>
+								<ReactDataGridColumn width="400" dataField="stepLongStatus" enableCellClickRowSelect={false} textAlign="left" headerText="Step Long Status" />
 							</ReactDataGridColumnLevel>
 						</ReactDataGridColumnLevel>
 					</DataGrid>

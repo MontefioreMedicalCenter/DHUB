@@ -77,16 +77,13 @@ class RemitsTracker extends EventDispatcher {
 
 	getRowTextColor = cell => {	
 		var status = this.getStatus(cell.getRowInfo().getData().status.toString())
-		if (status.indexOf('In-process') === 0)
-		{
+		if (status.indexOf('In-process') === 0){
 			return '0x0000FF';
 		}
-		if (status.indexOf('Rejected') === 0 )
-		{
+		if (status.indexOf('Rejected') === 0 ){
 			return '0xFF0000';
 		}
-		if (status.indexOf('Duplicate Checks') === 0 )
-		{
+		if (status.indexOf('Duplicate Checks') === 0 ){
 			return '0xFF0000';
 		}
 	}
@@ -98,6 +95,21 @@ class RemitsTracker extends EventDispatcher {
 	dateForm = (item, col) => {
 		const dataField = col.dataField.split('.')
 		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY hh:mm A') : null
+	}
+
+	getStatus = (status) => {
+		var pollStatus = 'Completed'
+		var statusArr = status && status.split(';')
+		for (var n = 0; n < statusArr && statusArr.length; n++) {
+			var stepstatus = statusArr[n].split('=')
+			if (stepstatus[1] === 'Pending') {
+				pollStatus = 'In-process'
+			}
+			if (stepstatus[1] === 'Hold') {
+				pollStatus = 'Duplicate Checks'
+			}
+		}
+		return pollStatus
 	}
 
 	render() {
