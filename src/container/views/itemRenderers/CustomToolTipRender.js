@@ -35,9 +35,8 @@ class CustomToolTipRender extends React.Component {
 	}
 
 	handleOpenPopup = event => {
-		var ppp = this.props
+		// var ppp = this.props
 		// console.log(this.props.column.dataField)
-		debugger
 		if (this.props.column.dataField === 'eagleClaimPaymentCount') {
 			return this.setState({ textData: this.props.cell.rowInfo.getData().eagleClaimPaymentStr })
 		}
@@ -51,11 +50,9 @@ class CustomToolTipRender extends React.Component {
 			return this.setState({ textData: this.props.cell.rowInfo.getData().hhClaimPaymentStr })
 		}
 		if (this.props.column.dataField === 'hb_epicClaimPaymentCount') {
-			//
 			return this.setState({ textData: this.props.cell.rowInfo.getData().hb_epicClaimPaymentStr })
 		}
 		if (this.props.column.dataField === 'pb_epicClaimPaymentCount') {
-			//
 			return this.setState({ textData: this.props.cell.rowInfo.getData().pb_epicClaimPaymentStr })
 		}
 		if (this.props.column.dataField === 'hh_epicClaimPaymentCount') {
