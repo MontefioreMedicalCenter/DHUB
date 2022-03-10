@@ -1,4 +1,5 @@
 import VoBase from "../../../../../../../../vo/VoBase"
+import { EdiErrorStorePK } from "./EdiErrorStorePK.ts"
 
 export class EdiErrorStoreBase extends VoBase {
 	private _componentName: string
