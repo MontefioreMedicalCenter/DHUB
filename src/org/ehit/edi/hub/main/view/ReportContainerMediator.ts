@@ -13,11 +13,12 @@ import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import { ReportEvent } from '../model/events/ReportEvent.ts'
 import { FileEditorService } from '../service/FileEditorService.ts'
 import ReportContainer from './components/ReportContainer'
-import { FlexDataGridColumn, FlexDataGridColumnGroup, ClassFactory } from '../../../../../../flexicious'
+import { FlexDataGridColumn, FlexDataGridColumnGroup, ClassFactory, FlexDataGridEvent } from '../../../../../../flexicious'
 import moment from 'moment'
 import fileReference from "js-file-download"
 import ExampleUtils from '../../../../../../utils/ExampleUtils'
 import Search from '../../../../../../assets/images/search.png'
+import CustomToolTipRender from '../../../../../../container/views/itemRenderers/CustomToolTipRender'
 
 export class ReportContainerMediator extends Mediator {
 	public view: ReportContainer
@@ -133,7 +134,6 @@ export class ReportContainerMediator extends Mediator {
 				var cols: any[] = []
 				var colGroup: FlexDataGridColumnGroup = new FlexDataGridColumnGroup()
 				colGroup.setHeaderText(this.remitsModel.remitHeader[x][1])
-
 				var claimPayment: FlexDataGridColumn = new FlexDataGridColumn()
 				claimPayment.setHeaderText('Claim Payment')
 				claimPayment.columnWidthMode == 'fitToContent'
@@ -160,11 +160,14 @@ export class ReportContainerMediator extends Mediator {
 				claimCount.enableCellClickRowSelect = false
 
 				claimCount.cellTextColorFunction = this.getCellTextColor
-				claimCount.enableIcon = true
-				claimCount.iconHandCursor = true
-				claimCount.showIconOnCellHover = true
-
-				claimCount.iconFunction = this.dynamicIconFunction
+				claimCount.itemRenderer = new ClassFactory(CustomToolTipRender)
+				
+				//commented because of iconFunction issue
+				// claimCount.enableIcon = true
+				// claimCount.iconHandCursor = true
+				// claimCount.showIconOnCellHover = true
+				// claimCount.iconFunction = this.dynamicIconFunction
+				//commented because of iconFunction issue
 
 				//var tooltipstr:String=colGroup.headerText.toLowerCase() + 'ClaimPaymentStr'
 				//claimCount.iconTooltipRenderer= UIUtils.createRenderer(TextArea,{text:tooltipstr,width :"100%" ,height : "100%" ,alpha :".8"})
@@ -179,78 +182,73 @@ export class ReportContainerMediator extends Mediator {
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setGroupedColumns(colGroups)
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.reDraw()
 	}
+	// done in Renderer
+	// dynamicIconFunction = (cell, state = '') => {
+	// 	var toolstring: string = '-'
+	// 	if (cell.rowInfo.getIsDataRow() && !cell.rowInfo.getIsHeaderRow()) {
+	// 		// trace('value of header was' + cell.column.headerText.toLowerCase() + 'cell.rowInfo.data=' + cell.rowInfo.data.hb_epicClaimPaymentStr)
+	// 		if (cell.getColumn().getDataField() === 'eagleClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().eagleClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'idxmotClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().idxmotClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'idxmocClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().idxmocClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'hhClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().hhClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'hb_epicClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().hb_epicClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'pb_epicClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().pb_epicClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'hh_epicClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().hh_epicClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'satpClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().satpClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'dosaClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().dosaClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'cercClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().cercClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'ucpClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().ucpClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'meditechClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().meditechClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'zotecClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().zotecClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'ucpClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().ucpClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'mckessonClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().mckessonClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'mckesson2ClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().mckesson2ClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'caduceusClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().caduceusClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'obgynClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().obgynClaimPaymentStr
+	// 		} else if (cell.getColumn().getDataField() == 'otherClaimPaymentCount') {
+	// 			toolstring = cell.rowInfo.getData().otherClaimPaymentStr
+	// 		} else {
+	// 			toolstring = '*'
+	// 		}
 
-	dynamicIconFunction = (cell, state = '') => {
-		var toolstring: string = '-'
-		if (cell.rowInfo.getIsDataRow() && !cell.rowInfo.getIsHeaderRow()) {
-			// trace('value of header was' + cell.column.headerText.toLowerCase() + 'cell.rowInfo.data=' + cell.rowInfo.data.hb_epicClaimPaymentStr)
-			if (cell.getColumn().getDataField() === 'eagleClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().eagleClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'idxmotClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().idxmotClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'idxmocClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().idxmocClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'hhClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().hhClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'hb_epicClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().hb_epicClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'pb_epicClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().pb_epicClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'hh_epicClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().hh_epicClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'satpClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().satpClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'dosaClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().dosaClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'cercClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().cercClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'ucpClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().ucpClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'meditechClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().meditechClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'zotecClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().zotecClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'ucpClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().ucpClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'mckessonClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().mckessonClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'mckesson2ClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().mckesson2ClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'caduceusClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().caduceusClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'obgynClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().obgynClaimPaymentStr
-			} else if (cell.getColumn().getDataField() == 'otherClaimPaymentCount') {
-				toolstring = cell.rowInfo.getData().otherClaimPaymentStr
-			} else {
-				toolstring = '*'
-			}
-
-			// var productRenderer: ClassFactory = new ClassFactory(CustomToolTipRender)//Need to Implement
-			// productRenderer.properties = { _mydata: toolstring }//Need to Implement
-			// cell.getColumn().iconTooltipRenderer = productRenderer//Need to Implement
+	// 		// var productRenderer: ClassFactory = new ClassFactory(CustomToolTipRender)//Need to Implement
+	// 		// productRenderer.properties = { _mydata: toolstring }//Need to Implement
+	// 		// cell.getColumn().iconTooltipRenderer = productRenderer//Need to Implement
 
 
-			//var iconField:String=cell.rowInfo.data.id;
-			//var img:Class=iconField.toString()!="" ? search : null;
+	// 		//var iconField:String=cell.rowInfo.data.id;
+	// 		//var img:Class=iconField.toString()!="" ? search : null;
 			
-			return Search
-			// return ReportContainerMediator.search
-		}
+	// 		return Search
+	// 		// return ReportContainerMediator.search
+	// 	}
 
-		return Search
-		// return ReportContainerMediator.search
-	}
+	// 	return Search
+	// 	// return ReportContainerMediator.search
+	// }
 
 	// /*[Embed('/org/ehit/edi/hub/assets/img/search.png')]*/
 	// private static search: Class
 
 	public changeContent(file, label): void {
-		// if (event.item.label == 'content') {
-		// 	this.view.dispatchEvent(new Event('reportsToContent'))
-		// } else if (event.item.label == 'save') {
-		// 	this.downloadExplainFile()
-		// }
 		var rootDocument = this.view.props.reportContainer.props.parentDocument.props.parentDoc
 		if(label === 'content'){
 			rootDocument.viewFile(rootDocument.state.selectedColumnFileId, false)
