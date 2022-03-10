@@ -123,7 +123,7 @@ export class ReportContainerMediator extends Mediator {
 
 	claimPaymentLabelFunction = (item, col) => {
 		const dataField = col.dataField.split('.')
-		return item[dataField].toFixed(2)
+		return Number(item[dataField] || 0).toFixed(2)
 	}
 
 	private addRemitHeader(): void {

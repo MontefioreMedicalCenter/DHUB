@@ -4,6 +4,7 @@ import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEven
 import { ClaimsModel } from '../model/ClaimsModel.ts'
 import qs from 'qs'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
+import { ProcessInstance } from '../model/vo/ProcessInstance.ts'
 
 export class ClaimsService extends ServiceProxyBase {
 	/**
@@ -80,7 +81,8 @@ export class ClaimsService extends ServiceProxyBase {
 	}
 
 	protected successResultEvent(event: ResultEvent, token: Object = null): void {
-		this.claimsModel.claims = ArrayCollection.from(event.result)
+		let data = event.result.map(item => new ProcessInstance().fromJson(item)) 
+		this.claimsModel.claims = ArrayCollection.from(data)
 	}
 
 	/**
