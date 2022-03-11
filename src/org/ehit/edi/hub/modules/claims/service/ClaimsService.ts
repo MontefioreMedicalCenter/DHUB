@@ -4,6 +4,7 @@ import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEven
 import { ClaimsModel } from '../model/ClaimsModel.ts'
 import qs from 'qs'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
+import { ProcessInstance } from '../model/vo/ProcessInstance.ts'
 
 export class ClaimsService extends ServiceProxyBase {
 	/**
@@ -56,16 +57,16 @@ export class ClaimsService extends ServiceProxyBase {
 		startDate = startDate == null && this.searchStartDt == null ? lastWeek : startDate != null ? startDate : this.searchStartDt
 		endDate = endDate == null && this.searchEndDt == null ? now : endDate != null ? endDate : this.searchEndDt
 
-		this.searchStartDt = startDate
-		this.searchEndDt = endDate
+		this.searchStartDt = new Date(new Date(Date.parse(startDate)).getTime() - new Date(Date.parse(startDate)).getTimezoneOffset()* 60000)
+		this.searchEndDt = new Date(new Date(Date.parse(endDate)).getTime() - new Date(Date.parse(endDate)).getTimezoneOffset()* 60000)
+		
+		
 
 		var formData = qs.stringify({
-			startDate: startDate,
-			endDate: endDate
+			startDate: this.searchStartDt,
+			endDate: this.searchEndDt
 		})
 
-		// var rpcCall: AsyncToken = this.service.findClaimProcesses(startDate, endDate)
-		// rpcCall.addResponder(new AsyncResponder(this.successResultEvent, this.failureFaultEvent))
 		return this.callServiceMethod('post', 'DHub/api/claimsvc/findClaimProcesses', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
@@ -80,7 +81,8 @@ export class ClaimsService extends ServiceProxyBase {
 	}
 
 	protected successResultEvent(event: ResultEvent, token: Object = null): void {
-		this.claimsModel.claims = ArrayCollection.from(event.result)
+		let data = event.result.map(item => new ProcessInstance().fromJson(item)) 
+		this.claimsModel.claims = ArrayCollection.from(data)
 	}
 
 	/**

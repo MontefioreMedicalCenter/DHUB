@@ -6,7 +6,7 @@ export default class VoBase {
 
 		for (const key of keys) {
 			//for each key in json
-			if (obj[key] instanceof Array) {
+			if (obj[key] instanceof Array && this[key]) {
 				//this property is an array
 				const array = obj[key]
 				this[key].length = 0 //reset my array
@@ -38,8 +38,10 @@ export default class VoBase {
 		}
 	}
 	getComplexProperty(key) {
-		if (key.endsWith('Date') || key === 'dateOfBirth' || key === 'riDos') {
-			return this.dateProxy()
+		if(key === 'instanceEndTime' || key === 'instanceStartTime' || key ==='stepStartTime' || key === 'stepEndTime' || key === 'stepDeadline' || key === 'logDatetime' || key === 'paymentDate' || key === 'postingCompleteDate' || key === 'pricingCompleteDate' || key === 'rebillDate' || key === 'denialReviewStartDate' || key === 'remitDate' ||  key ==='denialRemitDate') {
+			return this.dateProxy2(key)
+		}else if (key.endsWith('Date') || key === 'dateOfBirth' || key === 'riDos') {
+			return this.dateProxy2(key)
 		}
 		return null
 	}
@@ -48,6 +50,16 @@ export default class VoBase {
 		return {
 			fromJson: dateVal => {
 				const result = new Date(Date.parse(dateVal))
+				return result
+			}
+		}
+	}
+	dateProxy2(key) {
+		return {
+			fromJson: dateVal => {
+
+				const result = dateVal ? new Date(new Date(Date.parse(dateVal)).getTime() - new Date(Date.parse(dateVal)).getTimezoneOffset()* 60000) : dateVal
+				// console.log(key, result)
 				return result
 			}
 		}

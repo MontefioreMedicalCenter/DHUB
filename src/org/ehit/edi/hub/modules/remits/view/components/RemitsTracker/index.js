@@ -77,16 +77,13 @@ class RemitsTracker extends EventDispatcher {
 
 	getRowTextColor = cell => {	
 		var status = this.getStatus(cell.getRowInfo().getData().status.toString())
-		if (status.indexOf('In-process') === 0)
-		{
+		if (status.indexOf('In-process') === 0){
 			return '0x0000FF';
 		}
-		if (status.indexOf('Rejected') === 0 )
-		{
+		if (status.indexOf('Rejected') === 0 ){
 			return '0xFF0000';
 		}
-		if (status.indexOf('Duplicate Checks') === 0 )
-		{
+		if (status.indexOf('Duplicate Checks') === 0 ){
 			return '0xFF0000';
 		}
 	}
@@ -100,6 +97,21 @@ class RemitsTracker extends EventDispatcher {
 		return item[dataField] ? moment(new Date(item[dataField])).format('MM/DD/YY hh:mm A') : null
 	}
 
+	getStatus = (status) => {
+		var pollStatus = 'Completed'
+		var statusArr = status && status.split(';')
+		for (var n = 0; n < statusArr && statusArr.length; n++) {
+			var stepstatus = statusArr[n].split('=')
+			if (stepstatus[1] === 'Pending') {
+				pollStatus = 'In-process'
+			}
+			if (stepstatus[1] === 'Hold') {
+				pollStatus = 'Duplicate Checks'
+			}
+		}
+		return pollStatus
+	}
+
 	render() {
 		return (
 			<Paper className="page_style_remits">
@@ -110,7 +122,7 @@ class RemitsTracker extends EventDispatcher {
 							<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="450" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(RemitsFileNameRenderer)} onHandleFileName={(fileId, reportOnly) => this.viewFile(fileId, reportOnly)} dataField="filename" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 							<ReactDataGridColumn textAlign="left" columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
 							<ReactDataGridColumn textAlign="left" columnWidthMode="fitToContent" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(RemitsStatusRenderer)} parentDocument={this} labelFunction={this.dataFormat}/>
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo}/>
+							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="logDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo}/>
 
 						</ReactDataGridColumnLevel>
 					</DataGrid>

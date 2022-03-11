@@ -78,7 +78,7 @@ class FileContentContainer extends EventDispatcher {
                 showMessage(
                     'Alert',
                     'File is too big for the editor.Save it?',
-                    'OK_CANCLE',
+                    'OK_CANCEL',
                     () => {
                         // eslint-disable-next-line no-use-before-define
                         var fileReference=new fileReference();

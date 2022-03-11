@@ -1,6 +1,7 @@
 import GlobalEventDispatcher from '../../../../../../../service/utils/GlobalEventDispatcher'
 import ArrayCollection from '../../../../../../../vo/ArrayCollection'
 import VoBase from '../../../../../../../vo/VoBase'
+import EdiUserRoleMap from '../../../user/model/vo/EdiUserRoleMap.ts'
 import { AdminEvent } from './events/AdminEvent.ts'
 
 export class AdminModel extends VoBase {
@@ -23,11 +24,11 @@ export class AdminModel extends VoBase {
 
 	private _pollerStatus: boolean
 
-	private _deliveryControls: ArrayCollection
+	private _deliveryControls: ArrayCollection = new ArrayCollection()
 
-	private _errorLogs: ArrayCollection
+	private _errorLogs: ArrayCollection = new ArrayCollection()
 
-	private _usersAndRoles: ArrayCollection
+	private _usersAndRoles: ArrayCollection = new ArrayCollection()
 
 	private _userRoleMap: EdiUserRoleMap
 

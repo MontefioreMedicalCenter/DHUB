@@ -1,11 +1,11 @@
 import VoBase from "../../../../../../../../vo/VoBase"
 
-export class ProcessInstancePKBase extends VoBase{
+export class DeliveryControlPKBase extends VoBase{
 	private _facilityId: string
 
 	private _serviceAreaId: string
 
-	private _instanceId: string
+	private _deliveryControlId: string
 
 	public get facilityId(): string {
 		return this._facilityId
@@ -23,10 +23,11 @@ export class ProcessInstancePKBase extends VoBase{
 		this._serviceAreaId = value
 	}
 
-	public set instanceId(value: string) {
-		this._instanceId = value
+	public get deliveryControlId(): string {
+		return this._deliveryControlId
 	}
-	public get instanceId(): string {
-		return this._instanceId
+
+	public set deliveryControlId(value: string) {
+		this._deliveryControlId = value
 	}
 }

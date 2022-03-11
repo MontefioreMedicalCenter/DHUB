@@ -1,10 +1,11 @@
 import VoBase from "../../../../../../../../vo/VoBase"
-export class ProcessInstancePK extends VoBase{
+
+export class EdiErrorStorePKBase extends VoBase{
 	private _facilityId: string
 
 	private _serviceAreaId: string
 
-	private _instanceId: string
+	private _errorId: string
 
 	public get facilityId(): string {
 		return this._facilityId
@@ -22,10 +23,11 @@ export class ProcessInstancePK extends VoBase{
 		this._serviceAreaId = value
 	}
 
-	public set instanceId(value: string) {
-		this._instanceId = value
+	public get errorId(): string {
+		return this._errorId
 	}
-	public get instanceId(): string {
-		return this._instanceId
+
+	public set errorId(value: string) {
+		this._errorId = value
 	}
 }

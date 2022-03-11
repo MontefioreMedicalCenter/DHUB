@@ -8,6 +8,7 @@ import RemitsModel from '../model/RemitsModel.ts'
 import qs from 'qs' 
 import { stringifyCircularObjectWithModifiedKeys } from '../../../../../../../shared/utils'
 import { RemitsReportEvent } from '../model/events/RemitsReportEvent.ts'
+import { PollLog } from '../../admin/model/vo/PollLog.ts'
 
 
 export class RemitsService extends ServiceProxyBase {
@@ -125,8 +126,9 @@ export class RemitsService extends ServiceProxyBase {
 	 * @param event
 	 * @param token
 	 */
-	protected successResultEvent(event: ResultEvent, token: Object = null): void {
-		this.remitsModel.remits = ArrayCollection.from(event.result)
+	 protected successResultEvent(event: ResultEvent, token: Object = null): void {
+		let data = event.result.map(item => new PollLog().fromJson(item)) 
+		this.remitsModel.remits = ArrayCollection.from(data)
 	}
 
 	/**
