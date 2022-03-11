@@ -134,10 +134,12 @@ export class LoginService extends ServiceProxyBase {
 		// this.dispatch(new LoginEvent(LoginEvent.LOGIN_ERROR, null, errStr))
 		this.loginModel.user = null
 		var msg: ErrorMessage = <ErrorMessage>event.message
-		if (event.error.response) {
-			toast.error(event.error.message)
+		if (event.error.response && event.error.response.data.message) {
+			//toast.error(event.error.message)
+			toast.error(event.error.response.data.message)
 		} else {
 			MontefioreUtils.showError(event)
+			//toast.error(msg)
 		}
 	}
 }
