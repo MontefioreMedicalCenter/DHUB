@@ -134,12 +134,12 @@ export const modifyKeys = obj => {
 		}
 	})
 }
-const nullOutWorkGroup = wg => {
-	wg.workLists.forEach(wl => (wl.worklistGroup = null))
-}
-const resetWorkGroup = wg => {
-	wg.workLists.forEach(wl => (wl.worklistGroup = wg))
-}
+// const nullOutWorkGroup = wg => {
+// 	wg.workLists.forEach(wl => (wl.worklistGroup = null))
+// }
+// const resetWorkGroup = wg => {
+// 	wg.workLists.forEach(wl => (wl.worklistGroup = wg))
+// }
 /*
 export const stringifyCircularObjectWithModifiedKeys = selectedRequest => {
 	let savedWls = null

@@ -90,13 +90,13 @@ class BankEFTSearch extends EventDispatcher {
 									</span>
 									<div className="line">
 										<div className="center">
-											<input type="radio" id="fileDate" name="radioBtn" value="fileDate" onClick={() => this.handleOnRadioClick('fileDate')} defaultChecked={true} />
+											<input type="radio" id="fileDate" name="radioBtn" value="fileDate" checked={this.state.radioValue === 'fileDate'} onClick={() => this.handleOnRadioClick('fileDate')} defaultChecked={true} />
 										</div>
 										<div className="center">
 											<span className="font">File</span>
 										</div>
 										<div className="center">
-											<input type="radio" id="chkDate" name="radioBtn" value="chkDate" onClick={() => this.handleOnRadioClick('chkDate')} />
+											<input type="radio" id="chkDate" name="radioBtn" value="chkDate" checked={this.state.radioValue === 'chkDate'} onClick={() => this.handleOnRadioClick('chkDate')} />
 										</div>
 										<div className="center">
 											<span className="font">Check</span>
@@ -140,7 +140,7 @@ class BankEFTSearch extends EventDispatcher {
 								Search
 							</ColorButton>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<ColorButton style={{ height: '30px', width: '90px' }} onClick={this.handleOnClear}>
+							<ColorButton style={{ height: '30px', width: '90px' }} onClick={()=>this.mediator.clearSearch()}>
 								Clear
 							</ColorButton>
 						</div>

@@ -94,19 +94,27 @@ export class BankEFTSearchMediator extends Mediator {
 			// this.view.payer.errorString = ''
 			var dateSearch: number
 			if (this.view.state.radioValue === 'fileDate') dateSearch = 1
-			else if (this.view.state.radioValue === 'fileDate') dateSearch = 2
+			else if (this.view.state.radioValue === 'chkDate') dateSearch = 2
 
 			this.bankEFTService.runBankEFTReport(0, this.view.state.chkNo, this.view.state.trnNo, this.view.state.payer, this.view.state.startDate, this.view.state.endDate, dateSearch)
 		// }
 	}
 
 	private clearSearch(event: MouseEvent): void {
-		this.view.fileDate.selected = true
-		this.view.startDate.selectedDate = new Date()
-		this.view.endDate.selectedDate = new Date()
-		this.view.chkNo.text = ''
-		this.view.trnNo.text = ''
-		this.view.payer.text = ''
+		this.view.setState({
+			radioValue: 'fileDate',
+			chkNo: '',
+			trnNo: '',
+			payer: '',
+			startDate: new Date(),
+			endDate: new Date()
+		})
+		// this.view.fileDate.selected = true
+		// this.view.startDate.selectedDate = new Date()
+		// this.view.endDate.selectedDate = new Date()
+		// this.view.chkNo.text = ''
+		// this.view.trnNo.text = ''
+		// this.view.payer.text = ''
 	}
 
 	private bankEFTReport(event: BankEFTReportEvent): void {
