@@ -29,6 +29,8 @@ class RemitsReport extends React.Component {
 		else return 0x000000
 	}
 
+	blueColor = () => 0x0000ff
+
 	numFormat = (item, col) => {
 		const dataField = col.dataField.split('.')
 		return `$${Number(item[dataField] || 0).toFixed(2)}`
@@ -51,20 +53,20 @@ class RemitsReport extends React.Component {
 						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} labelFunction={this.numFormat} dataField="discrepancyAmt" footerAlign="right" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" headerText="Discrepancy" /*labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction}*/ textAlign="right" />
 						<ReactDataGridColumn headerWordWrap={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} dataField="adjAmount" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" headerText="Surcharge" labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction} textAlign="right" />
 						<ReactDataGridColumn headerWordWrap={true} truncateToFit={true} headerAlign="right" cellTextColorFunction={this.getCellTextColor} dataField="controlTotal" filterWaterMark="Contains" filterControl="TextInput" filterOperation="Contains" footerAlign="right" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" headerText="Control Total" labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction} textAlign="right" />
-						<ReactDataGridColumnLevel rowHeight="19" nestIndent="30" headerColors={[0xc0c0c0, 0xeeeeee]} headerRollOverColors={[0xeeeeee, 0xc0c0c0]} alternatingItemColors={[0xffffff, 0xffffff]} color="blue" horizontalGridLineColor="#C0C0C0" horizontalGridLineThickness="2">
-							<ReactDataGridColumn width="100" dataField="system" enableCellClickRowSelect={false} headerText="System" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="checkNo" enableCellClickRowSelect={false} headerText="Check #" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="claimNo" enableCellClickRowSelect={false} headerText="Claim #" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="status" enableCellClickRowSelect={false} headerText="Status" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="patientId" enableCellClickRowSelect={false} headerText="Patient ID" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="patientLastName" enableCellClickRowSelect={false} headerText="Patient Last Name" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="patientFirstName" enableCellClickRowSelect={false} headerText="Patient First Name" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="provider" enableCellClickRowSelect={false} headerText="Provider" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="providerId" enableCellClickRowSelect={false} headerText="Provider ID" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="claimServiceDate" enableCellClickRowSelect={false} headerText="Claim Service Date" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="payment" enableCellClickRowSelect={false} headerText="Payment" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction} textAlign="left" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="totalCharges" enableCellClickRowSelect={false} headerText="Total Charges" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction} textAlign="left" />
-							<ReactDataGridColumn columnWidthMode="fitToContent" dataField="nonCoveredCharges" enableCellClickRowSelect={false} headerText="Non Covered Charges" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction} textAlign="left" />
+						<ReactDataGridColumnLevel rowHeight="19" nestIndent="30" headerColors={[0xc0c0c0, 0xeeeeee]} headerRollOverColors={[0xeeeeee, 0xc0c0c0]} color={0x0000ff} alternatingItemColors={[0xffffff, 0xffffff]} color="blue" horizontalGridLineColor="#C0C0C0" horizontalGridLineThickness="2">
+							<ReactDataGridColumn width="100" dataField="system" cellTextColorFunction={this.blueColor} enableCellClickRowSelect={false} headerText="System" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="checkNo" enableCellClickRowSelect={false} headerText="Check #" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="claimNo" enableCellClickRowSelect={false} headerText="Claim #" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="status" enableCellClickRowSelect={false} headerText="Status" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="patientId" enableCellClickRowSelect={false} headerText="Patient ID" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="patientLastName" enableCellClickRowSelect={false} headerText="Patient Last Name" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="patientFirstName" enableCellClickRowSelect={false} headerText="Patient First Name" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="provider" enableCellClickRowSelect={false} headerText="Provider" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="providerId" enableCellClickRowSelect={false} headerText="Provider ID" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="claimServiceDate" enableCellClickRowSelect={false} headerText="Claim Service Date" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="payment" enableCellClickRowSelect={false} headerText="Payment" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" /*labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction}*/ textAlign="left" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="totalCharges" enableCellClickRowSelect={false} headerText="Total Charges" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" /*labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction}*/ textAlign="left" />
+							<ReactDataGridColumn columnWidthMode="fitToContent" cellTextColorFunction={this.blueColor} dataField="nonCoveredCharges" enableCellClickRowSelect={false} headerText="Non Covered Charges" formatter={ExampleUtils.globalCurrencyFormatter} footerAlign="left" footerFormatter={ExampleUtils.globalCurrencyFormatter} footerOperation="sum" footerOperationPrecision="2" /*labelFunction={UIUtils.dataGridFormatCurrencyLabelFunction}*/ textAlign="left" />
 						</ReactDataGridColumnLevel>
 					</ReactDataGridColumnLevel>
 				</DataGrid>
