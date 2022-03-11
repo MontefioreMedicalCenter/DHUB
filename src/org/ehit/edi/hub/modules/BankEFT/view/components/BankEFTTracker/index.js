@@ -108,7 +108,7 @@ class BankEFTTracker extends EventDispatcher {
 	}
 
 	globalDateFormatter = item => {
-		if (item.logDatetime != null) return moment(new Date(item.logDatetime)).format('MM/DD/YYYY h:mm A')
+		if (item.logDatetime != null) return moment(new Date(new Date(Date.parse(item.logDatetime)).getTime() - new Date(Date.parse(item.logDatetime)).getTimezoneOffset()* 60000)).format('MM/DD/YYYY h:mm A')
 	}
 
 	dataFormat = (item, col) => {

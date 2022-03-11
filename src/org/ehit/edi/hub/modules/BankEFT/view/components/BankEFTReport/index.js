@@ -53,7 +53,9 @@ class BankEFTReport extends React.Component {
 
     depositDateFormater = (item, cell) => {
         var date 
-        item.depositDate ?  date = moment(new Date(item.depositDate)).format('MMM D, YYYY') : date=null
+        item.depositDate ?  date = moment(new Date(new Date(Date.parse(item.depositDate)).getTime() - new Date(Date.parse(item.depositDate)).getTimezoneOffset()* 60000)).format('MMM D, YYYY') : date=null
+		// const result = dateVal ? new Date(new Date(Date.parse(dateVal)).getTime() - new Date(Date.parse(dateVal)).getTimezoneOffset()* 60000) : dateVal
+			
         return date
     }
 
