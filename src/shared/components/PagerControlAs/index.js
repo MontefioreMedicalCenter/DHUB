@@ -12,6 +12,12 @@ import firstPageArrow from '../../../../src/assets/images/firstPage.png'
 import prevPage from '../../../../src/assets/images/prevPage.png'
 import nextPage from '../../../../src/assets/images/nextPage.png'
 import lastPage from '../../../../src/assets/images/lastPage.png'
+import collapse from '../../../../src/assets/images/collapse.png'
+import expand from '../../../../src/assets/images/expand.png'
+import expandall from '../../../../src/assets/images/expandall.png'
+import collapseall from '../../../../src/assets/images/collapseall.png'
+import settings from '../../../assets/images/settings.png'
+import saveSettings from '../../../assets/images/saveSettings.png'
 import { Tooltip } from '@material-ui/core'
 /*eslint-disable */
 /**
@@ -353,19 +359,19 @@ export default class PagerControl extends UIComponent {
 				topLevelToolbarButtons.push(
 					<span key="1">
 						<span key={gridId + 'btnCollapseOne'} id={gridId + 'btnCollapseOne'} className={'pagerDiv  iconCell'}>
-							<img tabIndex={0} src={this.grid.getThemeToolbarIconFolder() + '/collapseOne.png'} className={'imageButtonExpandUp'} alt={Constants.PGR_BTN_EXP_ONE_UP_TOOLTIP} title={Constants.PGR_BTN_EXP_ONE_UP_TOOLTIP} />
+							<img tabIndex={0} src={collapse} style={{paddingTop:'9px', paddingBottom:'9px'}} className={'imageButtonExpandUp'} alt={Constants.PGR_BTN_EXP_ONE_UP_TOOLTIP} title={Constants.PGR_BTN_EXP_ONE_UP_TOOLTIP} />
 						</span>
 
 						<span key={gridId + 'btnExpandOne'} id={gridId + 'btnExpandOne'} className={'pagerDiv  iconCell'}>
-							<img tabIndex={0} src={this.grid.getThemeToolbarIconFolder() + '/expandOne.png'} className={'imageButtonExpandDown'} alt={Constants.PGR_BTN_EXP_ONE_DOWN_TOOLTIP} title={Constants.PGR_BTN_EXP_ONE_DOWN_TOOLTIP} />
+							<img tabIndex={0} src={expand} style={{paddingTop:'9px', paddingBottom:'9px'}} className={'imageButtonExpandDown'} alt={Constants.PGR_BTN_EXP_ONE_DOWN_TOOLTIP} title={Constants.PGR_BTN_EXP_ONE_DOWN_TOOLTIP} />
 						</span>
 						<span className={'pagerDiv lineSep'}>&nbsp;</span>
 						<span key={gridId + 'btnCollapseAll'} id={gridId + 'btnCollapseAll'} className={'pagerDiv  iconCell'}>
-							<img tabIndex={0} src={this.grid.getThemeToolbarIconFolder() + '/collapseAll.png'} className={'imageButtonCollapseAll'} alt={Constants.PGR_BTN_COLLAPSE_ALL_TOOLTIP} title={Constants.PGR_BTN_COLLAPSE_ALL_TOOLTIP} />
+							<img tabIndex={0} src={collapseall} style={{paddingTop:'9px', paddingBottom:'9px'}} className={'imageButtonCollapseAll'} alt={Constants.PGR_BTN_COLLAPSE_ALL_TOOLTIP} title={Constants.PGR_BTN_COLLAPSE_ALL_TOOLTIP} />
 						</span>
 
 						<span key={gridId + 'btnExpandAll'} id={gridId + 'btnExpandAll'} className={'pagerDiv  iconCell'}>
-							<img tabIndex={0} src={this.grid.getThemeToolbarIconFolder() + '/expandAll.png'} className={'imageButtonExpandAll'} alt={Constants.PGR_BTN_EXP_ALL_TOOLTIP} title={Constants.PGR_BTN_EXP_ALL_TOOLTIP} />
+							<img tabIndex={0} src={expandall} style={{paddingTop:'9px', paddingBottom:'9px'}} className={'imageButtonExpandAll'} alt={Constants.PGR_BTN_EXP_ALL_TOOLTIP} title={Constants.PGR_BTN_EXP_ALL_TOOLTIP} />
 						</span>
 						<span key={gridId + 'linesep' + linesep++} className={'pagerDiv lineSep'}>
 							&nbsp;

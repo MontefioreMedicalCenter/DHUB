@@ -148,7 +148,6 @@ class BankEFTTracker extends EventDispatcher {
 				<AdvanceDialog
 					open={this.state.fileEditoriconWindow}
 					handleClose={() => this.setState({ fileEditoriconWindow: false})}
-					headerTitle={this.state.bankTrackerHeader}
 					bodyRenderer={
 							<FileEditor
 								ref={g => (this.fileEditor = g)}

@@ -4,7 +4,6 @@ import { TypedObject } from '../flexicious';
 
 export default class ExcelXlsxExporter extends (TypedObject as any) {
   setUpExportData(grid: any, exportData: ReadonlyArray<any>) {
-
      const columns = grid.getColumns()
 
      const dataProvider = exportData.map((data) => {
@@ -12,7 +11,16 @@ export default class ExcelXlsxExporter extends (TypedObject as any) {
       let exportData = {}
         columns.forEach((column) => {
             const headerText= column.getHeaderText()
-            const value = column.itemToLabel(data)
+            let items = {}
+            const keys = Object.keys(data);
+
+            keys.forEach((key, index) => {
+              var localKey = key.replace("_",'')
+              items = {...items, ...{[localKey]:data[key]}}
+              return items
+              }
+            )
+            const value = column.itemToLabel(items)
             
             exportData =   {...exportData, ...{[headerText]: value }}
          })

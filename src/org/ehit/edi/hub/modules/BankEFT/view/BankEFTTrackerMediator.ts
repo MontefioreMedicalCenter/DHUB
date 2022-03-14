@@ -166,8 +166,7 @@ export class BankEFTTrackerMediator extends Mediator {
 			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
 			this.view.setState({ 
 				fileEditoriconWindow: true,
-				fileData: file,
-				bankTrackerHeader:fileName
+				fileData: file
 			})
 		} else {
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
