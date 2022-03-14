@@ -20,7 +20,8 @@ class BankEFTTracker extends EventDispatcher {
 		this.state= {
 			fileEditorWindow: false,
 			fileEditoriconWindow: false,
-			fileData: null
+			fileData: null,
+			bankTrackerHeader:''
 		}
 		this._initialIndex = -1
 	}
@@ -63,12 +64,12 @@ class BankEFTTracker extends EventDispatcher {
 		dispatchEvent(new DateRangeEvent(DateRangeEvent.SEARCH_BY_DATE_RANGE, dateRange))
 	}
 
-	viewFile = (fileId, reportOnly) => {
+	viewFile = (fileId, reportOnly, fileName) => {
 		var file = new EdiFileBase()
 		file.fileId = fileId
 		file.transType = 'EFT'
 		file.reportOnly = reportOnly
-		this.mediator.viewFile1(file)
+		this.mediator.viewFile1(file, fileName)
 		// this.dispatchEvent(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
 	}
 
@@ -147,6 +148,7 @@ class BankEFTTracker extends EventDispatcher {
 				<AdvanceDialog
 					open={this.state.fileEditoriconWindow}
 					handleClose={() => this.setState({ fileEditoriconWindow: false})}
+					headerTitle={this.state.bankTrackerHeader}
 					bodyRenderer={
 							<FileEditor
 								ref={g => (this.fileEditor = g)}
@@ -161,6 +163,7 @@ class BankEFTTracker extends EventDispatcher {
 				<AdvanceDialog
 						open={this.state.fileEditorWindow}
 						handleClose={() => this.setState({ fileEditorWindow: false })}
+						headerTitle={this.state.bankTrackerHeader}
 						bodyRenderer={
 							<FileEditor
 								ref={g => (this.fileEditor = g)}

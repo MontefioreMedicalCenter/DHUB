@@ -149,8 +149,8 @@ export class BankEFTTrackerMediator extends Mediator {
 		}
 	}
 
-	private viewFile1(event): void {
-		var file: EdiFileBase = event
+	private viewFile1(file, fileName): void {
+		// var file: EdiFileBase = event
 		// var fileEditor:FileEditor=new FileEditor();
 		// fileEditor.height=contextView.height-40;
 		// fileEditor.width=contextView.width-40;
@@ -166,13 +166,15 @@ export class BankEFTTrackerMediator extends Mediator {
 			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
 			this.view.setState({ 
 				fileEditoriconWindow: true,
-				fileData: file
+				fileData: file,
+				bankTrackerHeader:fileName
 			})
 		} else {
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 			this.view.setState({
 				fileEditorWindow: true,
-				fileData: file
+				fileData: file,
+				bankTrackerHeader:fileName
 			})
 		}
 

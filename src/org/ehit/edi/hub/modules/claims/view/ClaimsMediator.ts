@@ -63,9 +63,9 @@ export class ClaimsMediator extends Mediator {
 
 	dataGridFormatIcon = (item, column) => {
 		var status: string
-		for (var x: number = 0; x < item.processInstanceSteps.length; x++) {
-			if (item.processInstanceSteps[x].id.stepNum === column.getDataField()) {
-				status = String(item.processInstanceSteps[x].id.stepNum)
+		for (var x: number = 0; x < item._processInstanceSteps.length; x++) {
+			if (item._processInstanceSteps[x].id.stepNum === column.getDataField()) {
+				status = String(item._processInstanceSteps[x].id.stepNum)
 				return status === 'Completed' ? 'Y' : status === 'n/a' ? 'N/A' : 'N'
 			}
 		}
@@ -163,7 +163,7 @@ export class ClaimsMediator extends Mediator {
 				file.fileId = fileId
 				file.removeCRLF = true
 				// this.dispatch(new FileEditorEvent(FileEditorEvent.VIEW_FILE, file))
-				this.execute(file) //as we don't have EdiHubContext we are directly calling FileEditorCommand, execute function here
+				this.execute(file, event.cell.getText()) //as we don't have EdiHubContext we are directly calling FileEditorCommand, execute function here
 			} else if (display) {
 				toast.error('Error opening file!! File not found')
 			}
@@ -172,14 +172,15 @@ export class ClaimsMediator extends Mediator {
 		}
 	}
 
-	private execute(file): void {
+	private execute(file, headerText): void {
 		if (file.reportOnly === true) {
 			// this.view.fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
 		} else {
 			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 			this.view.setState({
 				fileEditorWindow: true,
-				fileData: file
+				fileData: file,
+				claimsHeader: headerText
 			})
 		}
 	}

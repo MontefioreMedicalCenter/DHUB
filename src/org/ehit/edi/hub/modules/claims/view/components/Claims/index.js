@@ -26,6 +26,7 @@ class Claims extends EventDispatcher {
 			fileEditorWindow: false,
 			fileContentContainerWindow: false,
 			fileData: null,
+			claimsHeader: ''
 		}
 	}
 
@@ -86,6 +87,7 @@ class Claims extends EventDispatcher {
 					</DataGrid>
 					<AdvanceDialog
 						open={this.state.fileEditorWindow}
+						headerTitle={this.state.claimsHeader}
 						handleClose={() => this.setState({ fileEditorWindow: false })}
 						bodyRenderer={
 							<FileEditor
