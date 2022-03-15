@@ -46,7 +46,7 @@ export default class OSExportController extends ExtendedExportController {
 
     /* @ts-expect-error auto-src: non-strict-conversion */
     this._exportOptions.exporter.exportOptions = this._exportOptions
-    grid.nativeExcelExporter.export(grid, dataProvider)
+    grid.nativeExcelExporter.export(grid, dataProvider, this._exportOptions)
 
     grid.inExport = false
     grid.recordBeingExported = null
