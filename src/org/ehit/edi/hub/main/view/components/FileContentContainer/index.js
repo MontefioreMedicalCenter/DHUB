@@ -7,6 +7,7 @@ import binocularForward from '../../../../../../../../assets/images/binocular-fo
 import binaocularBackward from '../../../../../../../../assets/images/binocular-backward.png'
 import store from '../../../../../../../../AppConfig/store/configureStore';
 import { showMessage } from '../../../../../../../../AppConfig/store/actions/homeAction';
+import fileReference from "js-file-download"
 // import { EdiFileBase } from '../../../model/EdiFileBase.ts';
 import { FileContentContainerMediator } from '../../FileContentContainerMediator.ts';
 const CustomButton = styled(Button)(({ theme }) => ({
@@ -81,8 +82,9 @@ class FileContentContainer extends EventDispatcher {
                     'OK_CANCEL',
                     () => {
                         // eslint-disable-next-line no-use-before-define
-                        var fileReference=new fileReference();
-					    fileReference.save(this._file.fileContent, this._file.origFileName);
+                        // var fileReference=new fileReference();
+					    // fileReference.save(this._file.fileContent, this._file.origFileName);
+                        fileReference(this.getfile().fileContent, this.getfile().origFileName)
                     },
                     () => {}
                 )

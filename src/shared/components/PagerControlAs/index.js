@@ -16,8 +16,8 @@ import collapse from '../../../../src/assets/images/collapse.png'
 import expand from '../../../../src/assets/images/expand.png'
 import expandall from '../../../../src/assets/images/expandall.png'
 import collapseall from '../../../../src/assets/images/collapseall.png'
-import settings from '../../../assets/images/settings.png'
-import saveSettings from '../../../assets/images/saveSettings.png'
+// import settings from '../../../assets/images/settings.png'
+// import saveSettings from '../../../assets/images/saveSettings.png'
 import { Tooltip } from '@material-ui/core'
 /*eslint-disable */
 /**
