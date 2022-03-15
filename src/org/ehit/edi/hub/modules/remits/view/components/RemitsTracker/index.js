@@ -56,25 +56,6 @@ class RemitsTracker extends EventDispatcher {
 		this.mediator.viewFile1(file)
 	}
 
-	getStatus = (status) => {
-		var pollStatus = 'Completed'
-
-		var statusArr = status && status.split(';')
-		for (var n = 0; n < statusArr && statusArr.length; n++) {
-			var stepstatus = statusArr[n].split('=')
-
-			if (stepstatus[1] === 'Pending') {
-				pollStatus = 'In-process'
-			}
-
-			if (stepstatus[1] === 'Hold') {
-				pollStatus = 'Duplicate Checks'
-			}
-		}
-
-		return pollStatus
-	}
-
 	getRowTextColor = cell => {	
 		var status = this.getStatus(cell.getRowInfo().getData().status.toString())
 		if (status.indexOf('In-process') === 0){
@@ -100,7 +81,7 @@ class RemitsTracker extends EventDispatcher {
 	getStatus = (status) => {
 		var pollStatus = 'Completed'
 		var statusArr = status && status.split(';')
-		for (var n = 0; n < statusArr && statusArr.length; n++) {
+		for (var n = 0; n < statusArr.length; n++) {
 			var stepstatus = statusArr[n].split('=')
 			if (stepstatus[1] === 'Pending') {
 				pollStatus = 'In-process'

@@ -62,18 +62,13 @@ export class ClaimsMediator extends Mediator {
 	}
 
 	dataGridFormatIcon = (item, column) => {
-		let items = {}
-		const keys = Object.keys(item);
-		keys.forEach((key, index) => {
-			var localKey = key.replace("_",'')
-			items = {...items, ...{[localKey]:item[key]}}
-			return items
-		  }
-		)
 		var status: string
-		for (var x: number = 0; x < items.processInstanceSteps.length; x++) {
-			if (items.processInstanceSteps[x].id.stepNum === column.getDataField()) {
-				status = String(items.processInstanceSteps[x].id.stepNum)
+		if(item.processInstanceSteps){
+			item._processInstanceSteps = item.processInstanceSteps
+		}
+		for (var x: number = 0; x < item._processInstanceSteps.length ;x++) {
+			if (item._processInstanceSteps[x].id.stepNum === column.getDataField()) {
+				status = String(item._processInstanceSteps[x].id.stepNum)
 				return status === 'Completed' ? 'Y' : status === 'n/a' ? 'N/A' : 'N'
 			}
 		}

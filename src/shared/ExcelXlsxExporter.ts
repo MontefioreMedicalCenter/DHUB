@@ -1,49 +1,49 @@
 import * as XLSX from 'xlsx'
-import * as FileSaver from 'file-saver';
-import { TypedObject } from '../flexicious';
+import * as FileSaver from 'file-saver'
+import { TypedObject } from '../flexicious'
 
 export default class ExcelXlsxExporter extends (TypedObject as any) {
-  setUpExportData(grid: any, exportData: ReadonlyArray<any>) {
-     const columns = grid.getColumns()
+	setUpExportData(grid: any, exportData: ReadonlyArray<any>, selectedData) {
+		const columns = grid.getColumns()
 
-     const dataProvider = exportData.map((data) => {
+		const dataProvider = exportData.map(data => {
+			let exportData = {}
+			columns.forEach(column => {
+				const headerText = column.getHeaderText()
+				let selectedList = []
+				selectedData.forEach(x => {
+					selectedList.push(x.headerText)
+				})
+				if (selectedList.includes(headerText)) {
+					let items = {}
+					const keys = Object.keys(data)
 
-      let exportData = {}
-        columns.forEach((column) => {
-            const headerText= column.getHeaderText()
-            let items = {}
-            const keys = Object.keys(data);
+					keys.forEach((key, index) => {
+						var localKey = key.replace('_', '')
+						items = { ...items, ...{ [localKey]: data[key] } }
+						return items
+					})
+					const value = column.itemToLabel(items)
 
-            keys.forEach((key, index) => {
-              var localKey = key.replace("_",'')
-              items = {...items, ...{[localKey]:data[key]}}
-              return items
-              }
-            )
-            const value = column.itemToLabel(items)
-            
-            exportData =   {...exportData, ...{[headerText]: value }}
-         })
+					exportData = { ...exportData, ...{ [headerText]: value } }
+				}
+			})
+			return exportData
+		})
+		return dataProvider
+	}
 
-         return exportData
-     })
+	export = (grid, exportData: ReadonlyArray<any>, selectedData) => {
+		const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+		const fileExtension = '.xlsx'
 
-    return dataProvider
-  }
+		const newExportData = this.setUpExportData(grid, exportData, selectedData.columnsToExport)
 
-  export = (grid, exportData: ReadonlyArray<any>) => {
-    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    const fileExtension = '.xlsx';
+		const ws = XLSX.utils.json_to_sheet(newExportData)
+		const wb = { Sheets: { data: ws }, SheetNames: ['data'] }
+		const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
 
-    const newExportData = this.setUpExportData(grid, exportData)
-
-    const ws = XLSX.utils.json_to_sheet(newExportData)
-    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    console.log(excelBuffer);
-
-    const data = new Blob([excelBuffer], {type: fileType});
-    FileSaver.saveAs(data, "download" + fileExtension);
-    
-  }
+		const data = new Blob([excelBuffer], { type: fileType })
+		FileSaver.saveAs(data, 'download' + fileExtension)
+	}
 }
