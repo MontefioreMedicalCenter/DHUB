@@ -23,6 +23,15 @@ const formatter = (item, dataField, formatString) => {
 		return UIUtils.toString(item[dataField])
 	}
 }
+const numberWithCommas = x => {
+	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+}
+
+MontefioreUtils.currencyFormatterWithComma = (item, col) => {
+	const dataField = col.dataField.split('.')
+
+	return `$${numberWithCommas(String(Number(item[dataField] || 0).toFixed(2)))}`
+}
 MontefioreUtils.showError = err => {
 	if (err.error && err.error.response && err.error.response.data && err.error.response.data.reason) {
 		toast.error('Error: ' + (err.error ? err.error.response.data.reason : err.toString()))

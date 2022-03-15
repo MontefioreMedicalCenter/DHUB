@@ -141,6 +141,8 @@ export class ReportContainerMediator extends Mediator {
 				claimPayment.footerOperation = 'sum'
 				claimPayment.enableCellClickRowSelect = false
 				claimPayment.footerAlign = 'right'
+				claimPayment.textAlign = 'right'
+				claimPayment.headerAlign = 'right'
 				claimPayment.footerOperationPrecision = 2
 				claimPayment.setLabelFunction(this.claimPaymentLabelFunction)
 				claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
@@ -156,6 +158,8 @@ export class ReportContainerMediator extends Mediator {
 				claimCount.columnWidthMode == 'fitToContent'
 				claimCount.footerOperation = 'sum'
 				claimCount.footerAlign = 'right'
+				claimCount.textAlign = 'right'
+				claimCount.headerAlign = 'right'
 				claimCount.footerOperationPrecision = 0
 				claimCount.enableCellClickRowSelect = false
 
