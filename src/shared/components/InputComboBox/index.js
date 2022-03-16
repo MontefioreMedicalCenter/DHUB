@@ -44,7 +44,7 @@ const styles = theme => ({
 	},
 	popup: {
 		maxHeight: 250,
-		width: 'inherit',
+		width: 'inherit !important',
 		overflow: 'auto'
 	},
 	popup2: {
@@ -121,10 +121,19 @@ class InputComboBox extends React.Component<Props> {
 		const stateObj = { value, changed: true }
 
 		if (value) {
-			const filteredDataProvider = this.getFilteredDataProvider(value, labelField)
+			if (this.props.searchValue) {
+				if (this.props.dataProvider.map(firstLetter => firstLetter[0]).includes(value) || this.props.dataProvider.map(firstLetter => firstLetter[0]).includes(value.toUpperCase()) ) {
+					const filteredDataProvider = this.getFilteredDataProvider(value, labelField)
 
-			if (filteredDataProvider.length) stateObj.open = true
-			else stateObj.open = false
+					if (filteredDataProvider.length) stateObj.open = true
+					else stateObj.open = false
+				}
+			} else {
+				const filteredDataProvider = this.getFilteredDataProvider(value, labelField)
+
+				if (filteredDataProvider.length) stateObj.open = true
+				else stateObj.open = false
+			}
 		}
 		stateObj.userSelectedValue = value
 		this.setState(stateObj)
@@ -160,6 +169,11 @@ class InputComboBox extends React.Component<Props> {
 		//     this.props.onValueChanged(event, value);
 		// }
 		// this.setState(stateObj);
+
+		if(this.props.onBlur) {
+			this.props.onBlur(event, event.target.value)
+		}
+
 		const value = event.target.value
 		const { onValueChanged } = this.props
 
@@ -167,6 +181,13 @@ class InputComboBox extends React.Component<Props> {
 			onValueChanged(event, value)
 		}
 	}
+
+	handleOnKeyDown = event => {
+		if(this.props.onKeyDown){
+			this.props.onKeyDown(event, event.target.value)
+		}
+	}
+
 	focusOnMenu() {
 		// if (
 		//   this.menuList.state.currentTabIndex < this.menuList.props.children.length
@@ -254,7 +275,6 @@ class InputComboBox extends React.Component<Props> {
 		const dataProvider = this.props.dataProvider || []
 
 		if (
-			!searchField ||
 			!value ||
 			!(value = value
 				.toString()
@@ -310,6 +330,7 @@ class InputComboBox extends React.Component<Props> {
 		this.props.showDropIcon ? (
 			<InputAdornment position="end">
 				<IconButton
+					disabled={this.props.disabled ? this.props.disabled : false}
 					style={{ padding: 0 }}
 					onClick={this.handleToggle}
 					onMouseDown={() => {
@@ -359,6 +380,7 @@ class InputComboBox extends React.Component<Props> {
 			onFocus={this.handleFocus}
 			onChange={this.handleOnChange}
 			onBlur={this.handleOnBlur}
+			onKeyDown={this.handleOnKeyDown}
 			{...this.props.TextFieldProps}
 			multiline={this.props.multiline}
 		/>

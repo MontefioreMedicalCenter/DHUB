@@ -4,6 +4,7 @@ import PlayerNameEditor from '../../../../../../../../../container/views/itemRen
 import { ClassFactory, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
 import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
+import InputComboBox from '../../../../../../../../../shared/components/InputComboBox'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 import { RemitMonthRptMediator } from '../../RemitMonthRptMediator.ts'
 import CustomAutoComplete from '../../../../../../../../../shared/components/CustomAutoComplete'
@@ -49,6 +50,12 @@ class MonthlyRemitRpt extends EventDispatcher {
 		this.setState({ [e.target.name]: e.target.value })
 	}
 
+	handleOnComboChange = (e, value) => {
+		if (e.target.id) {
+			this.setState({ [e.target.id]: value })
+		}
+	}
+
 	onClickClear = e => {
 		this.setState({
 			remitPayerComBox: '',
@@ -69,15 +76,16 @@ class MonthlyRemitRpt extends EventDispatcher {
 							<div className="line">
 								<span className="font">Payer Name</span>
 								<div>
-									
-									<CustomAutoComplete ref={g => (this.remitPayerComBox = g)} id="remitPayerComBox" name="remitPayerComBox" value={this.state.remitPayerComBox} data={this.state.remitPayerComBoxDataProvider} onChange={(e, value) => this.setState({ remitPayerComBox: value })} onSelect={value => this.setState({ remitPayerComBox: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ width: '300px' }} />
+								<InputComboBox ref={g => (this.remitPayerComBox = g)} id="remitPayerComBox" key="remitPayerComBox"  dataProvider={this.state.remitPayerComBoxDataProvider} value={this.state.remitPayerComBox} onValueChanged={this.handleOnComboChange} />
+									{/* <CustomAutoComplete ref={g => (this.remitPayerComBox = g)} id="remitPayerComBox" name="remitPayerComBox" value={this.state.remitPayerComBox} data={this.state.remitPayerComBoxDataProvider} onChange={(e, value) => this.setState({ remitPayerComBox: value })} onSelect={value => this.setState({ remitPayerComBox: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ width: '300px' }} /> */}
 								</div>
 							</div>
 							<div className="line">
 								<span className="font">Remit Month</span>
 								<div>
-									
-									<CustomAutoComplete ref={g => (this.remitMonthComBox = g)} id="remitMonthComBox" name="remitMonthComBox" value={this.state.remitMonthComBox} data={this.state.remitMonthComBoxDataProvider} onChange={(e, value) => this.setState({ remitPayerComBox: value })} onSelect={value => this.setState({ remitMonthComBox: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ height: '35px', width: '200px' }} />
+								<InputComboBox ref={g => (this.remitMonthComBox = g)} id="remitMonthComBox" key="remitMonthComBox"  dataProvider={this.state.remitMonthComBoxDataProvider} value={this.state.remitMonthComBox} onValueChanged={this.handleOnComboChange} />
+								
+									{/* <CustomAutoComplete ref={g => (this.remitMonthComBox = g)} id="remitMonthComBox" name="remitMonthComBox" value={this.state.remitMonthComBox} data={this.state.remitMonthComBoxDataProvider} onChange={(e, value) => this.setState({ remitPayerComBox: value })} onSelect={value => this.setState({ remitMonthComBox: value })} handleOnChange={this.handleOnChange} textBoxStyle={{ height: '35px', width: '200px' }} /> */}
 								</div>
 							</div>
 						</div>
