@@ -93,6 +93,29 @@ class RemitsTracker extends EventDispatcher {
 		return pollStatus
 	}
 
+	textFilterFunction = (item, filter) => {
+		if (typeof filter.expression === 'string') {
+			var dispStatus = this.getStatus(item[filter.columnName])
+			return (dispStatus.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1)
+		} else if (
+			typeof filter.expression === 'object' &&
+			filter.expression.length > 0
+		) {
+			// eslint-disable-next-line array-callback-return
+			const filteredArr = filter.expression.map(data => {
+				const temp =
+					item[filter.columnName]
+						.toString()
+						.toLowerCase()
+						.indexOf(data.toLowerCase()) !== -1
+
+				if (temp) return true
+			})
+
+			return filteredArr && filteredArr.length && filteredArr[0]
+		}
+	}
+
 	render() {
 		return (
 			<Paper className="page_style_remits">
@@ -101,8 +124,8 @@ class RemitsTracker extends EventDispatcher {
 						<ReactDataGridColumnLevel rowHeight="21" enableFilters={true} enablePaging={true} pageSize="500" rowTextColorFunction={this.getRowTextColor}>
 							<ReactDataGridColumn textAlign="left" headerAlign="left" columnWidthMode="fitToContent" dataField="pollControl.processReceiver" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Receiver" />
 							<ReactDataGridColumn textAlign="left" headerAlign="left" sortable={false} enableCellClickRowSelect={false} columnWidthMode="fixed" width="450" headerText="File Name" useUnderLine={true} itemRenderer={new ClassFactory(RemitsFileNameRenderer)} onHandleFileName={(fileId, reportOnly) => this.viewFile(fileId, reportOnly)} dataField="filename" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
-							<ReactDataGridColumn textAlign="left" headerAlign="left" columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
-							<ReactDataGridColumn textAlign="left" headerAlign="left" columnWidthMode="fitToContent" dataField="status" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(RemitsStatusRenderer)} parentDocument={this} labelFunction={this.dataFormat}/>
+							<ReactDataGridColumn textAlign="right" headerAlign="right" columnWidthMode="fitToContent" dataField="pollControl.processSender" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" iconRight="5" />
+							<ReactDataGridColumn textAlign="right" headerAlign="right" columnWidthMode="fitToContent" dataField="status" filterCompareFunction={this.textFilterFunction} enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" itemRenderer={new ClassFactory(RemitsStatusRenderer)} parentDocument={this} labelFunction={this.dataFormat}/>
 							<ReactDataGridColumn textAlign="right" headerAlign="right" columnWidthMode="fitToContent" dataField="logDatetime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} enableCellClickRowSelect="false" headerText="Log Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo}/>
 						
 						</ReactDataGridColumnLevel>

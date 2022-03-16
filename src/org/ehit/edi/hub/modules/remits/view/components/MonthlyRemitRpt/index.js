@@ -7,7 +7,7 @@ import DataGrid from '../../../../../../../../../shared/components/ExtendedDataG
 import InputComboBox from '../../../../../../../../../shared/components/InputComboBox'
 import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 import { RemitMonthRptMediator } from '../../RemitMonthRptMediator.ts'
-import CustomAutoComplete from '../../../../../../../../../shared/components/CustomAutoComplete'
+// import CustomAutoComplete from '../../../../../../../../../shared/components/CustomAutoComplete'
 import './monthlyRemitRpt.scss'
 
 const playerNameEditor = new ClassFactory(PlayerNameEditor.editorWrapper)
