@@ -104,7 +104,13 @@ class FileContentContainer extends EventDispatcher {
         var truncatedText = this.state.ediContent
 
         var search_result = truncatedText.search(search_Str)
-        document.getElementById('ediContent').focus()
+        var check = document.getElementById('ediContent')
+        let stringPlace = check.getInnerHTML().search(search_Str)
+
+        // document.getElementsByName('ediContent')[0].onfocus = search_Str
+        check.select()
+        check.selectionStart = stringPlace
+        check.selectionEnd = stringPlace + search_Str.length
         if (search_result !== -1) {
             this.oldSearchResult = this.oldSearchResult + search_result + search_Str.length;
         }
@@ -125,7 +131,11 @@ class FileContentContainer extends EventDispatcher {
         var truncatedText = this.state.ediContent.substring(this.oldSearchResult)
 
         var search_result = truncatedText.search(search_Str)
-        document.getElementById('ediContent').focus()
+        // document.getElementById('ediContent').focus()
+        var check = document.getElementById('ediContent')
+        check.select()
+        check.selectionStart = search_result + this.oldSearchResult
+        check.selectionEnd = search_result + this.oldSearchResult + search_Str.length
         if (search_result !== -1) {
             this.oldSearchResult = this.oldSearchResult + search_result + search_Str.length;
         } else {
@@ -145,7 +155,11 @@ class FileContentContainer extends EventDispatcher {
         var truncatedText = this.state.ediContent.substring(0, this.oldSearchResult)
 
         var search_result = truncatedText.search(search_Str)
-        document.getElementById('ediContent').focus()
+        // document.getElementById('ediContent').focus()
+        var check = document.getElementById('ediContent')
+        check.select()
+        check.selectionStart = search_result
+        check.selectionEnd = search_result + search_Str.length
         if (search_result !== -1) {
             this.oldSearchResult = this.oldSearchResult + search_result + search_Str.length;
         } else {
