@@ -37,7 +37,8 @@ export class ProcessInstance extends VoBase{
 		this._fileName = value
 	}
 	public get fileName(): string {
-		return this._fileName
+		
+		return this._fileName.substring(this._fileName.lastIndexOf('/') + 1, this._fileName.length)
 	}
 
 	public set instanceEndTime(value: Date) {

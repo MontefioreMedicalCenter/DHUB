@@ -39,7 +39,8 @@ export class PollLogBase extends VoBase{
 	}
 
 	public get filename(): string {
-		return this._filename
+		
+		return this._filename.substring(this._filename.lastIndexOf('/') + 1, this._filename.length)
 	}
 
 	public set logDatetime(value: Date) {
