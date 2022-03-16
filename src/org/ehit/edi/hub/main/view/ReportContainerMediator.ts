@@ -19,6 +19,7 @@ import fileReference from "js-file-download"
 import ExampleUtils from '../../../../../../utils/ExampleUtils'
 import Search from '../../../../../../assets/images/search.png'
 import CustomToolTipRender from '../../../../../../container/views/itemRenderers/CustomToolTipRender'
+import MontefioreUtils from '../../../../../../service/utils/MontefioreUtils'
 
 export class ReportContainerMediator extends Mediator {
 	public view: ReportContainer
@@ -144,7 +145,7 @@ export class ReportContainerMediator extends Mediator {
 				claimPayment.textAlign = 'right'
 				claimPayment.headerAlign = 'right'
 				claimPayment.footerOperationPrecision = 2
-				claimPayment.setLabelFunction(this.claimPaymentLabelFunction)
+				claimPayment.setLabelFunction(MontefioreUtils.currencyFormatterWithComma)
 				claimPayment.footerFormatter = ExampleUtils.globalCurrencyFormatter
 				claimPayment.filterControl = 'TextInput'
 				claimPayment.filterWaterMark = 'Contains'

@@ -188,7 +188,7 @@ class FileContentContainer extends EventDispatcher {
                     <ButtonGroup id="editorMenu">
                         <Button id='view' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'view')}>View</Button>
                         <Button id='wrap' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'wrap')}>Wrap</Button>
-                        <Button id='unwrap' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'unwrap')}>UnWrap</Button>
+                        {/* <Button id='unwrap' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'unwrap')}>UnWrap</Button> */}
                         <Button id='save' variant="contained" color="primary" onClick={e => this.mediator.changeContent(e, 'save')}>Save</Button>
                         {this.props.fileData && this.props.fileData.transType && (this.props.fileData.transType === '835' || this.props.fileData.transType === '835S') && <Button id='save' variant="contained" color="primary" onClick={this.reportPopUp}>Reports</Button>/* <Button id='save' variant="contained" color="primary" onClick={}>split X12</Button> */}
                         {this.props.fileData && this.props.fileData.transType && (this.props.fileData.transType === '999' || this.props.fileData.transType.indexOf('277') >= 0) && <Button id='save' variant="contained" color="primary">explain</Button>}
