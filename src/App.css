@@ -45,3 +45,7 @@
 body.waiting * {
   cursor: progress!important;
 }
+
+.dateComboBox {
+  text-align: end !important
+}

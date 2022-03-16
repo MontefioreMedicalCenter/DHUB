@@ -127,8 +127,10 @@ export class RemitsService extends ServiceProxyBase {
 	 * @param token
 	 */
 	 protected successResultEvent(event: ResultEvent, token: Object = null): void {
-		let data = event.result.map(item => new PollLog().fromJson(item)) 
-		this.remitsModel.remits = ArrayCollection.from(data)
+		 if(event.result) {
+			 let data = event.result.map(item => new PollLog().fromJson(item)) 
+			 this.remitsModel.remits = ArrayCollection.from(data)
+		 }
 	}
 
 	/**

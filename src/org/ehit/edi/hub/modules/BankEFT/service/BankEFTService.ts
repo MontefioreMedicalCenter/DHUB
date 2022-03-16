@@ -101,7 +101,9 @@ export class BankEFTService extends ServiceProxyBase {
 		}
 	}
 	protected successResultEvent(event: ResultEvent, token: Object = null): void {
-		this.bankEFTModel.bankEFT = ArrayCollection.from(event.result)
+		if(event.result){
+			this.bankEFTModel.bankEFT = ArrayCollection.from(event.result)
+		}
 	}
 
 	protected failureFaultEvent(event: FaultEvent, token: Object = null): void {
