@@ -73,6 +73,19 @@ export default class RemitsTrackerMediator extends Mediator {
 		return null
 	}
 
+	dataGridFormatIcon = (item, column) => {
+		var status: string
+		var statusArr = item.status.split(';')
+		for (var n: number = 0; n < statusArr.length; n++) {
+			var stepstatus: any[] = statusArr[n].split('=')
+			if (Number(stepstatus[0]) === column.getDataField()) {
+				status = String(stepstatus[1])
+				return status === 'Completed' ? 'Y' : status === 'n/a' ? 'N/A' : 'N'
+			}
+		}
+		return 'n/a'
+	}
+
 	private addRemitHeader(event: RemitsEvent): void {
 		this.view.props.setRemitsHeader(this.remitsModel.remitHeader)
 		for (var x: number = 0; x < this.remitsModel.remitHeader.length; x++) {
@@ -82,11 +95,11 @@ export default class RemitsTrackerMediator extends Mediator {
 			col.hideText = true
 			col.enableIcon = true
 			col.iconHandCursor = true
-			//col.columnWidthMode = 'fitToContent'
 			col.setWidth(65)
 			col.setStyle('iconLeft', 10)
 			col.enableCellClickRowSelect = false
 			col.iconFunction = this.dynamicIconFunction
+			col.setLabelFunction(this.dataGridFormatIcon)
 			if (col.getHeaderText() != 'Recvd') {
 				this.view.grid && this.view.grid.addColumn(col)
 			}
@@ -148,7 +161,10 @@ export default class RemitsTrackerMediator extends Mediator {
 			var transaction: string = '835'
 			if (event.cell && event.cell.getColumn() != null) {
 				for (var x: number = 0; x < event.cell.getRowInfo().getData().deliveryLogs.length; x++) {
-					var stepArr: any[] = event.cell.getRowInfo().getData().deliveryLogs[x].deliveryControl.stepNo.split(',')
+					var stepArr: any[] = event.cell
+						.getRowInfo()
+						.getData()
+						.deliveryLogs[x].deliveryControl.stepNo.split(',')
 					for (var n: number = 0; n < stepArr.length; n++) {
 						if (Number(stepArr[n]) === event.cell.getColumn().getDataField()) {
 							fileId = event.cell.getRowInfo().getData().deliveryLogs[x].postFileId
@@ -168,28 +184,13 @@ export default class RemitsTrackerMediator extends Mediator {
 	}
 
 	private viewFile1(file): void {
-		// {
-		// 	var file:EdiFileBase=event.file;
-		// 	var fileEditor:FileEditor=new FileEditor();
-		// 	fileEditor.height=contextView.height-40;
-		// 	fileEditor.width=contextView.width-40;
-		// 	PopUpManager.addPopUp(fileEditor, contextView, true);
-		// 	PopUpManager.centerPopUp(fileEditor);
-		// 	fileEditor.container.setfile(file);
-		// 	mediatorMap.createMediator(fileEditor);
-		// 	if (file.reportOnly == true)
-		// 		fileEditor.container.fileContentContainer.dispatchEvent(new Event('contentToReports'))
-		// 	else
-		// 		service.getFile(file.fileId, file.removeCRLF);
-
-		// }
-		if(file.reportOnly === true){
-			this.view.setState({ 
+		if (file.reportOnly === true) {
+			this.view.setState({
 				fileEditoriconWindow: true,
 				fileData: file
 			})
-		}else{
-			this.fileEditorService.getFile(file.fileId, file.removeCRLF);
+		} else {
+			this.fileEditorService.getFile(file.fileId, file.removeCRLF)
 			this.view.setState({
 				fileEditorWindow: true,
 				fileData: file

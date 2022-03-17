@@ -68,7 +68,7 @@ export class ClaimsMediator extends Mediator {
 		}
 		for (var x: number = 0; x < item._processInstanceSteps.length ;x++) {
 			if (item._processInstanceSteps[x].id.stepNum === column.getDataField()) {
-				status = String(item._processInstanceSteps[x].id.stepNum)
+				status = String(item._processInstanceSteps[x].stepStatus)
 				return status === 'Completed' ? 'Y' : status === 'n/a' ? 'N/A' : 'N'
 			}
 		}

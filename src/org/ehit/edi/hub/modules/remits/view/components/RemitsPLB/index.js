@@ -7,7 +7,7 @@ class RemitsPLB extends React.Component {
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 1px)', width: '100%' }}>
-				<DataGrid id="grid" width="100%" height="100%" enableCopy="true" dataProvider={[{checkNo:'test', code:'test', description:'test', identifier:'test'}]} enableExport="true" styleName="gridStyle" horizontalScrollPolicy="auto" footerDrawTopBorder="true" enableEagerDraw="true">
+				<DataGrid id="grid" width="100%" height="100%" enableCopy="true" enableExport="true" styleName="gridStyle" horizontalScrollPolicy="auto" footerDrawTopBorder="true" enableEagerDraw="true" pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="21" enablePaging="true" pageSize="1000" enableFilters="true">
 						<ReactDataGridColumn textAlign="left" headerAlign="left" width="200" dataField="checkNo" enableCellClickRowSelect="false" headerText="Check #" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn textAlign="left" headerAlign="left" width="200" dataField="code" enableCellClickRowSelect="false" headerText="Reason Code" />
