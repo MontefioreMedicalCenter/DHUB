@@ -300,6 +300,8 @@ export class ReportContainerMediator extends Mediator {
 		}
 
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setDataProvider(event.reportdata.claimPaymentEntry)
+		// this.view.balanceReport && this.view.balanceReport.remitsSurcharge.grid.setDataProvider(event.reportdata.claimPaymentSurchargeEntry)
+		// this.view.balanceReport && this.view.balanceReport.remitsPLB.grid.setDataProvider(event.reportdata.pLBEntry)
 		this.view.setState({
 			remitsSurcharge: event.reportdata.claimPaymentSurchargeEntry,
 			remitsPLB: event.reportdata.pLBEntry

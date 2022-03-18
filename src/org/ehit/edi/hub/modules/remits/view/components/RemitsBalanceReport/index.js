@@ -74,7 +74,7 @@ class RemitsBalanceReport extends React.Component {
 				<Paper style={{ height: "calc(100% - 85px)" }}>
 					{this.state.tab === 0 && <RemitsReport ref={g => (this.remitsReport = g)} RemitsBalanceReport={this}/>}
 					{this.state.tab === 1 && <RemitsSurcharge ref={g => (this.remitsSurcharge = g)} RemitsBalanceReport={this}/>}
-					{this.state.tab === 2 && <RemitsPLB ref={g => (this.remitsPLB = g)} RemitsBalanceReport={this}/>}
+					{this.state.tab === 2 && <RemitsPLB ref={g => (this.remitsPLB = g)} RemitsBalanceReport={this} remitsPLB={this.props.remitsPLB} />}
 				</Paper>
 			</div>
 		)
