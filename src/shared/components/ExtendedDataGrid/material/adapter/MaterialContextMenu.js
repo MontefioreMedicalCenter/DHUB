@@ -111,7 +111,7 @@ export default class MaterialContextMenu extends UIComponent {
 	render() {
 		return (
 			<div key="contextMenuPopup" ref={cm => (this.contextMenu = cm)} className={'contextMenuPopup'} onMouseEnter={this.handleOnFocus} onMouseLeave={this.handleOnBlur}>
-				{this.grid.disableContextMenu ? null : <ContextPoupContent handleOnProcessAction={this.processAction} SelectionMode={this.grid.getSelectionMode()} width={this.width} />}
+				{this.grid.disableContextMenu ? null : this.grid.currentCell.getColumn() && this.grid.currentCell.getColumn().getHeaderText().length ? <ContextPoupContent handleOnProcessAction={this.processAction} SelectionMode={this.grid.getSelectionMode()} width={this.width} /> : null}
 			</div>
 		)
 	}

@@ -105,7 +105,7 @@ class FileContentContainer extends EventDispatcher {
 
         var search_result = truncatedText.search(search_Str)
         var check = document.getElementById('ediContent')
-        let stringPlace = check.getInnerHTML().search(search_Str)
+        let stringPlace = check.value.search(search_Str)//check.getInnerHTML().search(search_Str)
 
         // document.getElementsByName('ediContent')[0].onfocus = search_Str
         check.select()
