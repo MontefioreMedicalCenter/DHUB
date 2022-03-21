@@ -3,18 +3,24 @@ import * as FileSaver from 'file-saver'
 import { TypedObject } from '../flexicious'
 
 export default class ExcelXlsxExporter extends (TypedObject as any) {
+
 	setUpExportData(grid: any, exportData: ReadonlyArray<any>, selectedData) {
 		const columns = grid.getColumns()
 
 		const dataProvider = exportData.map(data => {
-			let exportData = {}
+			let exportingData = {}
 			columns.forEach(column => {
+				// const colGroupHeaders = column.level.columnGroups.map( x => x.getHeaderText())//[1].getHeaderText()
+
 				const headerText = column.getHeaderText()
 				let selectedList = []
 				selectedData.forEach(x => {
 					selectedList.push(x.headerText)
-				})
-				if (selectedList.includes(headerText)) {
+				})	
+				const numberWithCommas = x => {
+					return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+				}
+				if (selectedList.includes(headerText) || column.columnGroup) {
 					let items = {}
 					const keys = Object.keys(data)
 
@@ -24,11 +30,23 @@ export default class ExcelXlsxExporter extends (TypedObject as any) {
 						return items
 					})
 					const value = column.itemToLabel(items)
+					if(!column.columnGroup){
+						exportingData = { ...exportingData, ...{ [headerText]: value } }
+					}else{
+						let groupedData = selectedData.map(x => x.name)
+						let selectedgrpData = column.columnGroup._columns.map(x => x.getHeaderText())
+						for(var j=0; j< selectedgrpData.length; j++){
+							if(groupedData.includes(selectedgrpData[j])){
+								for( var i = 0 ; i < column.columnGroup._columns.map(x => x.getHeaderText()).length; i++ ){
+									i === 0 ? exportingData = {...exportingData, ...{ [column.columnGroup.getHeaderText()+'-'+column.columnGroup._columns[i].getHeaderText()]: '$' + numberWithCommas(String(Number(data[column.columnGroup._columns[i].getDataField()] || 0).toFixed(2))) }} : exportingData = {...exportingData, ...{ [column.columnGroup.getHeaderText()+'-'+column.columnGroup._columns[i].getHeaderText()]: numberWithCommas(String(Number(data[column.columnGroup._columns[i].getDataField()] || 0))) }}							
+								}
+							}
+						}
+					}
 
-					exportData = { ...exportData, ...{ [headerText]: value } }
 				}
 			})
-			return exportData
+			return exportingData
 		})
 		return dataProvider
 	}
