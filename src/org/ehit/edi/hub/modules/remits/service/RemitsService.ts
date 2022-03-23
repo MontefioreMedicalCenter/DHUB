@@ -96,13 +96,15 @@ export class RemitsService extends ServiceProxyBase {
 	}
 
 	protected remitsReportsuccessResultEvent(event: ResultEvent, token: Object = null): void {
-		var remitsReportEvent: RemitsReportEvent
-		if (this._editor) {
-			remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REMITS_REPORT_EDITOR, event.result)
-			this.dispatch(remitsReportEvent)
-		} else {
-			remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REMITS_REPORT, event.result)
-			this.dispatch(remitsReportEvent)
+		if(event.result){
+			var remitsReportEvent: RemitsReportEvent
+			if (this._editor) {
+				remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REMITS_REPORT_EDITOR, event.result)
+				this.dispatch(remitsReportEvent)
+			} else {
+				remitsReportEvent = new RemitsReportEvent(RemitsReportEvent.REMITS_REPORT, event.result)
+				this.dispatch(remitsReportEvent)
+			}
 		}
 	}
 

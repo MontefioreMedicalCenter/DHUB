@@ -82,10 +82,13 @@ export class BankEFTService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/bankEFTsvc/runEdiRemitEFTReport', formData, null, this.eftReportsuccessResultEvent.bind(this), this.eftReportfailureResultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
+	
 	protected eftReportsuccessResultEvent(event: ResultEvent, token: Object = null): void {
-		var bankEFTReportEvent: BankEFTReportEvent
-		bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.BANKEFT_REPORT, event.result)
-		this.dispatch(bankEFTReportEvent)
+		if(event.result) {
+			var bankEFTReportEvent: BankEFTReportEvent
+			bankEFTReportEvent = new BankEFTReportEvent(BankEFTReportEvent.BANKEFT_REPORT, event.result)
+			this.dispatch(bankEFTReportEvent)
+		}
 	}
 
 	protected eftReportfailureResultEvent(event: FaultEvent, token: Object = null): void {
