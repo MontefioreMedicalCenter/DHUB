@@ -1,0 +1,21 @@
+.xl-outline {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    border: none;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    &::before {
+        content: "";
+        border: 1px solid #a7a7a7;
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: -2px;
+        left: -1px;
+        background: #54944d;
+        z-index: 0;
+    }
+}

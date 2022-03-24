@@ -39,7 +39,7 @@ class RemitsReport extends React.Component {
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 1px)', width: '100%' }}>
-				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" enableDrillDown={true} horizontalScrollPolicy="auto" footerDrawTopBorder={true} enableEagerDraw={true} verticalScrollPolicy="on" pagerRenderer={MontefioreUtils.pagerFactory}>
+				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableExportAll={true} enableCopy={true} enableExport={true} enablePrint={true} styleName="gridStyle" enableDrillDown={true} horizontalScrollPolicy="auto" footerDrawTopBorder={true} enableEagerDraw={true} verticalScrollPolicy="on" pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="20" childrenField="claimDetails" enablePaging={true} pageSize="1000" enableFilters={true} enableFooters={true} initialSortAscending={true}>
 						<ReactDataGridColumn headerAlign="right" textAlign="right" columnWidthMode="fitToContent" headerWordWrap={true} truncateToFit={true} dataField="batchNumber" enableCellClickRowSelect={false}  headerText="Batch #" />
 						<ReactDataGridColumn headerAlign="right" textAlign="right" columnWidthMode="fitToContent" headerWordWrap={true} dataField="checkTraceNo" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Check/EFT Trace #"  />

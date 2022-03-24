@@ -3,8 +3,8 @@ import './index.scss'
 import { Constants, StyleDefaults, ReactDataGrid, UIUtils, Point, FilterExpression } from '../../../flexicious'
 import MaterialDataGrid from './material/grid/MaterialDataGrid'
 import { toast } from 'react-toastify'
-import OSExportController from '../../../export/OSExportController.ts'
-import ExcelXlsxExporter from '../../../shared/ExcelXlsxExporter.ts'
+// import OSExportController from '../../../export/OSExportController.ts'
+// import ExcelXlsxExporter from '../../../shared/ExcelXlsxExporter.ts'
 
 const iconExpand = '/keyboard_arrow_right.svg'
 const iconCollapse = '/keyboard_arrow_up.svg'
@@ -154,7 +154,7 @@ export default class DataGrid extends MaterialDataGrid {
 		// this.headerVerticalGridLines = true
 		this.alternatingItemColors=[0xe1e8e4, 0xffffff]
 		this.measurerClassName = 'common-row-height-style'
-		this.nativeExcelExporter = new ExcelXlsxExporter()
+		// this.nativeExcelExporter = new ExcelXlsxExporter()//
 		this.setFooterRowHeight(25)
 		this.propertyBag = {
 			...this.propertyBag,
@@ -201,12 +201,6 @@ export default class DataGrid extends MaterialDataGrid {
 	 */
 	getClassNames() {
 		return ['Montefiore', ...super.getClassNames()]
-	}
-
-	defaultExcelHandlerfunction() {
-		const eo = this.excelOptions
-		eo.exportOptionsRenderer = this.popupFactoryExportOptions
-		OSExportController.instance().doexport(this, eo)
 	}
 
 	onGridRightClick(event: $FlowFixMe) {

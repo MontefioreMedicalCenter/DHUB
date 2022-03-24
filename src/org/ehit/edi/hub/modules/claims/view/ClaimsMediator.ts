@@ -84,7 +84,6 @@ export class ClaimsMediator extends Mediator {
 			var col: FlexDataGridColumn = new FlexDataGridColumn()
 			col.setHeaderText(this.claimsModel.claimHeader[x][1])
 			col.dataField = this.claimsModel.claimHeader[x][0]
-			// debugger
 			// col.labelFunction = this.dataGridFormatIcon
 			col.setLabelFunction(this.dataGridFormatIcon)
 			col.hideText = true

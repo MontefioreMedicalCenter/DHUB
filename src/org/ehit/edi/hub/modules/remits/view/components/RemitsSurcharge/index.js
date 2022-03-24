@@ -8,7 +8,7 @@ class RemitsSurcharge extends React.Component {
 	render() {
 		return (
 			<div style={{ height: 'calc(100% - 1px)', width: '100%' }}>
-				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableCopy="true" dataProvider={this.props.RemitsBalanceReport.props.parentDocument.state.remitsSurcharge} enableExport="true" styleName="gridStyle" horizontalScrollPolicy="auto" footerDrawTopBorder="true" enableEagerDraw="true" pagerRenderer={MontefioreUtils.pagerFactory}>
+				<DataGrid ref={g => (this.grid = g)} id="grid" width="100%" height="100%" enableExportAll={true} enableCopy="true" dataProvider={this.props.RemitsBalanceReport.props.parentDocument.state.remitsSurcharge} enableExport="true" styleName="gridStyle" horizontalScrollPolicy="auto" footerDrawTopBorder="true" enableEagerDraw="true" pagerRenderer={MontefioreUtils.pagerFactory}>
 					<ReactDataGridColumnLevel rowHeight="20" enablePaging="true" pageSize="1000" enableFooters="true" enableFilters="true">
 						<ReactDataGridColumn headerAlign="right" footerAlign="right" textAlign="right" width="200" dataField="invoiceNum" enableCellClickRowSelect="false" headerText="Invoice Number" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn headerAlign="right" footerAlign="right" textAlign="right" width="200" dataField="refNum" enableCellClickRowSelect="false" headerText="Reference Number" />

@@ -8,6 +8,7 @@ import filter from '../../../../src/assets/images/filter.png'
 import clearFilter from '../../../../src/assets/images/clearFilter.png' //clearFilter//
 import word from '../../../../src/assets/images/word.png'
 import exporte from '../../../../src/assets/images/export.png'
+// import printer from '../../../../src/assets/images/print.png'
 import firstPageArrow from '../../../../src/assets/images/firstPage.png'
 import prevPage from '../../../../src/assets/images/prevPage.png'
 import nextPage from '../../../../src/assets/images/nextPage.png'
@@ -19,6 +20,8 @@ import collapseall from '../../../../src/assets/images/collapseall.png'
 // import settings from '../../../assets/images/settings.png'
 // import saveSettings from '../../../assets/images/saveSettings.png'
 import { Tooltip } from '@material-ui/core'
+import OSExportController from '../../../export/OSExportController.ts'
+import './pagerControl.scss'
 /*eslint-disable */
 /**
  * Flexicious
@@ -197,8 +200,19 @@ export default class PagerControl extends UIComponent {
 	 * ExtendedExportController.instance().doexport(this.grid,ExportOptions.create())
 	 */
 	onExcelExport() {
-		this.grid.defaultExcelHandlerfunction()
-		// this.grid.toolbarExcelHandlerFunction()
+		this.defaultExcelHandlerfunction()
+	}
+
+	onExcelExportAll(){
+		this.grid.toolbarExcelHandlerFunction()
+	}
+
+
+
+	defaultExcelHandlerfunction() {
+		const eo = this.grid.excelOptions
+		eo.exportOptionsRenderer = this.grid.popupFactoryExportOptions
+		OSExportController.instance().doexport(this.grid, eo)
 	}
 
 	/**
@@ -499,6 +513,19 @@ export default class PagerControl extends UIComponent {
 						<span key={gridId + 'btnExcel'} id={gridId + 'btnExcel'} className={'pagerDiv  iconCell'}>
 							<Tooltip title={Constants.PGR_BTN_EXCEL_TOOLTIP}>
 								<img tabIndex={0} src={exporte} className={'imageButtonExcel'} alt={Constants.PGR_BTN_EXCEL_TOOLTIP} style={{ paddingBottom:"10px", paddingTop:"10px" }} />
+							</Tooltip>
+						</span>
+					</span>
+				)
+			}
+			if (this.grid.enableExportAll) {
+				topLevelToolbarButtons.push(
+					<span key="13">
+						<span key={gridId + 'btnExcelAll'} id={gridId + 'btnExcelAll'} className={'pagerDiv  iconCell'} >
+							<Tooltip title={"Export All"}>			
+								<span className='xl-outline'>
+								<img tabIndex={0} src={exporte} className={'imageButtonExcel'} alt={Constants.PGR_BTN_EXCEL_TOOLTIP} style={{ position:'relative', zIndex:9 }} onClick={this.onExcelExportAll.bind(this)}></img>
+								</span>				
 							</Tooltip>
 						</span>
 					</span>
