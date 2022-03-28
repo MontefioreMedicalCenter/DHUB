@@ -47,5 +47,5 @@ body.waiting * {
 }
 
 .dateComboBox {
-  text-align: end !important
+  text-align-last: end !important
 }
