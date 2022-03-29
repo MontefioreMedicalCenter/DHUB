@@ -192,12 +192,7 @@ export default class DataGrid extends MaterialDataGrid {
 					t.id = 'pasteArea'
 					t.setAttribute('readonly', '')
 					t.style.position = 'absolute'
-					// t.style.left = '-9999px'
-					t.style.top = '0px'
-					t.style.height = '500px'
-					t.style.width = '200px'
-					t.style.zIndex = 55555555555555555
-					t.tabIndex = -1
+					 t.style.left = '-9999px'
 					document.body.appendChild(t)
 					var i = document.getSelection().rangeCount > 0 && document.getSelection().getRangeAt(0)
 					t.select()
@@ -205,7 +200,7 @@ export default class DataGrid extends MaterialDataGrid {
 					try {
 						var ele = document.getElementById('modal-dialog')
 						if(ele) {
-							prompt("Data to Copy", strToPaste)
+							prompt('Press "CTRL + C" to copy the data', strToPaste)
 							document.execCommand('copy')
 						}else {
 							document.execCommand('copy')
