@@ -46,7 +46,7 @@ const AdvanceDialog = ({ open, handleClose, classes, headerTitle, bodyRenderer }
 			onClose={handleClose}
 			aria-labelledby="simple-modal-title"
 			aria-describedby="simple-modal-description">
-			<Paper className="dialog-paper-container">
+			<Paper className="dialog-paper-container" id="modal-dialog">
 				<div className="dialog-header-container">
 					<div className="dialog-header-title">{headerTitle}</div>
 					<Cancel style={{ fill: 'white' }} onClick={handleClose} />

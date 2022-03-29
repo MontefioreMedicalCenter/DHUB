@@ -152,7 +152,7 @@ export default class DataGrid extends MaterialDataGrid {
 		// this.verticalGridLines = true
 		// this.verticalGridLineColor = 0xcccccc
 		// this.headerVerticalGridLines = true
-		this.alternatingItemColors=[0xe1e8e4, 0xffffff]
+		this.alternatingItemColors = [0xe1e8e4, 0xffffff]
 		this.measurerClassName = 'common-row-height-style'
 		// this.nativeExcelExporter = new ExcelXlsxExporter()//
 		this.setFooterRowHeight(25)
@@ -182,7 +182,58 @@ export default class DataGrid extends MaterialDataGrid {
 		this.enableHorizontalScrollOptimizationsBETA = true
 		this.footerDrawTopBorder = true
 		// this.enableMultiColumnSort = true
+		flexiciousNmsp.UIUtils.pasteToClipBoard = strToPaste => {
+			// if (!navigator.clipboard) {
+				try {
+					window.clipboardData.setData('text', strToPaste)
+				} catch (n) {
+					var t = document.createElement('textarea')
+					t.value = strToPaste
+					t.id = 'pasteArea'
+					t.setAttribute('readonly', '')
+					t.style.position = 'absolute'
+					// t.style.left = '-9999px'
+					t.style.top = '0px'
+					t.style.height = '500px'
+					t.style.width = '200px'
+					t.style.zIndex = 55555555555555555
+					t.tabIndex = -1
+					document.body.appendChild(t)
+					var i = document.getSelection().rangeCount > 0 && document.getSelection().getRangeAt(0)
+					t.select()
+
+					try {
+						var ele = document.getElementById('modal-dialog')
+						if(ele) {
+							prompt("Data to Copy", strToPaste)
+							document.execCommand('copy')
+						}else {
+							document.execCommand('copy')
+						}
+					} catch (e) {
+						console.log('Error occured ' + e)
+						prompt(strToPaste)
+					}
+
+					document.body.removeChild(t)
+					if(i) {
+						document.getSelection().removeAllRanges()
+						document.getSelection().addRange(i)
+					}
+				}
+				return
+			// }
+
+			// navigator.clipboard.writeText(strToPaste).then(
+			// 	function() {},
+			// 	function(err) {
+			// 		console.log('failed to copy')
+			// 		alert(err)
+			// 	}
+			// )
+		}
 	}
+
 	onMouseWheel(event) {
 		super.onMouseWheel(event)
 		if (this.getVerticalScrollPosition() === 0) {
