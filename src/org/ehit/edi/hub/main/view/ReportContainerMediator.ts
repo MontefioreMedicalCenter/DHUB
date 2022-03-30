@@ -283,20 +283,22 @@ export class ReportContainerMediator extends Mediator {
 		if (event.reportdata.payerName.indexOf('healthfirst') > -1) {
 			var colChrg: FlexDataGridColumn = new FlexDataGridColumn()
 			colChrg.setHeaderText('Capp Chrg')
-			colChrg.setDataField('hsrCapChrgAmt')
-			colChrg.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
+			colChrg.dataField='hsrCapChrgAmt'
+			colChrg.setLabelFunction(MontefioreUtils.currencyFormatterWithComma)
+			// colChrg.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
 			colChrg.columnWidthMode == 'fitToContent'
 			colChrg.enableCellClickRowSelect = false
 			var colPaid: FlexDataGridColumn = new FlexDataGridColumn()
 			colPaid.setHeaderText('Capp Paid')
-			colPaid.setDataField('hsrCapPaidAmt')
-			colPaid.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
+			colPaid.dataField='hsrCapPaidAmt'
+			colChrg.setLabelFunction(MontefioreUtils.currencyFormatterWithComma)
+			// colPaid.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
 			colPaid.columnWidthMode == 'fitToContent'
 			colPaid.enableCellClickRowSelect = false
 			var columns: any[] = this.balanceReport.remitsReport.grid.getColumns()
 			columns.splice(7, 0, colChrg)
 			columns.splice(8, 0, colPaid)
-			this.balanceReport.remitsReport.grid.columns = columns
+			this.balanceReport.remitsReport.grid.addColumn(columns)
 		}
 
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setDataProvider(event.reportdata.claimPaymentEntry)
