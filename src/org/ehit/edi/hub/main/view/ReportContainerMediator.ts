@@ -13,7 +13,7 @@ import { FileEditorEvent } from '../model/events/FileEditorEvent.ts'
 import { ReportEvent } from '../model/events/ReportEvent.ts'
 import { FileEditorService } from '../service/FileEditorService.ts'
 import ReportContainer from './components/ReportContainer'
-import { FlexDataGridColumn, FlexDataGridColumnGroup, ClassFactory, FlexDataGridEvent } from '../../../../../../flexicious'
+import { FlexDataGridColumn, FlexDataGridColumnGroup, ClassFactory, FlexDataGridEvent, UIUtils } from '../../../../../../flexicious'
 import moment from 'moment'
 import fileReference from "js-file-download"
 import ExampleUtils from '../../../../../../utils/ExampleUtils'
