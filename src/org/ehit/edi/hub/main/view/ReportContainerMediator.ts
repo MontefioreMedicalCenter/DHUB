@@ -295,10 +295,10 @@ export class ReportContainerMediator extends Mediator {
 			// colPaid.labelFunction = UIUtils.dataGridFormatCurrencyLabelFunction
 			colPaid.columnWidthMode == 'fitToContent'
 			colPaid.enableCellClickRowSelect = false
-			var columns: any[] = this.balanceReport.remitsReport.grid.getColumns()
+			var columns: any[] = this.view.balanceReport.remitsReport.grid.getColumns()
 			columns.splice(7, 0, colChrg)
 			columns.splice(8, 0, colPaid)
-			this.balanceReport.remitsReport.grid.addColumn(columns)
+			this.view.balanceReport.remitsReport.grid.setColumns(columns)
 		}
 
 		this.view.balanceReport && this.view.balanceReport.remitsReport.grid.setDataProvider(event.reportdata.claimPaymentEntry)
