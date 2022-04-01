@@ -165,10 +165,10 @@ class RemitQuickSearch extends EventDispatcher {
 	render() {
 		return (
 			<div>
-				<Paper className="pageStyleRemitsQuickSearch">
+				<Paper className="pageStyleRemitsQuickSearchRemits">
 					<div style={{ height: '100%', padding: '5px' }}>
-						<div className="column-divider">
-							<div className="mainDiv">
+						<div className="column-divider2">
+							<div className="mainDivRemits">
 								<div className="line">
 									<span className="font" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 										{' '}
@@ -220,7 +220,7 @@ class RemitQuickSearch extends EventDispatcher {
 									</div>
 								</div> */}
 							</div>
-							<div className="mainDiv">
+							<div className="mainDivRemits">
 							
 							<div className="line">
 									<span className="font2">Patient Account Number</span>
@@ -243,7 +243,7 @@ class RemitQuickSearch extends EventDispatcher {
 							
 								
 							</div>
-							<div className="mainDiv">
+							<div className="mainDivRemits">
 								<div className="line">
 									<span className="font2">Payer Id</span>
 									<div>
@@ -253,7 +253,7 @@ class RemitQuickSearch extends EventDispatcher {
 								<div className="line">
 
 									<span className="font2">Payer Name</span>
-									<div>
+									<div style={{marginRight:'5px'}}>
 										<MultiSelectComboBox id="payerNmBtn" name="payerNmBtn" label={this.state.payerNmBtnLabel} selectedData={this.state.payerNmBtnData} dataProvider={this.state.payerNmBtn_dataProvider} onChange={this.handleChangeCombo} selectAll={this.state.payerNmBtn_dataProvider.length} width={'182px'} margin="0px" />
 									</div>
 								</div>

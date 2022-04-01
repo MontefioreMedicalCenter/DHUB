@@ -27,6 +27,7 @@ class FileContentContainer extends EventDispatcher {
             ediContent: ''
         }
         this.oldSearchResult = 0
+        this.prevData = 0
         this._file = props.fileData
         this.arr = [];
     }
@@ -108,10 +109,10 @@ class FileContentContainer extends EventDispatcher {
         let stringPlace = check.value.search(search_Str)//check.getInnerHTML().search(search_Str)
 
         // document.getElementsByName('ediContent')[0].onfocus = search_Str
-        check.select()
-        check.selectionStart = stringPlace
-        check.selectionEnd = stringPlace + search_Str.length
         if (search_result !== -1) {
+            check.select()
+            check.selectionStart = stringPlace
+            check.selectionEnd = stringPlace + search_Str.length
             this.oldSearchResult = this.oldSearchResult + search_result + search_Str.length;
         }
         else {
@@ -129,14 +130,14 @@ class FileContentContainer extends EventDispatcher {
     button2_clickHandler = () => {
         var search_Str = this.state.searchTxt
         var truncatedText = this.state.ediContent.substring(this.oldSearchResult)
-
+        this.prevData = this.oldSearchResult
         var search_result = truncatedText.search(search_Str)
         // document.getElementById('ediContent').focus()
-        var check = document.getElementById('ediContent')
-        check.select()
-        check.selectionStart = search_result + this.oldSearchResult
-        check.selectionEnd = search_result + this.oldSearchResult + search_Str.length
         if (search_result !== -1) {
+            var check = document.getElementById('ediContent')
+            check.select()
+            check.selectionStart = search_result + this.oldSearchResult
+            check.selectionEnd = search_result + this.oldSearchResult + search_Str.length
             this.oldSearchResult = this.oldSearchResult + search_result + search_Str.length;
         } else {
             store.dispatch(
@@ -152,15 +153,17 @@ class FileContentContainer extends EventDispatcher {
 
     button3_clickHandler = () => {
         var search_Str = this.state.searchTxt
-        var truncatedText = this.state.ediContent.substring(0, this.oldSearchResult)
+        var truncatedText = this.state.ediContent.substring(0, this.prevData - search_Str.length)
 
         var search_result = truncatedText.search(search_Str)
         // document.getElementById('ediContent').focus()
         var check = document.getElementById('ediContent')
-        check.select()
-        check.selectionStart = search_result
-        check.selectionEnd = search_result + search_Str.length
         if (search_result !== -1) {
+            check.select()
+            check.selectionStart = this.prevData - search_Str.length
+            check.selectionEnd = this.prevData
+            var data = this.state.ediContent.substring(0, this.prevData - search_Str.length)
+            this.prevData = data.lastIndexOf(search_Str) + search_Str.length
             this.oldSearchResult = this.oldSearchResult + search_result + search_Str.length;
         } else {
             store.dispatch(
