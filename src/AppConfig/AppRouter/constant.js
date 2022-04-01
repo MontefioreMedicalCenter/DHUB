@@ -1,4 +1,4 @@
-// import Admin from "../../org/ehit/edi/hub/modules/admin/view/components/Admin"
+import Admin from "../../org/ehit/edi/hub/modules/admin/view/components/Admin"
 import DeliveryControl from "../../org/ehit/edi/hub/modules/admin/view/components/DeliveryControl"
 import DeliveryLog from "../../org/ehit/edi/hub/modules/admin/view/components/DeliveryLog"
 import ErrorLog from "../../org/ehit/edi/hub/modules/admin/view/components/ErrorLog"
@@ -8,7 +8,7 @@ import X12CombineTrigger from "../../org/ehit/edi/hub/modules/admin/view/compone
 import BankEFT from "../../org/ehit/edi/hub/modules/BankEFT/view/components/BankEFT"
 import Claims from "../../org/ehit/edi/hub/modules/claims/view/components/Claims"
 import Remits from "../../org/ehit/edi/hub/modules/remits/view/components/Remits"
-// import Interfaces from "../../org/ehit/edi/hub/modules/interfaces/view/components/Interfaces"
+import Interfaces from "../../org/ehit/edi/hub/modules/interfaces/view/components/Interfaces"
 import Login from "../../org/ehit/edi/hub/user/view/components/Login"
 import PortalCanvas from "../../org/ehit/edi/hub/user/view/components/PortalCanvas"
 import RemitsTracker from "../../org/ehit/edi/hub/modules/remits/view/components/RemitsTracker"
@@ -43,7 +43,7 @@ export const PRIVATE_ROUTES = [
 		private: true,
 		component: BankEFT,
 		exact: false
-	}/*,
+	},
 	{
 		name: 'Interface',
 		url: '/main/interface',
@@ -57,7 +57,7 @@ export const PRIVATE_ROUTES = [
 		private: true,
 		component: Admin,
 		exact: false
-	}*/
+	}
 ]
 
 export const remitsTabList = [

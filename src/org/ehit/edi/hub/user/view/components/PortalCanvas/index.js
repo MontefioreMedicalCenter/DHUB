@@ -87,7 +87,7 @@ const PortalCanvas = () => {
 				// tabData.push(tabList[3])
 			}
 			if (hasAdmin) {
-				// tabData.push(tabList[4])
+				tabData.push(tabList[4])
 			}
 			if ( hasRemits || hasInterfaces || hasAdmin) {
 				//Not Implemented Tab
