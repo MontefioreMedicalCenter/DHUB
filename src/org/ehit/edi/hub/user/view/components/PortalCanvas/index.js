@@ -84,7 +84,7 @@ const PortalCanvas = () => {
 				tabData.push(tabList[2])
 			}
 			if (hasInterfaces) {
-				// tabData.push(tabList[3])
+				tabData.push(tabList[3])
 			}
 			if (hasAdmin) {
 				tabData.push(tabList[4])
