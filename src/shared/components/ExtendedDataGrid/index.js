@@ -182,51 +182,51 @@ export default class DataGrid extends MaterialDataGrid {
 		this.enableHorizontalScrollOptimizationsBETA = true
 		this.footerDrawTopBorder = true
 		// this.enableMultiColumnSort = true
-		flexiciousNmsp.UIUtils.pasteToClipBoard = strToPaste => {
-			// if (!navigator.clipboard) {
-				try {
-					window.clipboardData.setData('text', strToPaste)
-				} catch (n) {
-					var t = document.createElement('textarea')
-					t.value = strToPaste
-					t.id = 'pasteArea'
-					t.setAttribute('readonly', '')
-					t.style.position = 'absolute'
-					 t.style.left = '-9999px'
-					document.body.appendChild(t)
-					var i = document.getSelection().rangeCount > 0 && document.getSelection().getRangeAt(0)
-					t.select()
+		// flexiciousNmsp.UIUtils.pasteToClipBoard = strToPaste => {
+		// 	// if (!navigator.clipboard) {
+		// 		try {
+		// 			window.clipboardData.setData('text', strToPaste)
+		// 		} catch (n) {
+		// 			var t = document.createElement('textarea')
+		// 			t.value = strToPaste
+		// 			t.id = 'pasteArea'
+		// 			t.setAttribute('readonly', '')
+		// 			t.style.position = 'absolute'
+		// 			 t.style.left = '-9999px'
+		// 			document.body.appendChild(t)
+		// 			var i = document.getSelection().rangeCount > 0 && document.getSelection().getRangeAt(0)
+		// 			t.select()
 
-					try {
-						var ele = document.getElementById('modal-dialog')
-						if(ele) {
-							prompt('Press "CTRL + C" to copy the data', strToPaste)
-							document.execCommand('copy')
-						}else {
-							document.execCommand('copy')
-						}
-					} catch (e) {
-						console.log('Error occured ' + e)
-						prompt(strToPaste)
-					}
+		// 			try {
+		// 				var ele = document.getElementById('modal-dialog')
+		// 				if(ele) {
+		// 					prompt('Press "CTRL + C" to copy the data', strToPaste)
+		// 					document.execCommand('copy')
+		// 				}else {
+		// 					document.execCommand('copy')
+		// 				}
+		// 			} catch (e) {
+		// 				console.log('Error occured ' + e)
+		// 				prompt(strToPaste)
+		// 			}
 
-					document.body.removeChild(t)
-					if(i) {
-						document.getSelection().removeAllRanges()
-						document.getSelection().addRange(i)
-					}
-				}
-				return
-			// }
+		// 			document.body.removeChild(t)
+		// 			if(i) {
+		// 				document.getSelection().removeAllRanges()
+		// 				document.getSelection().addRange(i)
+		// 			}
+		// 		}
+		// 		return
+		// 	// }
 
-			// navigator.clipboard.writeText(strToPaste).then(
-			// 	function() {},
-			// 	function(err) {
-			// 		console.log('failed to copy')
-			// 		alert(err)
-			// 	}
-			// )
-		}
+		// 	// navigator.clipboard.writeText(strToPaste).then(
+		// 	// 	function() {},
+		// 	// 	function(err) {
+		// 	// 		console.log('failed to copy')
+		// 	// 		alert(err)
+		// 	// 	}
+		// 	// )
+		// }
 	}
 
 	onMouseWheel(event) {
