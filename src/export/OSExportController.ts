@@ -49,6 +49,34 @@ export default class OSExportController extends ExtendedExportController {
 		grid.recordBeingExported = null
 	}
 
+	
+	writeRecord(obj, level) {
+
+        const grid = this._grid.implementsOrExtends("FlexDataGrid") ? this._grid : null;
+        const exportOptions = this._exportOptions;
+        let body = "";
+		grid.recordBeingExported=obj;
+        this.setExportLevel(level);
+        body += exportOptions.exporter.writeRecord(this._grid, obj);
+        if (level.nextLevel) {
+            this.setExportLevel(level.nextLevel);
+            const result = level.getChildren(obj, true, false, true);
+            if (grid.getLength(result) > 0 && !level.nextLevel.excludeFromExport && level.isItemOpen(obj)) {
+                if (!grid.currentExportLevel.reusePreviousLevelColumns)
+                    body += exportOptions.exporter.writeHeader(grid);
+
+                for (const child of result) {
+                    body += this.writeRecord(child, level.nextLevel);
+                }
+
+                if (!grid.currentExportLevel.reusePreviousLevelColumns)
+                    body += exportOptions.exporter.writeFooter(grid, result);
+            }
+        }
+        return body;
+
+    }
+
 	excelXlsxExporter() {
 		var grid = this._grid
 		var exportData = this._grid.getDataProvider()
@@ -115,3 +143,4 @@ export default class OSExportController extends ExtendedExportController {
 
 /* @ts-expect-error auto-src: non-strict-conversion */
 OSExportController._instance = new OSExportController()
+flexiciousNmsp.ExtendedExportController._instance.writeRecord = OSExportController._instance.writeRecord;
