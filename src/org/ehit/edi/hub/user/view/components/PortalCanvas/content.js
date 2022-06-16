@@ -1,9 +1,9 @@
 export const tabList = [
 	{ label: 'Claims', value: 0, path: '/main/claims' },
 	{ label: 'Remittance', value: 1, path: '/main/remittance' },
-	{ label: 'Bank EFT ', value: 2, path: '/main/bankEFT' }/*,
+	{ label: 'Bank EFT ', value: 2, path: '/main/bankEFT' },
 	{ label: 'Interfaces ', value: 3, path: '/main/interface' },
-{ label: 'Admin', value: 4, path: '/main/admin' }*/
+	{ label: 'Admin', value: 4, path: '/main/admin' }
 ]
 
 export const tabStyles = {

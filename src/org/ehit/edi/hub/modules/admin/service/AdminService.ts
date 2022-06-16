@@ -89,7 +89,7 @@ export class AdminService extends ServiceProxyBase {
 
 	public getPollControl(triggerOnly: boolean = false): AxiosPromise<any> {
 		var formData = qs.stringify({
-			triggerOnly: stringifyCircularObjectWithModifiedKeys(triggerOnly)
+			triggerOnly: triggerOnly
 		})
 		// var rpcCall: AsyncToken = this.service.getPollControl(triggerOnly)
 		// if (triggerOnly) rpcCall.addResponder(new AsyncResponder(this.combineTriggerResultEvent, this.failureFaultEvent))
