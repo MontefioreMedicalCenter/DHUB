@@ -28,6 +28,7 @@ export class ErrorLogMediator extends Mediator {
 		// this.mapListener(this.view.LogSearch.dateSearchBtn, MouseEvent.CLICK, this.searchByDate, MouseEvent)
 		// this.mapListener(this.view.LogSearch.selectIdSearch, MouseEvent.CLICK, this.switchToFileId, MouseEvent)
 		this.mapListener(this.view, ErrorLogEvent.DELETE_ERROR, this.onDelete)
+		this.mapListener(this.view, ErrorLogEvent.REPUBLISH_MSG, this.onRepublish)
 		var adminEvent: AdminEvent = new AdminEvent(AdminEvent.GET_ERROR_LOG)
 		this.dispatch(adminEvent)
 		return this
@@ -113,6 +114,12 @@ export class ErrorLogMediator extends Mediator {
 	private onDelete(event: ErrorLogEvent): void {
 		// this.dispatch(new ErrorLogEvent(ErrorLogEvent.DELETE_ERROR, null, event.errLogs))
 		this.adminService.deleteErrorLogs(event.errLogs);
+	}
+
+	private onRepublish(event: ErrorLogEvent): void {
+		var errorId: String = event.errLog.id.errorId
+		var properties: String = event.errLog.userProps
+		this.adminService.republishError(errorId, properties)
 	}
 
 	private onConfirmDelete(event: CloseEvent): void {

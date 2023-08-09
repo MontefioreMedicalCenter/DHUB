@@ -17,6 +17,7 @@ import { ErrorLogMediator } from '../../ErrorLogMediator.ts'
 import ErrorContainer from '../ErrorContainer'
 import LogSearch from '../LogSearch/LogSearch'
 import './errorLog.scss'
+import moment from 'moment'
 
 class ErrorLog extends EventDispatcher {
 	constructor() {
@@ -28,6 +29,7 @@ class ErrorLog extends EventDispatcher {
 			errorId: 0
 		}
 		this._errorToDelete = null
+		this._errorToRedeliver = null
 	}
 
 	componentDidMount() {
@@ -36,6 +38,14 @@ class ErrorLog extends EventDispatcher {
 
 	componentWillUnmount() {
 		this.mediator.onUnRegister()
+	}
+
+	dateForm = (item, col) => {
+		var dateStr = ''
+		if (item.rcAudit != null) {
+			dateStr = item.errLog[col.dataField.split('.')[1]] ? moment(new Date(item.errLog[col.dataField.split('.')[1]])).format('MM/DD/YYYY') : ''
+		}
+		return dateStr
 	}
 
 	onRemove = data => {
@@ -56,6 +66,24 @@ class ErrorLog extends EventDispatcher {
 		)
 	}
 
+	onRedeliver = data => {
+		var rowData = data.row.getData()
+		this._errorToRedeliver = new EdiErrorStore().fromJson(rowData)
+		store.dispatch(
+			showMessage(
+				'Confirm Redeliver',
+				'Are you sure you wish to redeliver this error?',
+				'Yes_No',
+				() => {
+					//var errorList = new ArrayCollection()
+					//errorList.addItem(this._errorToDelete)
+					this.dispatchEvent(new ErrorLogEvent(ErrorLogEvent.REPUBLISH_MSG, this._errorToRedeliver, null))
+				},
+				() => {}
+			)
+		)
+	}
+
 	render() {
 		return (
 			<Paper className="pageStyle">
@@ -69,17 +97,20 @@ class ErrorLog extends EventDispatcher {
 						<ReactDataGridColumnLevel rowHeight="21" enablePaging={true} pageSize="50" enableFilters={true} />
 						<MaterialCheckBoxColumn id="cbCol" />
 						<ReactDataGridColumn width="50" dataField="id.errorId" enableCellClickRowSelect={false} headerText="Error Id" />
+						<ReactDataGridColumn width="50" dataField="msgStatus" enableCellClickRowSelect={false} headerText="Msg Status" />
+						<ReactDataGridColumn width="50" dataField="msgOrigSend" enableCellClickRowSelect={false} headerText="Msg Orig Send" /*formatter={ExampleUtils.globalDateFormatter}*/ /*filterConverterFunction="`convertDate`"*/ />
+						<ReactDataGridColumn width="50" dataField="msgLastSend" enableCellClickRowSelect={false} headerText="Msg Last Send" /*formatter={ExampleUtils.globalDateFormatter}*/ /*filterConverterFunction="convertDate"*/ />
 						<ReactDataGridColumn width="100" dataField="errorLevel" enableCellClickRowSelect={false} headerText="Error Level" />
 						<ReactDataGridColumn width="300" dataField="errorMessage" enableCellClickRowSelect={false} headerText="Message" useUnderLine={true} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn width="150" dataField="userProps" enableCellClickRowSelect={false} headerText="Properties" useUnderLine={true} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
 						<ReactDataGridColumn width="300" dataField="stackTrace" enableCellClickRowSelect={false} headerText="StackTrace" useUnderLine={true} />
-						<ReactDataGridColumn width="50" dataField="componentName" enableCellClickRowSelect={false} headerText="Component Name Id" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
-						<ReactDataGridColumn width="100" dataField="msgDestination" enableCellClickRowSelect={false} headerText="Destination" />
-						<ReactDataGridColumn width="50" dataField="msgOrigSend" enableCellClickRowSelect={false} headerText="Msg Orig Send" formatter={ExampleUtils.globalDateFormatter} /*filterConverterFunction="`convertDate`"*/ />
-						<ReactDataGridColumn width="50" dataField="msgLastSend" enableCellClickRowSelect={false} headerText="Msg Last Send" formatter={ExampleUtils.globalDateFormatter} /*filterConverterFunction="convertDate"*/ />
-						<ReactDataGridColumn width="50" dataField="msgStatus" enableCellClickRowSelect={false} headerText="Msg Status" />
+						{/*<ReactDataGridColumn width="50" dataField="componentName" enableCellClickRowSelect={false} headerText="Component Name Id" filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />*/}
+						{/*<ReactDataGridColumn width="100" dataField="msgDestination" enableCellClickRowSelect={false} headerText="Destination" />*/}
+						{/*<ReactDataGridColumn width="50" dataField="msgOrigSend" enableCellClickRowSelect={false} headerText="Msg Orig Send" /*formatter={ExampleUtils.globalDateFormatter}*/ /*filterConverterFunction="`convertDate`" /> */}
+						{/*<ReactDataGridColumn width="50" dataField="msgLastSend" enableCellClickRowSelect={false} headerText="Msg Last Send" /*formatter={ExampleUtils.globalDateFormatter}*/ /*filterConverterFunction="convertDate" /> */}
+						{/*<ReactDataGridColumn width="50" dataField="msgStatus" enableCellClickRowSelect={false} headerText="Msg Status" />*/}
 						<ReactDataGridColumn width="70" dataField="fileId" headerText="Content ID" iconRight="40" paddingRight="20" useUnderLine={true} />
-						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="100" headerText="ReDeliver" itemRenderer={new ClassFactory(ReDeliverRenderer)} />
+						<ReactDataGridColumn sortable={false} enableCellClickRowSelect={false} width="100" headerText="ReDeliver" itemRenderer={new ClassFactory(ReDeliverRenderer)} onHandleRedeliver={data => this.onRedeliver(data)}/>
 						<ReactDataGridColumn width="50" headerText="Delete" iconRight="40" paddingRight="20" itemRenderer={new ClassFactory(DeleteErrorLogRenderer)} onHandleRemove={data => this.onRemove(data)} />
 					</DataGrid>
 				</div>

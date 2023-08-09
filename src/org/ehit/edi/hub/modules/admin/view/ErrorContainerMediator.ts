@@ -12,7 +12,7 @@ export class ErrorContainerMediator extends Mediator {
 
 	public onRegister(view): ErrorContainerMediator {
 		this.view = view
-		// this.mapListener(this.view, ErrorLogEvent.REPUBLISH_MSG, this.republishError) //directly called on onClick
+		this.mapListener(this.view, ErrorLogEvent.REPUBLISH_MSG, this.republishError) //directly called on onClick
 		return this
 	}
 

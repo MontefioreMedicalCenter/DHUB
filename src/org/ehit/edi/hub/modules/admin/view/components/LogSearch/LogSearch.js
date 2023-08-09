@@ -96,9 +96,9 @@ class LogSearch extends React.Component {
                     <span className='fontStyles'>Search Log</span>
                 </div>
                 {this.state.radioValue === '1' && (
-                    <div className='searchField'>
+                    <div className='searchField1'>
                         <span>Start Date:</span>
-                        <LogSearchDatePicker ref={g => (this.startDate = g)} id='startDate' selectedDate={this.state.startDate} onDateChange={date => this.handleOnDateChange(date, 'startDate')} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{ width: '160px' }} />
+                        <LogSearchDatePicker ref={g => (this.startDate = g)} id='startDate' selectedDate={this.state.startDate} onDateChange={date => this.handleOnDateChange(date, 'startDate')} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{  width: '160px' }} />
                         <span>End Date:</span>
                         <LogSearchDatePicker ref={g => (this.endDate = g)} id='endDate' selectedDate={this.state.endDate} onDateChange={date => this.handleOnDateChange(date, 'endDate')} InputProps={{ classes: { input: this.props.classes.calStyles } }} LogSearchDatePickerStyle={{ width: '160px' }} />
                         <SearchIconButton onClick={this.searchByDate}>

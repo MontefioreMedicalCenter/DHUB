@@ -31,7 +31,7 @@ class ErrorContainer extends React.Component {
 
     republish = () => {
         const mediator = this.mediator
-        mediator.republishError(this.props.errorId, this.props.msg)
+        mediator.republishError(this.props.id.errorId, this.props.msg)
     }
 
     render() {

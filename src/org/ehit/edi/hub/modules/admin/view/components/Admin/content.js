@@ -10,8 +10,8 @@ export const adminTabListTab = [
     { label: 'Dispatch Delivery', value: 1, path: '/main/admin/dispatchDelivery' },
     { label: 'Triggers', value: 2, path: '/main/admin/triggers'},
     { label: 'Manage User', value: 3, path: '/main/admin/manageUser'},
-    { label: 'Error Log', value: 4, path: '/main/admin/errorLog'},
-    { label: 'Delivery Log', value: 5, path: '/main/admin/deliveryLog'}
+    { label: 'Error Log', value: 4, path: '/main/admin/errorLog'}//,
+    //{ label: 'Delivery Log', value: 5, path: '/main/admin/deliveryLog'}
 ]
 
 
