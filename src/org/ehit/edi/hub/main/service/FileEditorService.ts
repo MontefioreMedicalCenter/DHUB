@@ -28,6 +28,14 @@ export class FileEditorService extends ServiceProxyBase {
 		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/getFile', formData, null, this.successResultEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
 	}
 
+	public displayFile(file: EdiFileBase): AxiosPromise<any> {
+		console.log('inside FileEditorService.ts displayFile()')
+		var formData = qs.stringify({
+			fileContent: file.fileContent
+			//removeCRLF: removeCRLF
+		})
+		return this.callServiceMethod('post', 'DHub/api/fileManagersvc/displayFile', formData, null, this.successDisplayEvent.bind(this), this.failureFaultEvent.bind(this), 'form', this.getHeaderFormData())
+	}
 	public explainPayload(fileId: number): AxiosPromise<any> {
 		var formData = qs.stringify({
 			fileId: stringifyCircularObjectWithModifiedKeys(fileId)
@@ -53,6 +61,18 @@ export class FileEditorService extends ServiceProxyBase {
 	 * @event(org.ehit.edihub.user.model.events.LoginEvent) Sends a LOGIN_SUCCESS event
 	 */
 	private file: EdiFileBase = new EdiFileBase()
+
+	protected successDisplayEvent(event: ResultEvent, token: Object = null): void {
+		console.log('inside FileEditorService.ts successDisplayEvent()')
+		var obj = event.result
+		this.file = new EdiFileBase()
+		//this.file.fileId = obj.fileId
+		this.file.fileContent = obj
+		//this.file.origFileName = obj.origFileName
+		//this.file.transType = obj.transType
+		console.log(this.file.fileContent)
+		this.dispatch(new FileEditorEvent(FileEditorEvent.FILE_CONTENT, this.file))
+	}
 
 	protected successResultEvent(event: ResultEvent, token: Object = null): void {
 		var obj = event.result

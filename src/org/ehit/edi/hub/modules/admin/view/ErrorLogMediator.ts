@@ -9,11 +9,13 @@ import GlobalEventDispatcher from "../../../../../../../service/utils/GlobalEven
 import { FlexDataGridEvent } from "../../../../../../../flexicious"
 import { EdiFileBase } from "../../../main/model/EdiFileBase.ts"
 import { FileEditorEvent } from "../../../main/model/events/FileEditorEvent.ts"
+import { FileEditorService } from '../../../main/service/FileEditorService.ts'
 
 export class ErrorLogMediator extends Mediator {
 	public view: ErrorLog
 	public adminModel: AdminModel = AdminModel.getInstance()
 	public adminService: AdminService = AdminService.getInstance()
+	public fileEditorService: FileEditorService = FileEditorService.getInstance()
 
 	// private log: ILogger = this.Log.getLogger('ErrorLogMediator')
 	private errorLog: EdiErrorStore
@@ -63,11 +65,11 @@ export class ErrorLogMediator extends Mediator {
 				this.view.setState({errorContainerTitle : 'Message'})
 				this.view.setState({errorId: event.cell.getRowInfo().getData().id.errorId})
 				this.view.setState({msg: event.cell.getRowInfo().getData().errorMessage})
-				// this.view.errorContainer.setState({msgContent : event.cell.rowInfo.data.errorMessage})
-		// 		var container1: ErrorContainer = new ErrorContainer()
-		// 		PopUpManager.addPopUp(container1, this.contextView, true)
-		// 		PopUpManager.centerPopUp(container1)
-		// 		container1.title = 'Message'
+				 //this.view.errorContainer.setState({msgContent : event.cell.rowInfo.data.errorMessage})
+		 		//var container1: ErrorContainer = new ErrorContainer()
+				//PopUpManager.addPopUp(container1, this.contextView, true)
+				//PopUpManager.centerPopUp(container1)
+		 		//container1.title = 'Message'
 		// 		container1.msgContent.text = event.cell.rowInfo.data.errorMessage
 			}
 
@@ -108,6 +110,64 @@ export class ErrorLogMediator extends Mediator {
 		// 		container4.hBox.visible = true
 		// 		container4.msgContent.text = event.cell.rowInfo.data.userProps
 			}
+		}
+	}
+
+	private viewFile1(errorMessage: string, withPublish: boolean = false): void {
+		if (file.reportOnly === true) {
+			this.view.setState({
+				fileEditoriconWindow: true,
+				fileData: file
+			})
+		} else {
+			console.log('inside ErrorLogMediator.ts')
+			//this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+			//protected successResultEvent(event: ResultEvent, token: Object = null): void {
+				//var obj = event.result
+				//file = new EdiFileBase()
+				//this.file.fileId = obj.fileId
+				//file.fileContent = obj.fileContent
+				//this.file.origFileName = obj.origFileName
+				//this.file.transType = obj.transType
+				//this.dispatch(new FileEditorEvent(FileEditorEvent.FILE_CONTENT, file))
+				this.view.setState({
+					msg: file.fileContent
+				})
+				//this.fileEditorService.displayFile(file)
+			//}
+			this.view.setState({
+				fileEditorWindow: true,
+				fileData: file
+			})
+		}
+	}
+
+	private viewContent(errorMessage: string, withPublish: boolean = false): void {
+		if (withPublish === true) {
+			this.view.setState({
+				fileEditoriconWindow: true,
+				fileData: file
+			})
+		} else {
+			console.log('inside ErrorLogMediator.ts viewContent() ', errorMessage)
+			//this.fileEditorService.getFile(file.fileId, file.removeCRLF)
+			//protected successResultEvent(event: ResultEvent, token: Object = null): void {
+				//var obj = event.result
+				//file = new EdiFileBase()
+				//this.file.fileId = obj.fileId
+				//file.fileContent = obj.fileContent
+				//this.file.origFileName = obj.origFileName
+				//this.file.transType = obj.transType
+				//this.dispatch(new FileEditorEvent(FileEditorEvent.FILE_CONTENT, file))
+				/*this.view.setState({
+					msg: errorMessage
+				}) */
+				//this.fileEditorService.displayFile(file)
+			//}
+			/*this.view.setState({
+				fileEditorWindow: true//,
+				//fileData: file
+			})*/
 		}
 	}
 
