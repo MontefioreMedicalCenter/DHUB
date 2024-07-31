@@ -1,8 +1,8 @@
 export const tabList = [
-	{ label: 'Claims', value: 0, path: '/main/claims' },
-	{ label: 'Remittance', value: 1, path: '/main/remittance' },
-	{ label: 'Bank EFT ', value: 2, path: '/main/bankEFT' },
-	{ label: 'Interfaces ', value: 3, path: '/main/interface' },
+	{ label: 'DHUB', value: 0, path: '/main/claims' },
+	{ label: 'IWay', value: 1, path: '/main/remittance' },
+	{ label: 'BDI ', value: 2, path: '/main/bankEFT' },
+	{ label: 'Health Connect ', value: 3, path: '/main/interface' },
 	{ label: 'Admin', value: 4, path: '/main/admin' }
 ]
 
