@@ -158,7 +158,7 @@ import { LoginService } from "../service/LoginService.ts";
 		
 
 		private refreshTab(value):void 
-		{
+		{   //testt waqas
 			// var labelStr:string=(<NavigatorContent>this.portalCanvas.viewStack.getChildAt(this.portalCanvas.viewStack.selectedIndex) ).label
 			// if(value === "/main/claims"){
 				// this.dispatch(new ClaimsEvent(ClaimsEvent.GET_CLAIMS));
