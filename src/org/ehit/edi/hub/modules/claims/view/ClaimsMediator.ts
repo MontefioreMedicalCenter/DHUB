@@ -34,7 +34,7 @@ export class ClaimsMediator extends Mediator {
 		this.claimsTimer = new Timer(600000)
 		// this.mapListener(this.claimsTimer, TimerEvent.TIMER, this.refreshClaims)
 		if (this.view.state.tabValue === '/main/claims') {
-			/** Directly called service call's from Claims Command */
+			/** Directly called service call's from Claims Command test */
 			if(this.view.props.claimsHeaders.length){
 				this.addClaimHeader()
 			}else{
