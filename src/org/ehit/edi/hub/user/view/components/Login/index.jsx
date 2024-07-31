@@ -134,12 +134,12 @@ class Login extends EventDispatcher {
 							</Typography>
 							<TextFeildComponent id="password" type={this.state.passwordVisiblity} style={{ width: '307px' }} value={this.state.password} onChange={this.handleChangeTxt} error={error.password} onBlur={this.loginUser} />
 						</div>
-						<div className="comboBox-field">
+						{/* <div className="comboBox-field">
 							<Typography variant="body2" display="block" gutterBottom>
 								<span className="fonts">Service Area :</span>
 							</Typography>
 							<ComboBox name="serviceArea" id="serviceArea" valueKey="label" labelKey="label" dataProvider={serviceArea} onChange={event => this.changeHandler(event)} value={this.state.serviceAreaValue} />
-						</div>
+						</div> for demo*/ } 
 						<div style={{ display: 'flex', padding: '5px', width: '140px' }}>
 							<input type="checkbox" id="showPassword" cstyle={{ height: '15px', width: '15px' }} onClick={this.showPassword} value={this.state.checkBox} />
 							&nbsp; <span style={{ fontSize: 'smaller' }}> Show Password? </span>

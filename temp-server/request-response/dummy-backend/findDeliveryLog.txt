@@ -1,0 +1,6 @@
+POST /DHub/api/adminsvc/findDeliveryLog HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=uOiqUpNaerFMpfc5ZBDfDwN8aMz5PgfDS6L09c0P.odcfsvvwd04
+
+startDate=2021-08-01&endDate=2021-08-03

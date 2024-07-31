@@ -1,0 +1,6 @@
+POST /DHub/api/remitssvc/remitMonth HTTP/1.1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+Cookie: JSESSIONID=6yMORVHyI-BwsLLzeGlWHk6-vxqSP4gzxTxisrcz.odcfsvvwd04
+
+pn=Affinity&rm=2020-11

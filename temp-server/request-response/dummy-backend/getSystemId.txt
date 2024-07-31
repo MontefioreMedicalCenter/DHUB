@@ -1,0 +1,22 @@
+
+POST http://localhost:8080/DHub/api/remitSearchsvc/getSystemId
+200
+57 ms
+Network
+addresses: {…}
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 4641b96f-657f-4174-afca-9742b7836173
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=eLVyytnUiPck8wC5OI5JqzqFsWpmUWGEoTEfW4ot.ynbedivwp01
+Content-Length: 0
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 231
+Date: Wed, 24 Nov 2021 20:38:27 GMT
+Response Body
+["ALL","HSR","MEDITECH","ZOTEC","EHUB","HOMEHEALTH","MCKESSON","HUB","SATP","EAGLE","DOSA","HB-EPIC","CERC","MOT","OTHER","Epic White Plains-SMG-EHUB","HH-EPIC","Epic White Plains-SMG","HB-EHUB","FPP","OBGYN","PB-EPIC","MCKESSON2"]

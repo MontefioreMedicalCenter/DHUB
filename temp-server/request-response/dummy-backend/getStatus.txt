@@ -1,0 +1,21 @@
+POST http://localhost:8080/DHub/api/remitSearchsvc/getStatus
+200
+20.20 s
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 652b6948-b780-468f-a32e-d5100755ba58
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=syd9MOcGOtlJYHfDC-hfAv1BMJZkxP2XN-Z4Bu_f.ynbedivwp01
+Content-Length: 0
+Request Body
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 46
+Date: Wed, 24 Nov 2021 20:27:43 GMT
+Response Body
+["1","19","2","20","21","22","25","3","4","0"]
