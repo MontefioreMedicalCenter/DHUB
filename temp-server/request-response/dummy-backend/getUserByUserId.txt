@@ -1,0 +1,23 @@
+POST http://localhost:8080/DHub/api/manageUsersvc/getUserByUserId
+200
+48 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: c4aa88d1-1da3-43e3-b459-135fe18da331
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 15
+Cookie: JSESSIONID=-Rh7xja4FUx9NxUbeAIrJ5uAy2lMkqv0GNK2J95k.ynbedivwp01
+Request Body
+userId: "mzeltsan"
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 798
+Date: Mon, 25 Oct 2021 17:42:18 GMT
+Response Body
+{"ediMemberships":[],"ediUserRoleMaps":[{"accessActiveFlag":1,"id":{"facilityId":"MHS","roleId":"Admin","serviceAreaId":"MMC","userId":"mzeltsan"}},{"accessActiveFlag":1,"id":{"facilityId":"MHS","roleId":"remits","serviceAreaId":"MMC","userId":"mzeltsan"}},{"accessActiveFlag":1,"id":{"facilityId":"MHS","roleId":"Admin","serviceAreaId":"WPH","userId":"mzeltsan"}},{"accessActiveFlag":1,"id":{"facilityId":"MHS","roleId":"Admin","serviceAreaId":"NYA","userId":"mzeltsan"}}],"name":"mzeltsan","restApiKey":null,"roleToString":"Admin:remits:Admin:Admin:","userActiveFlag":1,"userAddress1":" ","userAddress2":" ","userCity":" ","userEmail":"mzeltsan@montefiore.org","userFirstName":"micahel","userId":"mzeltsan","userLastName":"zeltsan","userPhone":" ","userPhone2":null,"userState":" ","userZip":" "}

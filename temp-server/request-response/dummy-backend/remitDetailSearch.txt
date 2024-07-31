@@ -1,0 +1,36 @@
+
+11:58:54.360
+POST http://localhost:8080/DHub/api/remitSearchsvc/remitDetailSearch
+200
+249 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 9d522704-ea99-4a3d-9b57-a4475c5ca544
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 140
+Cookie: JSESSIONID=SH5OCbkVytzxdaipMmZX7IZmgLUG8ePa-lYBfweZ.ynbedivwp01
+Request Body
+chkNo: "1568668959"
+payerId: ""
+payerName: ""
+patId: ""
+patFName: ""
+patLName: ""
+claimNo: ""
+systemId: ""
+status: "0"
+startDate: "2019-1-1"
+endDate: "2021-12-1"
+dateSearch: ""
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 4798
+Date: Wed, 24 Nov 2021 16:58:54 GMT
+Response Body
+[{"claimPaymentAmt":0.0,"facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"unitSeqNum":0,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","insuredGroupNum":null,"invoiceNum":"HB600035284814","medicalRecordNum":null,"nonCovChrg":3250.01,"patientFirst":"JOHNNY","patientGroupNum":null,"patientId":"946357005","patientLast":"MERCADO","patientMiddle":null,"patientRespAmt":0.0,"providerId":null,"providerName":null,"serviceAreaId":"MMC","serviceEndDate":"2020-01-29 05:00:00","serviceStartDate":"2020-01-14 05:00:00","splitKey":"HB_EPIC","status":"1","systemId":"HB-EPIC","totalClaimChrg":3250.01,"xremitCoreTracking":{"checkAmt":1057.11,"checkIssueDate":"2020-10-01 04:00:00","checkTraceNum":"1568668959","facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","payeeId":"1265591168","payeeName":"MONTEFIORE MEDICAL CENTER: 111 EAST 210TH ST","payerId":"87726","payerName":"UNITED HEALTHCARE INSURANCE COMPANY","paymentMethod":"ACH","provAdj":0.0,"serviceAreaId":"MMC","systemId":"HB-EPIC","totalChrgAmt":7720.040000000001,"totalNonCovChrg":6315.05,"totalPatientResp":347.88,"totalPaymentAmt":1057.11}},{"claimPaymentAmt":0.0,"facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"unitSeqNum":1,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","insuredGroupNum":null,"invoiceNum":"HB600034955213","medicalRecordNum":null,"nonCovChrg":2970.01,"patientFirst":"NIGEL","patientGroupNum":null,"patientId":"928333305","patientLast":"MURRAY","patientMiddle":"W","patientRespAmt":0.0,"providerId":null,"providerName":null,"serviceAreaId":"MMC","serviceEndDate":"2020-02-07 05:00:00","serviceStartDate":"2020-01-01 05:00:00","splitKey":"HB_EPIC","status":"1","systemId":"HB-EPIC","totalClaimChrg":2970.01,"xremitCoreTracking":{"checkAmt":1057.11,"checkIssueDate":"2020-10-01 04:00:00","checkTraceNum":"1568668959","facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","payeeId":"1265591168","payeeName":"MONTEFIORE MEDICAL CENTER: 111 EAST 210TH ST","payerId":"87726","payerName":"UNITED HEALTHCARE INSURANCE COMPANY","paymentMethod":"ACH","provAdj":0.0,"serviceAreaId":"MMC","systemId":"HB-EPIC","totalChrgAmt":7720.040000000001,"totalNonCovChrg":12630.100000000002,"totalPatientResp":347.88,"totalPaymentAmt":1057.11}},{"claimPaymentAmt":340.93,"facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"unitSeqNum":2,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","insuredGroupNum":null,"invoiceNum":"HB600035854716","medicalRecordNum":null,"nonCovChrg":61.19999999999999,"patientFirst":"CARMEN","patientGroupNum":null,"patientId":"850666106","patientLast":"SCULLY","patientMiddle":"M","patientRespAmt":347.88,"providerId":null,"providerName":null,"serviceAreaId":"MMC","serviceEndDate":"2020-02-29 05:00:00","serviceStartDate":"2020-02-21 05:00:00","splitKey":"HB_EPIC","status":"1","systemId":"HB-EPIC","totalClaimChrg":750.01,"xremitCoreTracking":{"checkAmt":1057.11,"checkIssueDate":"2020-10-01 04:00:00","checkTraceNum":"1568668959","facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","payeeId":"1265591168","payeeName":"MONTEFIORE MEDICAL CENTER: 111 EAST 210TH ST","payerId":"87726","payerName":"UNITED HEALTHCARE INSURANCE COMPANY","paymentMethod":"ACH","provAdj":0.0,"serviceAreaId":"MMC","systemId":"HB-EPIC","totalChrgAmt":7720.040000000001,"totalNonCovChrg":18945.150000000005,"totalPatientResp":347.88,"totalPaymentAmt":1057.11}},{"claimPaymentAmt":716.18,"facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"unitSeqNum":3,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","insuredGroupNum":null,"invoiceNum":"HB600036890205","medicalRecordNum":null,"nonCovChrg":33.83000000000004,"patientFirst":"KAROL","patientGroupNum":null,"patientId":"976231751","patientLast":"SOMERS","patientMiddle":null,"patientRespAmt":0.0,"providerId":null,"providerName":null,"serviceAreaId":"MMC","serviceEndDate":"2020-04-25 04:00:00","serviceStartDate":"2020-04-21 04:00:00","splitKey":"HB_EPIC","status":"1","systemId":"HB-EPIC","totalClaimChrg":750.01,"xremitCoreTracking":{"checkAmt":1057.11,"checkIssueDate":"2020-10-01 04:00:00","checkTraceNum":"1568668959","facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","payeeId":"1265591168","payeeName":"MONTEFIORE MEDICAL CENTER: 111 EAST 210TH ST","payerId":"87726","payerName":"UNITED HEALTHCARE INSURANCE COMPANY","paymentMethod":"ACH","provAdj":0.0,"serviceAreaId":"MMC","systemId":"HB-EPIC","totalChrgAmt":7720.040000000001,"totalNonCovChrg":25260.200000000008,"totalPatientResp":347.88,"totalPaymentAmt":1057.11}}]

@@ -1,0 +1,21 @@
+POST http://localhost:8080/DHub/api/bankEFTsvc/findBankEFTHeader
+200
+66 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 260db2bb-7f49-4030-a327-0b488436a915
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=pJs4X-nAypYxr1AKNoWvX38IopoBU032QLevfWVm.ynbedivwp01
+Content-Length: 0
+Request Body
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 13
+Date: Wed, 27 Oct 2021 16:45:26 GMT
+Response Body
+[[1,"Recvd"]]

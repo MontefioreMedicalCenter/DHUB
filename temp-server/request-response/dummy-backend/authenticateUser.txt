@@ -1,0 +1,73 @@
+{
+    "ediUserRoleMaps": [
+        {
+            "accessActiveFlag": 1,
+            "id": {
+                "facilityId": "MHS",
+                "roleId": "Admin",
+                "serviceAreaId": "STL",
+                "userId": "whussain"
+            }
+        },
+        {
+            "accessActiveFlag": 1,
+            "id": {
+                "facilityId": "MHS",
+                "roleId": "Admin",
+                "serviceAreaId": "NRMV",
+                "userId": "whussain"
+            }
+        },
+        {
+            "accessActiveFlag": 1,
+            "id": {
+                "facilityId": "MHS",
+                "roleId": "Admin",
+                "serviceAreaId": "NYA",
+                "userId": "whussain"
+            }
+        },
+        {
+            "accessActiveFlag": 1,
+            "id": {
+                "facilityId": "MHS",
+                "roleId": "Admin",
+                "serviceAreaId": "WPH",
+                "userId": "whussain"
+            }
+        },
+        {
+            "accessActiveFlag": 1,
+            "id": {
+                "facilityId": "MHS",
+                "roleId": "Admin",
+                "serviceAreaId": "MMC",
+                "userId": "whussain"
+            }
+        },
+        {
+            "accessActiveFlag": 1,
+            "id": {
+                "facilityId": "MHS",
+                "roleId": "Admin",
+                "serviceAreaId": "BURKE",
+                "userId": "whussain"
+            }
+        }
+    ],
+    "name": "whussain",
+    "restApiKey": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.wQqHCKoz0DVoJI7x3ubvCdFUpyOUa4cZzeidWdgzE6c",
+    "roleToString": "Admin:Admin:Admin:Admin:Admin:Admin:",
+    "userActiveFlag": 1,
+    "userAddress1": null,
+    "userAddress2": null,
+    "userCity": null,
+    "userEmail": "whussain@montefiore.org",
+    "userFirstName": "Waqas",
+    "userId": "whussain",
+    "userLastName": "Hussain",
+    "userPhone": null,
+    "userPhone2": null,
+    "userState": null,
+    "userZip": null
+}

@@ -79,7 +79,7 @@ import { LoginService } from "../service/LoginService.ts";
 			if (hasClaims)
 			{
 				var claimsTab:NavigatorContent=new NavigatorContent();
-				claimsTab.label="Claims"
+				claimsTab.label="DHUB"
 				var claims:Claims=new Claims()
 				claims.initialIndex=index
 				claimsTab.addElement(claims);
@@ -89,7 +89,7 @@ import { LoginService } from "../service/LoginService.ts";
 			if (hasRemits)
 			{
 				var remitsTab:NavigatorContent=new NavigatorContent();
-				remitsTab.label="Remittance"
+				remitsTab.label="IWAY"
 				var remits:Remits=new Remits();
 				remits.initialIndex=index
 				remitsTab.addElement(remits);
@@ -100,7 +100,7 @@ import { LoginService } from "../service/LoginService.ts";
 			if (hasBankEFT)  
 			{
 				var bankEFT:NavigatorContent=new NavigatorContent();
-				bankEFT.label="Bank EFT"
+				bankEFT.label="BDI"
 				var eft:BankEFT=new BankEFT()
 				eft.initialIndex=index
 				bankEFT.addElement(eft);
@@ -110,7 +110,7 @@ import { LoginService } from "../service/LoginService.ts";
 			if (hasInterfaces)
 			{
 				var interfaceTab:NavigatorContent=new NavigatorContent();
-				interfaceTab.label="Interfaces"
+				interfaceTab.label="OTHER"
 				var interfaces:Interfaces=new Interfaces()
 				interfaces.initialIndex=index
 				interfaceTab.addElement(interfaces);
@@ -121,7 +121,7 @@ import { LoginService } from "../service/LoginService.ts";
 			if (hasClaimStatus)
 			{
 				var claimStatusTab:NavigatorContent=new NavigatorContent();
-				claimStatusTab.label="Claim Status"
+				claimStatusTab.label="OTHER2"
 				var claimStatus:ClaimStatus=new ClaimStatus()
 				claimStatus.initialIndex=index
 				claimStatusTab.addElement(claimStatus);

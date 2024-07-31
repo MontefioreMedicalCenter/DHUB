@@ -1,0 +1,30 @@
+POST http://localhost:8080/DHub/api/remitSearchsvc/remitCoreSearch
+200
+6.07 s
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 2ce266a0-f105-49d5-ae08-9056aa7eafdc
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 106
+Cookie: JSESSIONID=iyMJ7cMYqeoyF1Dy5ZGQwW4Em0oWpMxFJow-k_Na.ynbedivwp01
+Request Body
+chkNo: "1568668959"
+payerId: ""
+payerName: ""
+systemId: ""
+status: ""
+startDate: "2020-10-01"
+endDate: "2020-11-01"
+dateSearch: ""
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 551
+Date: Fri, 19 Nov 2021 18:06:47 GMT
+Response Body
+[{"checkAmt":1057.11,"checkIssueDate":"2020-10-01 04:00:00","checkTraceNum":"1568668959","facilityId":"MHS","id":{"gsSeqNum":2,"isaSeqNum":0,"stSeqNum":0,"xmitId":116073},"insertDatetime":"2020-09-30 14:00:57","payeeId":"1265591168","payeeName":"MONTEFIORE MEDICAL CENTER: 111 EAST 210TH ST","payerId":"87726","payerName":"UNITED HEALTHCARE INSURANCE COMPANY","paymentMethod":"ACH","provAdj":0.0,"serviceAreaId":"MMC","systemId":"HB-EPIC","totalChrgAmt":7720.040000000001,"totalNonCovChrg":6315.05,"totalPatientResp":347.88,"totalPaymentAmt":1057.11}]

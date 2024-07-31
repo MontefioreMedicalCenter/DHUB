@@ -1,0 +1,20 @@
+POST http://localhost:8080/DHub/api/remitssvc/findRemitHeader
+200
+80 ms
+Network
+Request Headers
+User-Agent: PostmanRuntime/7.28.1
+Accept: */*
+Postman-Token: 8a7334b9-eca3-4601-aead-143a669ea66a
+Host: localhost:8080
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Cookie: JSESSIONID=ztNQ7Vxwh7x9N_ke8TQfEzq4o5g8rfdph6lAaDtv.ynbedivwp01
+Content-Length: 0
+Response Headers
+Connection: keep-alive
+Content-Type: application/json
+Content-Length: 140
+Date: Fri, 12 Nov 2021 16:44:17 GMT
+Response Body
+[[1,"Recvd"],[2,"EAGLE"],[8,"IDXMOT"],[12,"HH"],[13,"HB_EPIC"],[14,"PB_EPIC"],[15,"UCP"],[16,"SATP"],[17,"DOSA"],[18,"HH_EPIC"],[19,"CERC"]]

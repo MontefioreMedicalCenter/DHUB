@@ -24,28 +24,28 @@ const ROUTES = [
 
 export const PRIVATE_ROUTES = [
 	{
-		name: 'Claims',
+		name: 'DHub',
 		url: '/main/claims',
 		private: true,
 		component: Claims,
 		exact: false
 	},
 	{
-		name: 'Remittance',
+		name: 'IWay',
 		url: '/main/remittance',
 		private: true,
 		component: Remits,
 		exact: false
 	},
 	{
-		name: 'Bank EFT',
+		name: 'BDI',
 		url: '/main/bankEFT',
 		private: true,
 		component: BankEFT,
 		exact: false
 	},
 	{
-		name: 'Interface',
+		name: 'Other', 
 		url: '/main/interface',
 		private: true,
 		component: Interfaces,

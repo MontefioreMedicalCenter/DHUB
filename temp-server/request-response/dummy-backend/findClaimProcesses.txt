@@ -1,0 +1,596 @@
+[
+    {
+        "fileId": 9714154,
+        "fileName": "BURKE32103_453296761_20240729065015.837",
+        "id": {
+            "facilityId": "MHS",
+            "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+            "serviceAreaId": "BURKE"
+        },
+        "instanceEndTime": "2024-07-29 11:00:33",
+        "instanceStartTime": "2024-07-29 11:00:33",
+        "processDescription": "Burke 837I or 837P",
+        "processInstanceSteps": [
+            {
+                "fileId": 9714154,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+                    "stepNum": 1
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 file is picked up from the billing system",
+                "stepEndTime": "2024-07-29 11:00:33",
+                "stepLongStatus": "The 837 claims file has been picked up from the billing system.",
+                "stepStartTime": "2024-07-29 11:00:33",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+                    "stepNum": 2
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is run through EDI Systems edits",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not require EDI Systems edits.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+                    "stepNum": 3
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is delivered to the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "The EDI Delivery Hub does not track payer delivery for this 837.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9714154,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+                    "stepNum": 4
+                },
+                "stepDeadline": "2024-07-29 11:10:33",
+                "stepDescr": "The 837 is delivered to TREKS",
+                "stepEndTime": "2024-07-29 11:00:33",
+                "stepLongStatus": "The Availity-Corrected 837I has been delivered to TREKS, file '/TREKS/Epic/BURKE/837/BURKE32103_453296761_20240729065015.837'",
+                "stepStartTime": "2024-07-29 11:00:33",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+                    "stepNum": 5
+                },
+                "stepDeadline": null,
+                "stepDescr": "A text file acknowledgment received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a text acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453296761.2407290650.837I",
+                    "stepNum": 6
+                },
+                "stepDeadline": null,
+                "stepDescr": "A 99x Acknowledgment is received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a 99x acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            }
+        ],
+        "processName": "BURKE Claims",
+        "processStatus": "Completed",
+        "receiverName": "MultiplePayers",
+        "senderName": "Availity-Corrected",
+        "totalDollarAmt": 40794.0000,
+        "totalTransactionCount": 26,
+        "transactionType": "837I"
+    },
+    {
+        "fileId": 9713883,
+        "fileName": "BRHHBOPMCD837I072906111110218.837i",
+        "id": {
+            "facilityId": "MHS",
+            "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+            "serviceAreaId": "BURKE"
+        },
+        "instanceEndTime": "2024-07-29 10:40:19",
+        "instanceStartTime": "2024-07-29 10:20:11",
+        "processDescription": "Burke 837I or 837P",
+        "processInstanceSteps": [
+            {
+                "fileId": 9713883,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+                    "stepNum": 1
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 file is picked up from the billing system",
+                "stepEndTime": "2024-07-29 10:20:11",
+                "stepLongStatus": "The 837 claims file has been picked up from the billing system.",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+                    "stepNum": 2
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is run through EDI Systems edits",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not require EDI Systems edits.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9713883,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+                    "stepNum": 3
+                },
+                "stepDeadline": "2024-07-29 10:30:11",
+                "stepDescr": "The 837 is delivered to the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:21:10",
+                "stepLongStatus": "The 837 has been delivered to Availity, file '/montefiore/BURKE_REHAB/CLAIMS/INPUT/BRHHBOPMCD837I072906111110218.837i'",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+                    "stepNum": 4
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is delivered to TREKS",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 is not delivered to TREKS.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+                    "stepNum": 5
+                },
+                "stepDeadline": null,
+                "stepDescr": "A text file acknowledgment received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a text acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9714035,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541957.2407290611.837I",
+                    "stepNum": 6
+                },
+                "stepDeadline": "2024-07-30 10:21:10",
+                "stepDescr": "A 99x Acknowledgment is received from the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:40:19",
+                "stepLongStatus": "999 Received.  6 of 6 transaction sets accepted.",
+                "stepStartTime": "2024-07-29 10:21:10",
+                "stepStatus": "Completed"
+            }
+        ],
+        "processName": "BURKE Claims",
+        "processStatus": "Completed: 6/6",
+        "receiverName": "Availity",
+        "senderName": "EPIC-HB",
+        "totalDollarAmt": 10089.0000,
+        "totalTransactionCount": 6,
+        "transactionType": "837I"
+    },
+    {
+        "fileId": 9713882,
+        "fileName": "BRHHBOPMCD837I072906041110214.837i",
+        "id": {
+            "facilityId": "MHS",
+            "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+            "serviceAreaId": "BURKE"
+        },
+        "instanceEndTime": "2024-07-29 10:40:17",
+        "instanceStartTime": "2024-07-29 10:20:11",
+        "processDescription": "Burke 837I or 837P",
+        "processInstanceSteps": [
+            {
+                "fileId": 9713882,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+                    "stepNum": 1
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 file is picked up from the billing system",
+                "stepEndTime": "2024-07-29 10:20:11",
+                "stepLongStatus": "The 837 claims file has been picked up from the billing system.",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+                    "stepNum": 2
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is run through EDI Systems edits",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not require EDI Systems edits.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9713882,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+                    "stepNum": 3
+                },
+                "stepDeadline": "2024-07-29 10:30:11",
+                "stepDescr": "The 837 is delivered to the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:20:52",
+                "stepLongStatus": "The 837 has been delivered to Availity, file '/montefiore/BURKE_REHAB/CLAIMS/INPUT/BRHHBOPMCD837I072906041110214.837i'",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+                    "stepNum": 4
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is delivered to TREKS",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 is not delivered to TREKS.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+                    "stepNum": 5
+                },
+                "stepDeadline": null,
+                "stepDescr": "A text file acknowledgment received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a text acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9714030,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541941.2407290604.837I",
+                    "stepNum": 6
+                },
+                "stepDeadline": "2024-07-30 10:20:52",
+                "stepDescr": "A 99x Acknowledgment is received from the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:40:17",
+                "stepLongStatus": "999 Received.  11 of 11 transaction sets accepted.",
+                "stepStartTime": "2024-07-29 10:20:52",
+                "stepStatus": "Completed"
+            }
+        ],
+        "processName": "BURKE Claims",
+        "processStatus": "Completed: 11/11",
+        "receiverName": "Availity",
+        "senderName": "EPIC-HB",
+        "totalDollarAmt": 15851.0000,
+        "totalTransactionCount": 11,
+        "transactionType": "837I"
+    },
+    {
+        "fileId": 9713881,
+        "fileName": "BRHHBOPComm837I072906041110215.837i",
+        "id": {
+            "facilityId": "MHS",
+            "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+            "serviceAreaId": "BURKE"
+        },
+        "instanceEndTime": "2024-07-29 10:40:15",
+        "instanceStartTime": "2024-07-29 10:20:11",
+        "processDescription": "Burke 837I or 837P",
+        "processInstanceSteps": [
+            {
+                "fileId": 9713881,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+                    "stepNum": 1
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 file is picked up from the billing system",
+                "stepEndTime": "2024-07-29 10:20:11",
+                "stepLongStatus": "The 837 claims file has been picked up from the billing system.",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+                    "stepNum": 2
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is run through EDI Systems edits",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not require EDI Systems edits.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9713881,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+                    "stepNum": 3
+                },
+                "stepDeadline": "2024-07-29 10:30:11",
+                "stepDescr": "The 837 is delivered to the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:20:34",
+                "stepLongStatus": "The 837 has been delivered to Availity, file '/montefiore/BURKE_REHAB/CLAIMS/INPUT/BRHHBOPComm837I072906041110215.837i'",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+                    "stepNum": 4
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is delivered to TREKS",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 is not delivered to TREKS.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+                    "stepNum": 5
+                },
+                "stepDeadline": null,
+                "stepDescr": "A text file acknowledgment received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a text acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9714027,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541943.2407290604.837I",
+                    "stepNum": 6
+                },
+                "stepDeadline": "2024-07-30 10:20:34",
+                "stepDescr": "A 99x Acknowledgment is received from the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:40:15",
+                "stepLongStatus": "999 Received.  12 of 12 transaction sets accepted.",
+                "stepStartTime": "2024-07-29 10:20:34",
+                "stepStatus": "Completed"
+            }
+        ],
+        "processName": "BURKE Claims",
+        "processStatus": "Completed: 12/12",
+        "receiverName": "Availity",
+        "senderName": "EPIC-HB",
+        "totalDollarAmt": 21532.0000,
+        "totalTransactionCount": 12,
+        "transactionType": "837I"
+    },
+    {
+        "fileId": 9713880,
+        "fileName": "BRHHBOPWC837I_072906041110212.837i",
+        "id": {
+            "facilityId": "MHS",
+            "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+            "serviceAreaId": "BURKE"
+        },
+        "instanceEndTime": "2024-07-29 10:20:11",
+        "instanceStartTime": "2024-07-29 10:20:11",
+        "processDescription": "Burke 837I or 837P",
+        "processInstanceSteps": [
+            {
+                "fileId": 9713880,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+                    "stepNum": 1
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 file is picked up from the billing system",
+                "stepEndTime": "2024-07-29 10:20:11",
+                "stepLongStatus": "The 837 claims file has been picked up from the billing system.",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+                    "stepNum": 2
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is run through EDI Systems edits",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not require EDI Systems edits.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9713880,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+                    "stepNum": 3
+                },
+                "stepDeadline": "2024-07-29 10:30:11",
+                "stepDescr": "The 837 is delivered to the payer or clearinghouse",
+                "stepEndTime": "2024-07-29 10:20:11",
+                "stepLongStatus": "The 837 has been delivered to Tritech, file '/Burke/Tritech/Incoming/837s/BRHHBOPWC837I_072906041110212.837i'",
+                "stepStartTime": "2024-07-29 10:20:11",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+                    "stepNum": 4
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is delivered to TREKS",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 is not delivered to TREKS.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+                    "stepNum": 5
+                },
+                "stepDeadline": null,
+                "stepDescr": "A text file acknowledgment received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a text acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "NYA000873.13201.000541935.2407290604.837I",
+                    "stepNum": 6
+                },
+                "stepDeadline": null,
+                "stepDescr": "A 99x Acknowledgment is received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a 99x acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            }
+        ],
+        "processName": "BURKE Claims",
+        "processStatus": "Completed",
+        "receiverName": "Tritech",
+        "senderName": "EPIC-HB",
+        "totalDollarAmt": 1255.0000,
+        "totalTransactionCount": 1,
+        "transactionType": "837I"
+    },
+    {
+        "fileId": 9713551,
+        "fileName": "BURKE32103_453263167_20240729035158.837",
+        "id": {
+            "facilityId": "MHS",
+            "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+            "serviceAreaId": "BURKE"
+        },
+        "instanceEndTime": "2024-07-29 08:00:44",
+        "instanceStartTime": "2024-07-29 08:00:44",
+        "processDescription": "Burke 837I or 837P",
+        "processInstanceSteps": [
+            {
+                "fileId": 9713551,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+                    "stepNum": 1
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 file is picked up from the billing system",
+                "stepEndTime": "2024-07-29 08:00:44",
+                "stepLongStatus": "The 837 claims file has been picked up from the billing system.",
+                "stepStartTime": "2024-07-29 08:00:44",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+                    "stepNum": 2
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is run through EDI Systems edits",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not require EDI Systems edits.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+                    "stepNum": 3
+                },
+                "stepDeadline": null,
+                "stepDescr": "The 837 is delivered to the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "The EDI Delivery Hub does not track payer delivery for this 837.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 9713551,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+                    "stepNum": 4
+                },
+                "stepDeadline": "2024-07-29 08:10:44",
+                "stepDescr": "The 837 is delivered to TREKS",
+                "stepEndTime": "2024-07-29 08:00:44",
+                "stepLongStatus": "The Availity-Corrected 837P has been delivered to TREKS, file '/TREKS/Epic/BURKE/837/BURKE32103_453263167_20240729035158.837'",
+                "stepStartTime": "2024-07-29 08:00:44",
+                "stepStatus": "Completed"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+                    "stepNum": 5
+                },
+                "stepDeadline": null,
+                "stepDescr": "A text file acknowledgment received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a text acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            },
+            {
+                "fileId": 0,
+                "id": {
+                    "instanceId": "REALMED.BURKE32103.453263167.2407290351.837P",
+                    "stepNum": 6
+                },
+                "stepDeadline": null,
+                "stepDescr": "A 99x Acknowledgment is received from the payer or clearinghouse",
+                "stepEndTime": null,
+                "stepLongStatus": "This 837 does not receive a 99x acknowledgement.",
+                "stepStartTime": null,
+                "stepStatus": "n/a"
+            }
+        ],
+        "processName": "BURKE Claims",
+        "processStatus": "Completed",
+        "receiverName": "MultiplePayers",
+        "senderName": "Availity-Corrected",
+        "totalDollarAmt": 1251.0000,
+        "totalTransactionCount": 38,
+        "transactionType": "837P"
+    }
+]
