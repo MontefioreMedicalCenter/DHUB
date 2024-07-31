@@ -65,24 +65,28 @@ class Claims extends EventDispatcher {
 				<div className="claimsGridStyle">
 					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint={true} styleName="gridStyle" enableDrillDown={true} enableExport={true} enableExportAll={true} enableCopy={true} parentDocument={this} pagerRenderer={MontefioreUtils.pagerFactory}>
 						<ReactDataGridColumnLevel rowHeight="21" childrenField="_processInstanceSteps" enableFilters={true} enablePaging={true} /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" rowTextColorFunction={this.getRowTextColor}>
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Sender" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" width="350" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="File Name" useHandCursor={true} useUnderLine={true} />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="receiverName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Payer" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Status" />
-							<ReactDataGridColumn headerAlign="right" textAlign="right" width="70" dataField="totalTransactionCount" enableCellClickRowSelect={false} headerText="Total Claims" />
-							<ReactDataGridColumn headerAlign="right" textAlign="right" columnWidthMode="fitToContent" dataField="totalDollarAmt" labelFunction={MontefioreUtils.currencyFormatterWithComma} enableCellClickRowSelect={false} headerText="Total Amount" />
-							<ReactDataGridColumn headerAlign="right" textAlign="right" columnWidthMode="fitToContent" dataField="instanceStartTime" filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]} filterControl="DateComboBox" filterOperation="Contains" /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} enableCellClickRowSelect={false} headerText="Start Time" /*filterConverterFunction="convertDate" filterRenderer="org.ehit.edi.hub.uitl.dateFormatCombo.EdiDateComboBox"*/ filterRenderer={EdiDateRangeCombo}/>
-							<ReactDataGridColumn headerAlign="right" textAlign="right" columnWidthMode="fitToContent" dataField="instanceEndTime" enableCellClickRowSelect={false} /*formatter="{ExampleUtils.globalDateFormatter}"*/ labelFunction={this.dateForm} headerText="Last Update Time" />
-							<ReactDataGridColumnLevel rowHeight="23" initialSortField="id.stepNum" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xe0e0e0, 0xffffff]}>
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="MMC" headerText="System ID" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" width="350" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="" headerText="Control ID" useHandCursor={true} useUnderLine={true} />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="receiverName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Interface ID" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Sender ID" />
+							
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="FTP Type" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.serviceAreaId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="State" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="Last Update" labelFunction={this.dateForm} />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.instanceId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Interface Conditions" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.facilityId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Actions" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="transactionType" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Logs" />
+							
+							{/* <ReactDataGridColumnLevel rowHeight="23" initialSortField="id.stepNum" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xe0e0e0, 0xffffff]}>
 								<ReactDataGridColumn headerAlign="left" textAlign="left" width="65" dataField="id.stepNum" enableCellClickRowSelect={false} headerText="Step No" />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" width="300" dataField="id.instanceId" enableCellClickRowSelect={false} headerText="Instance ID" />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" width="300" dataField="stepDescr" enableCellClickRowSelect={false} headerText="Step Desc" />
+								<ReactDataGridColumn headerAlign="right" textAlign="right" width="300" dataField="id.instanceId" enableCellClickRowSelect={false} headerText="Instance ID" /> */}
+								{/* <ReactDataGridColumn headerAlign="right" textAlign="right" width="300" dataField="stepDescr" enableCellClickRowSelect={false} headerText="Step Desc" />
 								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepStartTime" enableCellClickRowSelect={false} headerText="Step Start Time" labelFunction={this.dateForm} />
 								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepEndTime" enableCellClickRowSelect={false} headerText="Step End Time" labelFunction={this.dateForm} />
 								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepDeadline" enableCellClickRowSelect={false} headerText="Step Deadline" labelFunction={this.dateForm} />
 								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepStatus" enableCellClickRowSelect={false} headerText="Step Status" />
 								<ReactDataGridColumn headerAlign="right" textAlign="right" width="400" dataField="stepLongStatus" enableCellClickRowSelect={false}  headerText="Step Long Status" />
-							</ReactDataGridColumnLevel>
+							</ReactDataGridColumnLevel> */}
 						</ReactDataGridColumnLevel>
 					</DataGrid>
 					<AdvanceDialog
