@@ -71,31 +71,20 @@ class Claims extends EventDispatcher {
 			<Paper className="page-style">
 				<div className="claimsGridStyle">
 					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint={true} styleName="gridStyle" enableDrillDown={true} enableExport={true} enableExportAll={true} enableCopy={true} parentDocument={this} pagerRenderer={MontefioreUtils.pagerFactory}  dataProvider={dataArray}>
-					<ReactDataGridColumnLevel rowHeight="21" childrenField="systems" enableFilters={true} enablePaging={true} /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" >
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="MMC" headerText="System ID" nextLevel />
-							
-							<ReactDataGridColumn headerAlign="left" textAlign="left" width="350" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="" headerText="Control ID" useHandCursor={true} useUnderLine={true} />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systems.fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Interface ID" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systems.processStatus" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Sender ID" />
-							
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systems.processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="FTP Type" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.serviceAreaId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="State" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="Last Update" labelFunction={this.dateForm} />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.instanceId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Interface Conditions" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.facilityId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Actions" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="transactionType" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Logs" />
-							
-							{/* <ReactDataGridColumnLevel rowHeight="23" initialSortField="id.stepNum" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xe0e0e0, 0xffffff]}>
-								<ReactDataGridColumn headerAlign="left" textAlign="left" width="65" dataField="id.stepNum" enableCellClickRowSelect={false} headerText="Step No" />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" width="300" dataField="id.instanceId" enableCellClickRowSelect={false} headerText="Instance ID" /> */}
-								{/* <ReactDataGridColumn headerAlign="right" textAlign="right" width="300" dataField="stepDescr" enableCellClickRowSelect={false} headerText="Step Desc" />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepStartTime" enableCellClickRowSelect={false} headerText="Step Start Time" labelFunction={this.dateForm} />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepEndTime" enableCellClickRowSelect={false} headerText="Step End Time" labelFunction={this.dateForm} />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepDeadline" enableCellClickRowSelect={false} headerText="Step Deadline" labelFunction={this.dateForm} />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepStatus" enableCellClickRowSelect={false} headerText="Step Status" />
-								<ReactDataGridColumn headerAlign="right" textAlign="right" width="400" dataField="stepLongStatus" enableCellClickRowSelect={false}  headerText="Step Long Status" />
-							</ReactDataGridColumnLevel> */}
-					</ReactDataGridColumnLevel>
+						<ReactDataGridColumnLevel rowHeight="21"  enableFilters={true} enablePaging={true} /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" childrenField="systems" >
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="MMC" headerText="System ID" />
+								<ReactDataGridColumnLevel rowHeight="23" initialSortField="systems" nestIndent="30" headerColors={bgcolorarray} headerRollOverColors={headerbgcolorarray} alternatingItemColors={[0xe0e0e0, 0xffffff]}>
+									<ReactDataGridColumn headerAlign="left" textAlign="left" width="350" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="" headerText="Control ID" useHandCursor={true} useUnderLine={true} />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Interface ID" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Sender ID" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="FTP Type" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="State" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="Last Update" labelFunction={this.dateForm} />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Interface Conditions" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Actions" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="transactionType" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Logs" />
+								</ReactDataGridColumnLevel>
+						</ReactDataGridColumnLevel>
 					</DataGrid>
 					<AdvanceDialog
 						open={this.state.fileEditorWindow}
@@ -111,6 +100,19 @@ class Claims extends EventDispatcher {
 								}}
 							/>
 						}
+
+		// 	 "fileId": "MMC",
+        //   "fileName": "MMC.PICKUP.BCBS.999.AVAILITY",
+        //   "instanceEndTime": "2024-07-29 11:00:33",
+        //   "instanceStartTime": "2024-07-29 11:00:33",
+        //   "processDescription": "SFTP",
+        //   "processName": "BURKE Claims",
+        //   "processStatus": "Availity",
+        //   "receiverName": "MMC.PICKUP.BCBS.999.AVAILITY",
+        //   "senderName": "Availity-Corrected",
+        //   "totalDollarAmt": 40794,
+        //   "totalTransactionCount": 26,
+        //   "transactionType": "Logs"
 					/>
 				</div>
 			</Paper>
