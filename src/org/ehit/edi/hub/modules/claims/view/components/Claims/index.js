@@ -14,7 +14,7 @@ import ExampleUtils from '../../../../../../../../../utils/ExampleUtils'
 import FileEditor from '../../../../../main/view/components/FileEditor'
 import { ClaimsMediator } from '../../ClaimsMediator.ts'
 import './claims.scss'
-
+import dataArray from '../../../../../../../../../sample/findClaimProcesses.js'
 const bgcolorarray = [ "0xC0C0C0", "0xEEEEEE"]
 
 const headerbgcolorarray = [ "0xEEEEEE", "0xC0C0C0"]
@@ -28,13 +28,19 @@ class Claims extends EventDispatcher {
 			fileData: null,
 			claimsHeader: ''
 		}
+		
+		
 	}
 
 	componentDidMount() {
-		this.mediator = new ClaimsMediator().onRegister(this)
+
+		//this.mediator = new ClaimsMediator().onRegister(this)
+		
+
 	}
 	componentWillUnmount() {
-		this.mediator.onUnRegister()
+		//this.mediator.onUnRegister()
+	
 	}
 
 	currencyFormatter = (item, col) => {
@@ -59,18 +65,20 @@ class Claims extends EventDispatcher {
 		return null;
 	}
 
+  
 	render() {
 		return (
 			<Paper className="page-style">
 				<div className="claimsGridStyle">
-					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint={true} styleName="gridStyle" enableDrillDown={true} enableExport={true} enableExportAll={true} enableCopy={true} parentDocument={this} pagerRenderer={MontefioreUtils.pagerFactory}>
-						<ReactDataGridColumnLevel rowHeight="21" childrenField="_processInstanceSteps" enableFilters={true} enablePaging={true} /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" rowTextColorFunction={this.getRowTextColor}>
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="MMC" headerText="System ID" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" width="350" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="" headerText="Control ID" useHandCursor={true} useUnderLine={true} />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="receiverName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Interface ID" />
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Sender ID" />
+					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint={true} styleName="gridStyle" enableDrillDown={true} enableExport={true} enableExportAll={true} enableCopy={true} parentDocument={this} pagerRenderer={MontefioreUtils.pagerFactory}  dataProvider={dataArray}>
+					<ReactDataGridColumnLevel rowHeight="21" childrenField="systems" enableFilters={true} enablePaging={true} /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" >
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="MMC" headerText="System ID" nextLevel />
 							
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="FTP Type" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" width="350" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="" headerText="Control ID" useHandCursor={true} useUnderLine={true} />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systems.fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Interface ID" />
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systems.processStatus" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="" filterWaterMark="Contains" headerText="Sender ID" />
+							
+							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="systems.processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="FTP Type" />
 							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.serviceAreaId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="State" />
 							<ReactDataGridColumn headerAlign="left" textAlign="left" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="Last Update" labelFunction={this.dateForm} />
 							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="fitToContent" dataField="id.instanceId" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="c" filterWaterMark="Contains" headerText="Interface Conditions" />
@@ -87,7 +95,7 @@ class Claims extends EventDispatcher {
 								<ReactDataGridColumn headerAlign="right" textAlign="right" dataField="stepStatus" enableCellClickRowSelect={false} headerText="Step Status" />
 								<ReactDataGridColumn headerAlign="right" textAlign="right" width="400" dataField="stepLongStatus" enableCellClickRowSelect={false}  headerText="Step Long Status" />
 							</ReactDataGridColumnLevel> */}
-						</ReactDataGridColumnLevel>
+					</ReactDataGridColumnLevel>
 					</DataGrid>
 					<AdvanceDialog
 						open={this.state.fileEditorWindow}
