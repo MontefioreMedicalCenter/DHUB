@@ -108,15 +108,17 @@ class Claims extends EventDispatcher {
 		}
 	}
 
-	textFilterFunction1 = (item, filter) => {
+	 textFilterFunction1 = (item, filter) => {
 		if (typeof filter.expression === 'string') {
 			// Filter all systems based on matching fileName
-			return item.systems.filter(system => {
+			
+			item.systems = item.systems.filter(system => {
 				const fileName = system.fileName;
-				return (fileName.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1)
-		})
-		
-	}}
+				return fileName.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1;
+			});
+		}
+		return item; // Ensure to return the modified item
+	};
   
 	render() {
 		return (
