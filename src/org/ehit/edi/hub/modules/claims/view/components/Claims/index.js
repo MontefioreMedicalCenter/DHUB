@@ -65,62 +65,41 @@ class Claims extends EventDispatcher {
 		return null;
 	}
 	textFilterFunction = (item, filter) => {
-		// if (typeof filter.expression === 'string') {
-		// 	var dispStatus = this.getStatus(item[filter.columnName])
-		// 	return (dispStatus.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1)
-		// } else if (
-		// 	typeof filter.expression === 'object' &&
-		// 	filter.expression.length > 0
-		// ) {
-		// 	// eslint-disable-next-line array-callback-return
-		// 	const filteredArr = filter.expression.map(data => {
-		// 		const temp =
-		// 			item[filter.columnName]
-		// 				.toString()
-		// 				.toLowerCase()
-		// 				.indexOf(data.toLowerCase()) !== -1
-
-		// 		if (temp) return true
-		// 	})
-
-		// 	return filteredArr && filteredArr.length && filteredArr[0]
-		// }
-		item=item
-				if (typeof filter.expression === 'string') {
-			var dispStatus = item[filter.columnName]
-			return (dispStatus.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1)
-		} else if (
-			typeof filter.expression === 'object' &&
-			filter.expression.length > 0
-		) {
-			// eslint-disable-next-line array-callback-return
-			const filteredArr = filter.expression.map(data => {
-				const temp =
-					item[filter.columnName]
-						.toString()
-						.toLowerCase()
-						.indexOf(data.toLowerCase()) !== -1
-
-				if (temp) return true
-			})
-
-			return filteredArr && filteredArr.length && filteredArr[0]
+		// Check if filter is provided
+		if (!filter || !filter.expression) {
+			return true; // Return true to include all items initially, representing the original array
 		}
-	}
-
-	 textFilterFunction1 = (item, filter) => {
+	
+		if (typeof filter.expression === 'string') {
+			const dispStatus = item[filter.columnName];
+			return dispStatus.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1;
+		} else if (typeof filter.expression === 'object' && filter.expression.length > 0) {
+			// Check if any expression in the array matches
+			const filteredArr = filter.expression.map(data => {
+				const temp = item[filter.columnName]
+					.toString()
+					.toLowerCase()
+					.indexOf(data.toLowerCase()) !== -1;
+				return temp;
+			});
+	
+			// Return true if at least one match is found
+			return filteredArr.includes(true);
+		}
+		// Default return value if no match is found
+		return false;
+	};
+	textFilterFunction1 = (item, filter) => {
 		if (typeof filter.expression === 'string') {
 			// Filter all systems based on matching fileName
-			
+			console.log(item);
 			item.systems = item.systems.filter(system => {
 				const fileName = system.fileName;
 				return fileName.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1;
 			});
 		}
 		return item; // Ensure to return the modified item
-	};
-  
-	render() {
+	};	render() {
 		return (
 			<Paper className="page-style">
 				<div className="claimsGridStyle">
