@@ -1,4 +1,6 @@
 import { Paper } from '@material-ui/core'
+import { Tooltip, withStyles } from '@material-ui/core'
+
 import moment from 'moment'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -15,9 +17,49 @@ import FileEditor from '../../../../../main/view/components/FileEditor'
 import { ClaimsMediator } from '../../ClaimsMediator.ts'
 import './claims.scss'
 import dataArray from '../../../../../../../../../sample/findClaimProcesses.js'
+import StatusRenderer from '../../../../../../../../../shared/components/StatusRenderer'
+import dialog_warning from '../../../../../../../../../assets/images/dialog_warning.png'
+							
 const bgcolorarray = [ "0xC0C0C0", "0xEEEEEE"]
 
 const headerbgcolorarray = [ "0xEEEEEE", "0xC0C0C0"]
+
+const styles = {
+	statusContainer: {
+		height: '100%',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		paddingLeft: '3px'
+	},
+	tooltipContainer: {
+		width: 500,
+		height: 400,
+		display: 'flex',
+		flexDirection: 'column'
+	},
+	tooltipContent: {
+		padding: 10,
+		height: '100%',
+		width: 'calc(100% - 20px)',
+		background: '#FFFFE5'
+	},
+	tooltipheader: {
+		padding: 10,
+		borderBottom: '1px solid black'
+	}
+}
+const HtmlTooltip = withStyles(theme => ({
+	tooltip: {
+		backgroundColor: '#FFFF99',
+		opacity: 0.9,
+		color: 'rgba(0, 0, 0, 0.87)',
+		maxWidth: 500,
+		fontSize: theme.typography.pxToRem(12),
+		border: '1px solid black',
+		padding: 0
+	}
+}))(Tooltip)
 class Claims extends EventDispatcher {
 	constructor() {
 		super()
@@ -122,9 +164,9 @@ class Claims extends EventDispatcher {
 									<ReactDataGridColumn headerAlign="left" textAlign="left" width="210" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="" />
 									<ReactDataGridColumn headerAlign="left" textAlign="left" width="180" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="" />
 									<ReactDataGridColumn headerAlign="left" textAlign="left" width="150" dataField="processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" itemRenderer={StatusRenderer}/>
 									<ReactDataGridColumn headerAlign="left" textAlign="left" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="" labelFunction={this.dateForm} />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
+									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  headerText=""  />
 									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
 									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="transactionType" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
 								</ReactDataGridColumnLevel>
