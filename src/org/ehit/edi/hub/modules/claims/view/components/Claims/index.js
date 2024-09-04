@@ -1,12 +1,13 @@
 import { Paper } from '@material-ui/core'
-import { Tooltip, withStyles } from '@material-ui/core'
-
+import { Tooltip, withStyles,Button } from '@material-ui/core'
+import SaveIcon from '@material-ui/icons/Save'
+import Edit from '../../../../../../../../../assets/images/Edit-active.png'
 import moment from 'moment'
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../../../../../../../../AppConfig/store/actions/headersAction'
-import { DateRange, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel } from '../../../../../../../../../flexicious'
+import { DateRange, EventDispatcher, ReactDataGridColumn, ReactDataGridColumnLevel, ReactDataGridColumnGroup } from '../../../../../../../../../flexicious'
 import MontefioreUtils from '../../../../../../../../../service/utils/MontefioreUtils'
 import AdvanceDialog from '../../../../../../../../../shared/components/AdvanceDialog'
 import DataGrid from '../../../../../../../../../shared/components/ExtendedDataGrid'
@@ -19,10 +20,47 @@ import './claims.scss'
 import dataArray from '../../../../../../../../../sample/findClaimProcesses.js'
 import StatusRenderer from '../../../../../../../../../shared/components/StatusRenderer'
 import dialog_warning from '../../../../../../../../../assets/images/dialog_warning.png'
-							
-const bgcolorarray = [ "0xC0C0C0", "0xEEEEEE"]
 
-const headerbgcolorarray = [ "0xEEEEEE", "0xC0C0C0"]
+const bgcolorarray = ['0xC0C0C0', '0xEEEEEE']
+
+const headerbgcolorarray = ['0xEEEEEE', '0xC0C0C0']
+
+const edit= props => {
+	const onSave = () => {
+		props.column.handleSave(props)
+	}
+	if (props.cell.rowInfo && props.cell.rowInfo.getIsDataRow()) {
+		
+			
+			return (
+				<Button style={{ height: '100%' }}>
+					<img
+						id="Edit"
+						alt="Edit"
+						src={Edit}
+					/>
+				</Button>
+
+		)
+	} else {
+		return <div />
+	}
+}
+const save= props => {
+	const onSave = () => {
+		props.column.handleSave(props)
+	}
+	if (props.cell.rowInfo && props.cell.rowInfo.getIsDataRow()) {
+		return (
+			<Button onClick={onSave} style={{height:"100%"}}>
+				<SaveIcon fontSize="small" />
+			</Button>
+		)
+	} else {
+		return <div />
+	}
+}
+
 
 const styles = {
 	statusContainer: {
@@ -70,23 +108,21 @@ class Claims extends EventDispatcher {
 			fileData: null,
 			claimsHeader: ''
 		}
-		
-		
 	}
 
 	componentDidMount() {
-
 		//this.mediator = new ClaimsMediator().onRegister(this)
 		this.grid.expandAll()
-
 	}
 	componentWillUnmount() {
 		//this.mediator.onUnRegister()
-	
 	}
 
 	currencyFormatter = (item, col) => {
 		return item.totalDollarAmt ? ExampleUtils.globalCurrencyFormatter.format(item.totalDollarAmt) : null
+	}
+	globalDateFormatter = item => {
+		if (item.logDatetime != null) return moment(new Date(new Date(Date.parse(item.logDatetime)).getTime() - new Date(Date.parse(item.logDatetime)).getTimezoneOffset() * 60000)).format('MM/DD/YYYY h:mm A')
 	}
 
 	dateForm = (item, col) => {
@@ -95,81 +131,327 @@ class Claims extends EventDispatcher {
 	}
 
 	getRowTextColor = cell => {
-		var status = cell.getRowInfo().getData().processStatus.toString()
-		if (status.indexOf('In-process') === 0)
-		{
-			return 0x0000FF;
+		var status = cell
+			.getRowInfo()
+			.getData()
+			.processStatus.toString()
+		if (status.indexOf('In-process') === 0) {
+			return 0x0000ff
 		}
-		if (status.indexOf('Rejected') === 0)
-		{
-			return 0xFF0000;
+		if (status.indexOf('Rejected') === 0) {
+			return 0xff0000
 		}
-		return null;
+		return null
 	}
 	textFilterFunction = (item, filter) => {
 		// Check if filter is provided
 		if (!filter || !filter.expression) {
-			return true; // Return true to include all items initially, representing the original array
+			return true // Return true to include all items initially, representing the original array
 		}
-	
+
 		if (typeof filter.expression === 'string') {
-			const dispStatus = item[filter.columnName];
-			return dispStatus.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1;
+			const dispStatus = item[filter.columnName]
+			return (
+				dispStatus
+					.toString()
+					.toLowerCase()
+					.indexOf(filter.expression.toLowerCase()) !== -1
+			)
 		} else if (typeof filter.expression === 'object' && filter.expression.length > 0) {
 			// Check if any expression in the array matches
 			const filteredArr = filter.expression.map(data => {
-				const temp = item[filter.columnName]
-					.toString()
-					.toLowerCase()
-					.indexOf(data.toLowerCase()) !== -1;
-				return temp;
-			});
-	
+				const temp =
+					item[filter.columnName]
+						.toString()
+						.toLowerCase()
+						.indexOf(data.toLowerCase()) !== -1
+				return temp
+			})
+
 			// Return true if at least one match is found
-			return filteredArr.includes(true);
+			return filteredArr.includes(true)
 		}
 		// Default return value if no match is found
-		return false;
-	};
+		return false
+	}
 	textFilterFunction1 = (item, filter) => {
 		if (typeof filter.expression === 'string') {
 			// Filter all systems based on matching fileName
-			console.log(item);
+			console.log(item)
 			item.systems = item.systems.filter(system => {
-				const fileName = system.fileName;
-				return fileName.toString().toLowerCase().indexOf(filter.expression.toLowerCase()) !== -1;
-			});
+				const fileName = system.fileName
+				return (
+					fileName
+						.toString()
+						.toLowerCase()
+						.indexOf(filter.expression.toLowerCase()) !== -1
+				)
+			})
 		}
-		return item; // Ensure to return the modified item
-	};	render() {
+		return item // Ensure to return the modified item
+	}
+	render() {
 		return (
 			<Paper className="page-style">
 				<div className="claimsGridStyle">
-					<DataGrid width="100%" height="100%" ref={g => (this.grid = g)} enablePrint={true} styleName="gridStyle"  enableExport={true} enableExportAll={true} enableCopy={true} parentDocument={this} pagerRenderer={MontefioreUtils.pagerFactory}  dataProvider={dataArray} alternatingItemColors={[0xffffff, 0xffffff]}>
-						<ReactDataGridColumnLevel rowHeight="45"  enableFilters={true} enablePaging={true} /*pagerRenderer="org.ehit.edi.hub.uitl.MyCustomPager"*/ pageSize="50" childrenField="systems" >
-							<ReactDataGridColumn headerAlign="left" textAlign="left" columnWidthMode="60" dataField="systemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="System ID" filterCompareFunction={this.textFilterFunction}/>
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Control ID" useHandCursor={true} useUnderLine={true}  />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="210" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Interface ID" filterCompareFunction={this.textFilterFunction1}/>
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="180" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="Sender ID" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="150" dataField="processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="FTP Type" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="State" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="Last Update" labelFunction={this.dateForm} />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="Interface Conditions" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="Actions" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="transactionType" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="Logs" />
+					<DataGrid
+						ref={g => (this.grid = g)}
+						textAlign={'center'}
+						height={'100%'}
+						width={'100%'}
+						id="Requestor_WorkList_Grid"
+						clearOpenItemsOnDataProviderChange={false}
+						selectedKeyField={'uniqueIdentifier'}
+						alternatingItemColors={[0xffffff, 0xffffff]}
+						enablePrint
+						// enablePreferencePersistence
+						// enableDrag
+						showSpinnerOnFilterPageSort
+						enableEagerDraw
+						// enableDrop
+						// enableExport
+						enableCopy
+						preferencePersistenceKey={'simpleGrid'}
+						// enableMultiColumnSort
+						useCompactPreferences
+						horizontalScrollPolicy={'auto'}
+						footerDrawTopBorder
+						enablePdf
+						//cellBackgroundColorFunction="getColor"
 						
-								<ReactDataGridColumnLevel rowHeight="45" initialSortField="systems"  headerColors={[0xffffff, 0xffffff]} headerRollOverColors={[0xffffff, 0xffffff]} alternatingItemColors={[0xffffff, 0xffffff]} visible={false}>
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="140" dataField="ssystemId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="contains" headerText=" " useHandCursor={true} useUnderLine={true} />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="fileId" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="" headerText="" useHandCursor={true} useUnderLine={true} />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="210" dataField="fileName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="180" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" headerText="" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="150" dataField="processDescription" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="processStatus" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" itemRenderer={StatusRenderer}/>
-									<ReactDataGridColumn headerAlign="left" textAlign="left" dataField="instanceStartTime" enableCellClickRowSelect={false} headerText="" labelFunction={this.dateForm} />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  headerText=""  />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="senderName" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
-									<ReactDataGridColumn headerAlign="left" textAlign="left" width="130" dataField="transactionType" enableCellClickRowSelect={false} filterControl="TextInput"  filterOperation="Contains" filterWaterMark="Contains" headerText="" />
-								</ReactDataGridColumnLevel>
+						dataProvider ={dataArray}
+						enableToolbarActions
+						styleName="gridStyle"
+						editable
+						enableDrillDown
+						showAddEmployee
+						showRefresh
+						filterVisible={false}
+						headerWordWrap
+						headerHeight={60}
+						enableDefaultDisclosureIcon={false}
+						headerSortSeparatorRight={3}
+						// selectionMode="none"
+						// variableRowHeight
+						// getRowHeightFunction={getRowHeight}
+						// toolbarActionExecutedFunction={onExecuteToolbarAction}
+						// cellEditableFunction={isCellEditable}
+					>
+						<ReactDataGridColumnLevel rowHeight={10} enablePaging={true} horizontalGridLines={true} pageSize={10000} childrenField="systems" alternatingItemColors={[0xe1eef7, 0xe1eef7]} enableFilters={true} horizontalGridLineColor={0x99bbe8} horizontalGridLineThickness={1} >
+							<ReactDataGridColumnGroup headerText="ID">
+								<ReactDataGridColumn
+									dataField="worklistId"
+									headerText="#"
+									width={125}
+									columnLockMode={'left'}
+									enableCellClickRowSelect={false}
+									editable={false}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									enableExpandCollapseIcon
+									enableHierarchicalNestIndent
+									//expandCollapseIconPlacementFunction={placeExpandCollapseIcon}
+									filterCompareFunction={null}
+									// filterWaterMark={"Contains"}
+								/>
+								<ReactDataGridColumn dataField="systemId" headerText="System ID" width={50} columnLockMode={'left'} editable={false} enableCellClickRowSelect={false} filterControl="TextInput" filterOperation="Contains" filterWaterMark="Contains" />
+							</ReactDataGridColumnGroup>
+							<ReactDataGridColumn
+								headerText="Status"
+								dataField="processStatus"
+								width={70}
+								columnLockMode={'left'}
+								enableCellClickRowSelect={false}
+								editable={false}
+								itemRenderer={StatusRenderer}
+								//cellBackgroundColorFunction={getCellBackgroundColor}
+								filterCompareFunction={null}
+								filterComboBoxWidth={150}
+							/>
+							<ReactDataGridColumnGroup headerText="File Details" dataField="requester-user-id">
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="fileId"
+									headerText="Control ID"
+									width={150}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									headerWordWrap={true}
+									//itemEditor={textInputEditor}
+									enableRecursiveSearch={true}
+									itemEditorApplyOnValueCommit={true}
+									enableCellClickRowSelect={false}
+									//itemEditorValidatorFunction={validateLname}
+									filterCompareFunction={null}
+								/>
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="fileName"
+									headerText="Interface ID"
+									width={300}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									headerWordWrap={true}
+									enableRecursiveSearch={true}
+									//itemEditor={textInputEditor}
+									itemEditorApplyOnValueCommit={true}
+									enableCellClickRowSelect={false}
+									//itemEditorValidatorFunction={validateFname}
+									filterCompareFunction={null}
+								/>
+								<ReactDataGridColumn
+									dataField="senderName"
+									headerText="Sender ID"
+									width={150}
+									headerWordWrap={true}
+									itemEditorApplyOnValueCommit={true}
+									enableCellClickRowSelect={false}
+									//itemEditor={textInputEditor}
+									sortable={false}
+									//itemEditorValidatorFunction={validateInitial}
+								/>
+							
+								
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="processDescription"
+									headerText="FTP Type"
+									width={150}
+									//itemEditor={textInputEditor}
+									headerWordWrap={true}
+									//itemEditorValidatorFunction={validatePersonEmail}
+									itemEditorApplyOnValueCommit={true}
+									enableCellClickRowSelect={false}
+									sortable={false}
+								/>
+							</ReactDataGridColumnGroup>
+							<ReactDataGridColumnGroup headerText="Interface Details" dataField="requester-user-id">
+								
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="instanceStartTime"
+									headerText="Last Update"
+									width={150}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									enableRecursiveSearch={true}
+									//itemEditor={textInputEditor}
+									headerWordWrap="true"
+									//itemEditorValidatorFunction={validateCompanyCode}
+									itemEditorApplyOnValueCommit={true}
+									enableCellClickRowSelect={false}
+									sortable={false}
+									filterCompareFunction={null}
+								/>
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="campusCode"
+									headerText="Current Conditions"
+									width={100}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									enableRecursiveSearch={true}
+									//headerWordWrap={true}
+									itemEditorApplyOnValueCommit={false}
+									enableCellClickRowSelect={false}
+									itemEditorManagesPersistence={true}
+									//itemEditor={campusCodeEditorWrapper}
+									filterCompareFunction={null}
+								/>
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="title"
+									headerText="Prev Condition"
+									width={100}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									enableRecursiveSearch={true}
+									headerWordWrap={true}
+									itemEditorApplyOnValueCommit={false}
+									enableCellClickRowSelect={false}
+									itemEditorManagesPersistence={true}
+									//itemEditor={titleEditorWrapper}
+									filterCompareFunction={null}
+								/>
+								<ReactDataGridColumn
+									textAlign={'left'}
+									dataField="department"
+									headerText="Log"
+									width={100}
+									filterControl="TextInput"
+									filterOperation="Contains"
+									filterWaterMark="Contains"
+									enableRecursiveSearch={true}
+									headerWordWrap={true}
+									itemEditorApplyOnValueCommit={false}
+									enableCellClickRowSelect={false}
+									itemEditorManagesPersistence={true}
+									//itemEditor={departmenteEditorWrapper}
+									filterCompareFunction={null}
+								/>
+								<ReactDataGridColumn
+									dataField="instanceStartTime"
+									headerText="Last Update"
+									width={120}
+									editorDataField="selectedDate"
+									//filterRenderer={dateFilter}
+									// filterControl="DateComboBox"
+									enableRecursiveSearch={true}
+									headerWordWrap={false}
+									formatter={ExampleUtils.dateFormatter5}
+									itemEditorApplyOnValueCommit={true}
+									enableCellClickRowSelect={false}
+									//itemEditor={startDateRendererEditorWrapper}
+									// itemEditorValidatorFunction={validateStartDate}
+									filterDateRangeOptions={[DateRange.DATE_RANGE_CUSTOM]}
+									// filterCompareFunction={null}
+								/>
+								
+								
+							</ReactDataGridColumnGroup>
+							
+							<ReactDataGridColumn
+								dataField="Save"
+								headerText="Save"
+								width={50}
+								columnLockMode={'right'}
+								itemRenderer={this?save:null}
+								editable={false}
+								hideText={true}
+								//  enableIcon useIconRollOverTimer={false}={true}
+								//  iconFunction="dynamicIconFunctionSave"
+								iconToolTip="Save Request"
+								iconHandCursor={true}
+								columnWidthMode="fixed"
+								iconLeft="20"
+								sortable={false}
+								//onHandleSave={iconClick}
+							/>
+							<ReactDataGridColumn
+								dataField="Edit"
+								headerText="Edit"
+								width={50}
+								columnLockMode={'right'}
+								itemRenderer={edit}
+								editable={false}
+								hideText={true}
+								//  enableIcon useIconRollOverTimer={false}={true}
+								//  iconFunction="dynamicIconFunctionEdit"
+								iconToolTip="Edit Request"
+								iconHandCursor={true}
+								columnWidthMode="fixed"
+								iconLeft="20"
+								sortable={false}
+								//onHandleEdit={iconClick}
+							/>
+							
+							<ReactDataGridColumnLevel enableFooters parentField={'invoice'} horizontalGridLines={false} horizontalGridLineColor="0xffffff" horizontalGridLineThickness="0" rowHeight="23" reusePreviousLevelColumns={true} alternatingItemColors={[0xffffff, 0xffffff]} initialSortField="id.worklistSeqNum" />
 						</ReactDataGridColumnLevel>
 					</DataGrid>
 					<AdvanceDialog
@@ -206,6 +488,5 @@ const mapDispatchToProps = dispatch =>
 		},
 		dispatch
 	)
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Claims)
